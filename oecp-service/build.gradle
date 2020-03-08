@@ -1,0 +1,31 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+
+
+
+sourceCompatibility = '11'
+
+dependencies {
+
+	compile project(":oecp-domain")
+	compile project(":oecp-client")
+	compile 'org.apache.commons:commons-pool2:2.0'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.2.0.RELEASE'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile group: 'org.apache.dubbo', name: 'dubbo-spring-boot-starter', version: '2.7.1'
+	compile (group: 'org.apache.dubbo', name: 'dubbo-dependencies-zookeeper', version: '2.7.2')
+			{
+				exclude group:'org.slf4j'
+			}
+	compile ('org.apache.dubbo:dubbo:2.7.2'){
+		exclude group: 'org.springframework'
+		exclude group: 'javax.servlet'
+		exclude group: 'log4j'
+	}
+}

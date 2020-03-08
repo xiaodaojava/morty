@@ -1,0 +1,40 @@
+////////////////////////////////////////
+//这个模块要保持干净,要多干净就有多干净的那种//
+///////////////////////////////////////
+plugins {
+	id 'java'
+	id 'maven-publish'
+}
+
+
+sourceCompatibility = '11'
+
+dependencies {
+
+}
+//打包源码
+task sourcesJar(type: Jar) {
+	from sourceSets.main.allJava
+	archiveClassifier = 'sources'
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			groupId = group
+			version = version
+			from components.java
+			artifact sourcesJar
+		}
+	}
+
+	repositories {
+		maven { url "http://maven.default.svc.cluster.local:30081/repository/maven-snapshots/"
+			credentials {
+				username 'admin'
+				password 'admin123'
+			}
+		}
+
+	}
+}

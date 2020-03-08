@@ -1,0 +1,21 @@
+plugins {
+	id 'java'
+}
+
+
+
+
+allprojects {
+	group = 'com.platform.oecp'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+	repositories {
+		maven { url 'https://maven.aliyun.com/repository/public/' }
+		maven { url 'https://maven.aliyun.com/repository/spring/'}
+		mavenCentral()
+	}
+}
+
+
+
+
