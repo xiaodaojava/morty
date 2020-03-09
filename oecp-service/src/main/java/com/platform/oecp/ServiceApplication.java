@@ -36,12 +36,6 @@ public class ServiceApplication {
                 System.out.println(beanName);
             }
 
-            //change redisTemplate Serializer
-            RedisTemplate redisTemplate = ctx.getBean("redisTemplate", RedisTemplate.class);
-            redisTemplate.setKeySerializer(new StringRedisSerializer());
-            redisTemplate.setValueSerializer(new StringRedisSerializer());
-
-
         };
     }
 }
