@@ -3,3 +3,6 @@ build
 out
 .gradle
 .classpath
+.project
+default.log
+common-error.log
