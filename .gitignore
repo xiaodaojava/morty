@@ -6,3 +6,4 @@ out
 .project
 default.log
 common-error.log
+application.properties
