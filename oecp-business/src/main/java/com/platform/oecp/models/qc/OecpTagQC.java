@@ -7,16 +7,12 @@ import java.util.Date;
 /**
  * @author lixiang
  */
-public class OecpApplyInfoQC extends BaseQC {
+public class OecpTagQC extends BaseQC {
 
    
    
    /** 主键UUID  */
    private Long id;
-   
-   
-   /** 用户ID，外键  */
-   private Long userId;
    
    
    
@@ -34,37 +30,26 @@ public class OecpApplyInfoQC extends BaseQC {
         return this.id;
     }
 
-    public OecpApplyInfoQC setId(Long id) {
+    public OecpTagQC setId(Long id) {
         this.id = id;
         return this;
     }
      
     
+    
+    
+    
+    
+    
+    
+    
 
-    public Long getUserId() {
-        return this.userId;
+
+    public static OecpTagQC create(){
+        return new OecpTagQC();
     }
 
-    public OecpApplyInfoQC setUserId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
-     
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-    public static OecpApplyInfoQC create(){
-        return new OecpApplyInfoQC();
-    }
-
-    public OecpApplyInfoQC build(){
+    public OecpTagQC build(){
         return this;
     }
 

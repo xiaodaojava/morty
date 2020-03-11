@@ -6,20 +6,32 @@ import java.util.Date;
 /**
  * @author lixiang
  */
-public class OecpApplyInfoDO implements Serializable{
+public class OecpRoleDO implements Serializable{
 
    
    /** 主键UUID  */
    @SqlField
    private Long id;
 
-   /** 用户ID，外键  */
+   /** 归属机构ID  */
    @SqlField
-   private Long userId;
+   private String officeId;
 
-   /** 应用名称  */
+   /** 角色名称  */
    @SqlField
-   private String applyName;
+   private String name;
+
+   /** 英文名称  */
+   @SqlField
+   private String enName;
+
+   /** 角色类型  */
+   @SqlField
+   private Integer roleType;
+
+   /** 是否可用，0:代表可用;1:代表不可用  */
+   @SqlField
+   private Integer useable;
 
    /** 备注信息  */
    @SqlField
@@ -53,31 +65,55 @@ public class OecpApplyInfoDO implements Serializable{
         return this.id;
    }
 
-   public OecpApplyInfoDO setId(Long id) {
+   public OecpRoleDO setId(Long id) {
         this.id = id;
         return this;
    }
-   public Long getUserId() {
-        return this.userId;
+   public String getOfficeId() {
+        return this.officeId;
    }
 
-   public OecpApplyInfoDO setUserId(Long userId) {
-        this.userId = userId;
+   public OecpRoleDO setOfficeId(String officeId) {
+        this.officeId = officeId;
         return this;
    }
-   public String getApplyName() {
-        return this.applyName;
+   public String getName() {
+        return this.name;
    }
 
-   public OecpApplyInfoDO setApplyName(String applyName) {
-        this.applyName = applyName;
+   public OecpRoleDO setName(String name) {
+        this.name = name;
+        return this;
+   }
+   public String getEnName() {
+        return this.enName;
+   }
+
+   public OecpRoleDO setEnName(String enName) {
+        this.enName = enName;
+        return this;
+   }
+   public Integer getRoleType() {
+        return this.roleType;
+   }
+
+   public OecpRoleDO setRoleType(Integer roleType) {
+        this.roleType = roleType;
+        return this;
+   }
+   public Integer getUseable() {
+        return this.useable;
+   }
+
+   public OecpRoleDO setUseable(Integer useable) {
+        this.useable = useable;
         return this;
    }
    public String getRemarks() {
         return this.remarks;
    }
 
-   public OecpApplyInfoDO setRemarks(String remarks) {
+   public OecpRoleDO setRemarks(String remarks) {
         this.remarks = remarks;
         return this;
    }
@@ -85,7 +121,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.delFlag;
    }
 
-   public OecpApplyInfoDO setDelFlag(Integer delFlag) {
+   public OecpRoleDO setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
         return this;
    }
@@ -93,7 +129,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.createDate;
    }
 
-   public OecpApplyInfoDO setCreateDate(Date createDate) {
+   public OecpRoleDO setCreateDate(Date createDate) {
         this.createDate = createDate;
         return this;
    }
@@ -101,7 +137,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.createBy;
    }
 
-   public OecpApplyInfoDO setCreateBy(String createBy) {
+   public OecpRoleDO setCreateBy(String createBy) {
         this.createBy = createBy;
         return this;
    }
@@ -109,7 +145,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.updateDate;
    }
 
-   public OecpApplyInfoDO setUpdateDate(Date updateDate) {
+   public OecpRoleDO setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
         return this;
    }
@@ -117,17 +153,17 @@ public class OecpApplyInfoDO implements Serializable{
         return this.updateBy;
    }
 
-   public OecpApplyInfoDO setUpdateBy(String updateBy) {
+   public OecpRoleDO setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
         return this;
    }
    
 
-   public static OecpApplyInfoDO create(){
-       return new OecpApplyInfoDO();
+   public static OecpRoleDO create(){
+       return new OecpRoleDO();
    }
 
-   public OecpApplyInfoDO build(){
+   public OecpRoleDO build(){
        return this;
    }
 

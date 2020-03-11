@@ -6,28 +6,20 @@ import java.util.Date;
 /**
  * @author lixiang
  */
-public class OecpCaseInfoDO implements Serializable{
+public class OecpErrorCaseDO implements Serializable{
 
    
-   /** UUID主键  */
+   /** 主键UUID  */
    @SqlField
    private Long id;
 
-   /** 标题tag  */
+   /** 错误码主键id  */
    @SqlField
-   private String titleForSearch;
+   private Long codeId;
 
-   /** 标题内容  */
+   /** 案例主键id  */
    @SqlField
-   private String title;
-
-   /** 案例tag  */
-   @SqlField
-   private String contentForSearch;
-
-   /** 案列内容  */
-   @SqlField
-   private String content;
+   private Long caseId;
 
    /** 创建人  */
    @SqlField
@@ -61,47 +53,31 @@ public class OecpCaseInfoDO implements Serializable{
         return this.id;
    }
 
-   public OecpCaseInfoDO setId(Long id) {
+   public OecpErrorCaseDO setId(Long id) {
         this.id = id;
         return this;
    }
-   public String getTitleForSearch() {
-        return this.titleForSearch;
+   public Long getCodeId() {
+        return this.codeId;
    }
 
-   public OecpCaseInfoDO setTitleForSearch(String titleForSearch) {
-        this.titleForSearch = titleForSearch;
+   public OecpErrorCaseDO setCodeId(Long codeId) {
+        this.codeId = codeId;
         return this;
    }
-   public String getTitle() {
-        return this.title;
+   public Long getCaseId() {
+        return this.caseId;
    }
 
-   public OecpCaseInfoDO setTitle(String title) {
-        this.title = title;
-        return this;
-   }
-   public String getContentForSearch() {
-        return this.contentForSearch;
-   }
-
-   public OecpCaseInfoDO setContentForSearch(String contentForSearch) {
-        this.contentForSearch = contentForSearch;
-        return this;
-   }
-   public String getContent() {
-        return this.content;
-   }
-
-   public OecpCaseInfoDO setContent(String content) {
-        this.content = content;
+   public OecpErrorCaseDO setCaseId(Long caseId) {
+        this.caseId = caseId;
         return this;
    }
    public String getCreateBy() {
         return this.createBy;
    }
 
-   public OecpCaseInfoDO setCreateBy(String createBy) {
+   public OecpErrorCaseDO setCreateBy(String createBy) {
         this.createBy = createBy;
         return this;
    }
@@ -109,7 +85,7 @@ public class OecpCaseInfoDO implements Serializable{
         return this.createDate;
    }
 
-   public OecpCaseInfoDO setCreateDate(Date createDate) {
+   public OecpErrorCaseDO setCreateDate(Date createDate) {
         this.createDate = createDate;
         return this;
    }
@@ -117,7 +93,7 @@ public class OecpCaseInfoDO implements Serializable{
         return this.updateBy;
    }
 
-   public OecpCaseInfoDO setUpdateBy(String updateBy) {
+   public OecpErrorCaseDO setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
         return this;
    }
@@ -125,7 +101,7 @@ public class OecpCaseInfoDO implements Serializable{
         return this.updateDate;
    }
 
-   public OecpCaseInfoDO setUpdateDate(Date updateDate) {
+   public OecpErrorCaseDO setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
         return this;
    }
@@ -133,7 +109,7 @@ public class OecpCaseInfoDO implements Serializable{
         return this.remarks;
    }
 
-   public OecpCaseInfoDO setRemarks(String remarks) {
+   public OecpErrorCaseDO setRemarks(String remarks) {
         this.remarks = remarks;
         return this;
    }
@@ -141,17 +117,17 @@ public class OecpCaseInfoDO implements Serializable{
         return this.delFlag;
    }
 
-   public OecpCaseInfoDO setDelFlag(Integer delFlag) {
+   public OecpErrorCaseDO setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
         return this;
    }
    
 
-   public static OecpCaseInfoDO create(){
-       return new OecpCaseInfoDO();
+   public static OecpErrorCaseDO create(){
+       return new OecpErrorCaseDO();
    }
 
-   public OecpCaseInfoDO build(){
+   public OecpErrorCaseDO build(){
        return this;
    }
 

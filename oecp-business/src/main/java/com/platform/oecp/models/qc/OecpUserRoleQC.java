@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @author lixiang
  */
-public class OecpApplyInfoQC extends BaseQC {
+public class OecpUserRoleQC extends BaseQC {
 
    
    
@@ -15,9 +15,12 @@ public class OecpApplyInfoQC extends BaseQC {
    private Long id;
    
    
-   /** 用户ID，外键  */
-   private Long userId;
+   /** 用户ID  */
+   private String userId;
    
+   
+   /** 角色ID，外键  */
+   private String roleId;
    
    
    
@@ -34,19 +37,30 @@ public class OecpApplyInfoQC extends BaseQC {
         return this.id;
     }
 
-    public OecpApplyInfoQC setId(Long id) {
+    public OecpUserRoleQC setId(Long id) {
         this.id = id;
         return this;
     }
      
     
 
-    public Long getUserId() {
+    public String getUserId() {
         return this.userId;
     }
 
-    public OecpApplyInfoQC setUserId(Long userId) {
+    public OecpUserRoleQC setUserId(String userId) {
         this.userId = userId;
+        return this;
+    }
+     
+    
+
+    public String getRoleId() {
+        return this.roleId;
+    }
+
+    public OecpUserRoleQC setRoleId(String roleId) {
+        this.roleId = roleId;
         return this;
     }
      
@@ -57,14 +71,13 @@ public class OecpApplyInfoQC extends BaseQC {
     
     
     
-    
 
 
-    public static OecpApplyInfoQC create(){
-        return new OecpApplyInfoQC();
+    public static OecpUserRoleQC create(){
+        return new OecpUserRoleQC();
     }
 
-    public OecpApplyInfoQC build(){
+    public OecpUserRoleQC build(){
         return this;
     }
 

@@ -37,6 +37,7 @@ public interface OecpApplyInfoMapper {
      * @return
      */
     @InsertProvider(type = OecpApplyInfoProvider.class)
+    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpApplyInfo(OecpApplyInfoDO oecpApplyInfo);
 
     /**

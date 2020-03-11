@@ -6,20 +6,20 @@ import java.util.Date;
 /**
  * @author lixiang
  */
-public class OecpApplyInfoDO implements Serializable{
+public class OecpRoleSrcDO implements Serializable{
 
    
    /** 主键UUID  */
    @SqlField
    private Long id;
 
-   /** 用户ID，外键  */
+   /** 角色ID  */
    @SqlField
-   private Long userId;
+   private String roleId;
 
-   /** 应用名称  */
+   /** 资源路径ID  */
    @SqlField
-   private String applyName;
+   private String valueId;
 
    /** 备注信息  */
    @SqlField
@@ -53,31 +53,31 @@ public class OecpApplyInfoDO implements Serializable{
         return this.id;
    }
 
-   public OecpApplyInfoDO setId(Long id) {
+   public OecpRoleSrcDO setId(Long id) {
         this.id = id;
         return this;
    }
-   public Long getUserId() {
-        return this.userId;
+   public String getRoleId() {
+        return this.roleId;
    }
 
-   public OecpApplyInfoDO setUserId(Long userId) {
-        this.userId = userId;
+   public OecpRoleSrcDO setRoleId(String roleId) {
+        this.roleId = roleId;
         return this;
    }
-   public String getApplyName() {
-        return this.applyName;
+   public String getValueId() {
+        return this.valueId;
    }
 
-   public OecpApplyInfoDO setApplyName(String applyName) {
-        this.applyName = applyName;
+   public OecpRoleSrcDO setValueId(String valueId) {
+        this.valueId = valueId;
         return this;
    }
    public String getRemarks() {
         return this.remarks;
    }
 
-   public OecpApplyInfoDO setRemarks(String remarks) {
+   public OecpRoleSrcDO setRemarks(String remarks) {
         this.remarks = remarks;
         return this;
    }
@@ -85,7 +85,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.delFlag;
    }
 
-   public OecpApplyInfoDO setDelFlag(Integer delFlag) {
+   public OecpRoleSrcDO setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
         return this;
    }
@@ -93,7 +93,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.createDate;
    }
 
-   public OecpApplyInfoDO setCreateDate(Date createDate) {
+   public OecpRoleSrcDO setCreateDate(Date createDate) {
         this.createDate = createDate;
         return this;
    }
@@ -101,7 +101,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.createBy;
    }
 
-   public OecpApplyInfoDO setCreateBy(String createBy) {
+   public OecpRoleSrcDO setCreateBy(String createBy) {
         this.createBy = createBy;
         return this;
    }
@@ -109,7 +109,7 @@ public class OecpApplyInfoDO implements Serializable{
         return this.updateDate;
    }
 
-   public OecpApplyInfoDO setUpdateDate(Date updateDate) {
+   public OecpRoleSrcDO setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
         return this;
    }
@@ -117,17 +117,17 @@ public class OecpApplyInfoDO implements Serializable{
         return this.updateBy;
    }
 
-   public OecpApplyInfoDO setUpdateBy(String updateBy) {
+   public OecpRoleSrcDO setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
         return this;
    }
    
 
-   public static OecpApplyInfoDO create(){
-       return new OecpApplyInfoDO();
+   public static OecpRoleSrcDO create(){
+       return new OecpRoleSrcDO();
    }
 
-   public OecpApplyInfoDO build(){
+   public OecpRoleSrcDO build(){
        return this;
    }
 
