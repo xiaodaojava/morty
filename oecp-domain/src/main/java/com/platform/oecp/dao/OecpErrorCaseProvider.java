@@ -5,6 +5,7 @@ import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import red.lixiang.tools.common.mybatis.MapperUtils;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
+import red.lixiang.tools.jdk.SnowflakeGenerator;
 
 /**
  * @author lixiang
@@ -34,6 +35,7 @@ public class OecpErrorCaseProvider implements ProviderMethodResolver {
     }
 
     public String insertOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
+        oecpErrorCase.setId(SnowflakeGenerator.generateKey());
         SQL sql = new SQL() {{
             INSERT_INTO("oecp_error_case");
         }};

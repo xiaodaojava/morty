@@ -37,7 +37,6 @@ public interface OecpErrorCaseMapper {
      * @return
      */
     @InsertProvider(type = OecpErrorCaseProvider.class)
-    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpErrorCase(OecpErrorCaseDO oecpErrorCase);
 
     /**

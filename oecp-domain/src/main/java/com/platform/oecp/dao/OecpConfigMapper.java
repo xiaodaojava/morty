@@ -37,7 +37,6 @@ public interface OecpConfigMapper {
      * @return
      */
     @InsertProvider(type = OecpConfigProvider.class)
-    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpConfig(OecpConfigDO oecpConfig);
 
     /**

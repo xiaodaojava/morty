@@ -37,7 +37,6 @@ public interface OecpErrorTagMapper {
      * @return
      */
     @InsertProvider(type = OecpErrorTagProvider.class)
-    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpErrorTag(OecpErrorTagDO oecpErrorTag);
 
     /**

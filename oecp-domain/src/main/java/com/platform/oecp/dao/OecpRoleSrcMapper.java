@@ -37,7 +37,6 @@ public interface OecpRoleSrcMapper {
      * @return
      */
     @InsertProvider(type = OecpRoleSrcProvider.class)
-    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpRoleSrc(OecpRoleSrcDO oecpRoleSrc);
 
     /**

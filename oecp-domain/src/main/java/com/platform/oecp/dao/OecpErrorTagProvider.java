@@ -5,6 +5,7 @@ import com.platform.oecp.models.qc.OecpErrorTagQC;
 import red.lixiang.tools.common.mybatis.MapperUtils;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
+import red.lixiang.tools.jdk.SnowflakeGenerator;
 
 /**
  * @author lixiang
@@ -34,6 +35,7 @@ public class OecpErrorTagProvider implements ProviderMethodResolver {
     }
 
     public String insertOecpErrorTag(OecpErrorTagDO oecpErrorTag){
+        oecpErrorTag.setId(SnowflakeGenerator.generateKey());
         SQL sql = new SQL() {{
             INSERT_INTO("oecp_error_tag");
         }};

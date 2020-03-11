@@ -37,7 +37,6 @@ public interface OecpOrgMapper {
      * @return
      */
     @InsertProvider(type = OecpOrgProvider.class)
-    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpOrg(OecpOrgDO oecpOrg);
 
     /**

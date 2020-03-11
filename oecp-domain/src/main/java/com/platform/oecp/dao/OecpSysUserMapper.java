@@ -37,7 +37,6 @@ public interface OecpSysUserMapper {
      * @return
      */
     @InsertProvider(type = OecpSysUserProvider.class)
-    @SelectKey(keyColumn = "id",resultType = Long.class,before = false,keyProperty = "id",statement ="SELECT LAST_INSERT_ID()" )
     int insertOecpSysUser(OecpSysUserDO oecpSysUser);
 
     /**

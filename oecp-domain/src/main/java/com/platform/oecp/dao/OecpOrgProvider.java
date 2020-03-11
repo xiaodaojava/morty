@@ -5,6 +5,7 @@ import com.platform.oecp.models.qc.OecpOrgQC;
 import red.lixiang.tools.common.mybatis.MapperUtils;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
+import red.lixiang.tools.jdk.SnowflakeGenerator;
 
 /**
  * @author lixiang
@@ -34,6 +35,7 @@ public class OecpOrgProvider implements ProviderMethodResolver {
     }
 
     public String insertOecpOrg(OecpOrgDO oecpOrg){
+        oecpOrg.setId(SnowflakeGenerator.generateKey());
         SQL sql = new SQL() {{
             INSERT_INTO("oecp_org");
         }};
