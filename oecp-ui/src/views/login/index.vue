@@ -47,7 +47,7 @@
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
       </div>
-      <icon-svg icon-class="ali"></icon-svg>
+      <!-- <icon-svg icon-class="ali"></icon-svg> -->
     </el-form>
   </div>
 </template>
