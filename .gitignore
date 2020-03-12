@@ -7,3 +7,15 @@ out
 default.log
 common-error.log
 application.properties
+
+oecp-ui/node_modules/
+oecp-ui/.DS_Store
+oecp-ui/dist/
+oecp-ui/npm-debug.log*
+oecp-ui/package-lock.json
+oecp-ui/yarn-debug.log*
+oecp-ui/yarn-error.log*
+oecp-ui/tests/**/coverage/
+
+
+oecp-ui/.vscode
