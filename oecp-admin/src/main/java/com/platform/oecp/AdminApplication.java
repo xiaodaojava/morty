@@ -38,6 +38,9 @@ public class AdminApplication {
 	public WebFilter contextPathWebFilter() {
 		String contextPath = "/api";
 		return (exchange, chain) -> {
+			if (exchange.getRequest().getURI().getPath().equals("/")) {
+				return chain.filter(exchange.mutate().request(exchange.getRequest().mutate().path("/index.html").build()).build());
+			}
 			ServerHttpRequest request = exchange.getRequest();
 			if (request.getURI().getPath().startsWith(contextPath)) {
 				return chain.filter(
