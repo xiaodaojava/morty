@@ -47,16 +47,29 @@
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
       </div>
+       <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+          第三方登录
+        </el-button>
+
+      <!-- <el-button @click="testApi">测试</el-button> -->
       <!-- <icon-svg icon-class="ali"></icon-svg> -->
     </el-form>
+
+    <el-dialog title="第三方登录" :visible.sync="showDialog">
+      <social-sign />
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import { health } from '@/api/test'
+import axios from 'axios'
+import SocialSign from './components/SocialSignin'
 export default {
   name: 'Login',
+  components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -83,7 +96,8 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      showDialog: false
     }
   },
   watch: {
@@ -119,6 +133,18 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    testApi(){
+      //   health().then(response => {
+      //    this.$message.success("qweqwesxasfad");
+      // })
+      axios.post('/oecp/health.do',{
+
+      }).then((res)=>{
+        this.$message.success("接口调用成功");
+      }).catch(()=>{
+        this.$message.errer("------qaq");
       })
     }
   }
@@ -232,6 +258,18 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+
+   .thirdparty-button {
+    position: absolute;
+    right: 0;
+    bottom: 6px;
+  }
+
+  @media only screen and (max-width: 470px) {
+    .thirdparty-button {
+      display: none;
+    }
   }
 }
 </style>

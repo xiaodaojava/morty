@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/oecp-ui/user/login',
+    url: '/oecp-ui/user/login.do',
     method: 'post',
     data
   })

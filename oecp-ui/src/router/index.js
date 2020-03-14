@@ -147,7 +147,17 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/testboard',
+    component: Layout,
+    redirect: '/testboard',
+    children: [{
+      path: 'testboard',
+      name: '错误码平台首页',
+      component: () => import('@/views/testboard/index'),
+      meta: { title: '模拟请求转发', icon: 'ali' }
+    }]
+  },
   {
     path: '外链引用',
     component: Layout,
