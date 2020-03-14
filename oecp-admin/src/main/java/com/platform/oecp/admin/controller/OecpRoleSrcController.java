@@ -1,25 +1,18 @@
 package com.platform.oecp.admin.controller;
 
-import com.alibaba.fastjson.JSON;
-import red.lixiang.tools.base.BaseResponse;
-import red.lixiang.tools.base.PageData;
-import red.lixiang.tools.common.mybatis.model.Page;
-import red.lixiang.tools.common.mybatis.model.Sort;
 import com.platform.oecp.business.manager.OecpRoleSrcManager;
 import com.platform.oecp.models.dos.OecpRoleSrcDO;
 import com.platform.oecp.models.qc.OecpRoleSrcQC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import red.lixiang.tools.base.BaseResponse;
+import red.lixiang.tools.base.PageData;
+import red.lixiang.tools.common.mybatis.model.Page;
 
-
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author 造飞机团队

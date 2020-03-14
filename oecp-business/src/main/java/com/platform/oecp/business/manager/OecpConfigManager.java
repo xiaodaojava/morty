@@ -4,8 +4,6 @@ package com.platform.oecp.business.manager;
 import com.platform.oecp.models.dos.OecpConfigDO;
 import com.platform.oecp.models.qc.OecpConfigQC;
 
-import red.lixiang.tools.common.mybatis.model.Page;
-import red.lixiang.tools.common.mybatis.model.Sort;
 import java.util.List;
 
 

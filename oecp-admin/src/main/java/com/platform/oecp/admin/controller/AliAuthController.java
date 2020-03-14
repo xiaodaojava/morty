@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alipay.easysdk.base.oauth.models.AlipaySystemOauthTokenResponse;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.kernel.BaseClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,21 +17,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
  **/
 @Controller
 public class AliAuthController {
+
+    /**
+     * 日志
+     */
+    private static final Logger logger = LoggerFactory.getLogger(AliAuthController.class);
+
+    /**
+     * @description 支付宝回调请求
+     *      拿authCode去换accessToken
+     * @param authCode
+     * @return
+     */
     @GetMapping("authRedirect")
     @ResponseBody
-    public String authRedirect(@RequestParam("auth_code") String authCode){
-        //拿authCode去换accessToken
+    public AlipaySystemOauthTokenResponse authRedirect(@RequestParam("auth_code") String authCode){
         try {
-
+            // 1. 设置参数（全局只需设置一次）
             Factory.setOptions(getOptions());
             AlipaySystemOauthTokenResponse token = Factory.Base.OAuth().getToken(authCode);
-            return "你的支付宝userId是:"+ JSON.toJSONString(token);
+            return token;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info("调用遭遇异常，原因:{}",e.getMessage());
         }
-        return "wrong";
+        return null;
     }
 
+    /**
+     * @description 接口调用配置
+     * @return
+     */
     private static BaseClient.Config getOptions() {
         BaseClient.Config config = new BaseClient.Config();
         config.protocol = "https";
