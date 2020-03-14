@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/oecp-ui/user/login.do',
+    url: '/oecp/user/login.do',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/oecp-ui/user/info',
+    url: '/oecp/user/info',
     method: 'get',
     params: { token }
   })
@@ -18,7 +18,7 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/oecp-ui/user/logout',
+    url: '/oecp/user/logout',
     method: 'post'
   })
 }

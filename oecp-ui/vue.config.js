@@ -28,25 +28,39 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js'),
     //设置跨域
     // proxy: {
-    //   '/oecp-ui/': {
-    //     target: process.env.VUE_APP_BASE_API,
+    //   // '/oecp-ui/': {
+    //   //   target: process.env.VUE_APP_BASE_API,
+    //   //   changeOrigin: true,
+    //   //   pathRewrite: {
+    //   //     '^/oecp-ui/': '/oecp-ui/'
+    //   //   },
+    //   // },
+    //   // '/oecp/': {
+    //   //   target: "http://localhost:9999/",
+    //   //   changeOrigin: true,
+    //   //   ws: true,
+    //   //   pathRewrite: {
+    //   //     '^/oecp/': '/oecp/'
+    //   //   },
+    //   [process.env.VUE_APP_BASE_API + '/user/info']: {
+    //     target: "http://localhost:${port}/mock",
     //     changeOrigin: true,
     //     pathRewrite: {
-    //       '^/oecp-ui/': '/oecp-ui/'
+    //       ['^' + process.env.VUE_APP_BASE_API]: ''
     //     },
     //   },
-    //   '/oecp/': {
-    //     target: "http://localhost:9999/",
+    //   [process.env.VUE_APP_BASE_API]: {
+    //     target: process.env.BACKGROUND_APPLICATION_URL,
     //     changeOrigin: true,
-    //     ws: true,
     //     pathRewrite: {
-    //       '^/oecp/': '/oecp/'
+    //       ['^' + process.env.VUE_APP_BASE_API]: ''
     //     }
     //   }
-    // }
+    // },
+    after: require('./mock/mock-server.js'),
+
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

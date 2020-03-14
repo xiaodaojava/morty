@@ -24,6 +24,7 @@ export default {
       const appid = '2021001141609481'
       const redirect_uri = encodeURIComponent('https://oecp.lixiang.red/auth-redirect')
       const url = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=' + appid + '&scope= auth_user&redirect_uri=' + redirect_uri
+      
       openWindow(url, thirdpart, 750,600)
     },
     tencentHandleClick(thirdpart) {

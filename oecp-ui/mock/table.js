@@ -13,7 +13,7 @@ const data = Mock.mock({
 
 export default [
 {
-  url: '/oecp-ui/table/list',
+  url: '/oecp/table/list',
   type: 'get',
   response: config => {
     const items = data.items

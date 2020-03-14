@@ -42,6 +42,7 @@ export default {
 }
 .redirect{
    font-size:25px;
+   display:none;
 }
 </style>
 

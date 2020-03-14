@@ -1,4 +1,3 @@
-
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -26,7 +25,7 @@ const users = {
 export default [
   // user login
   {
-    url: '/oecp-ui/user/login',
+    url: '/oecp/user/login',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -39,7 +38,7 @@ export default [
           message: 'Account and password are incorrect.'
         }
       }
-
+      console.log("okkkkkk!")
       return {
         code: 20000,
         data: token
@@ -49,7 +48,7 @@ export default [
 
   // get user info
   {
-    url: '/oecp-ui/user/info\.*',
+    url: '/oecp/user/info\.*',
     type: 'get',
     response: config => {
       const { token } = config.query
@@ -72,7 +71,7 @@ export default [
 
   // user logout
   {
-    url: '/oecp-ui/user/logout',
+    url: '/oecp/user/logout',
     type: 'post',
     response: _ => {
       return {

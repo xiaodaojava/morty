@@ -50,15 +50,13 @@
        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
           第三方登录
         </el-button>
-
-      <!-- <el-button @click="testApi">测试</el-button> -->
       <!-- <icon-svg icon-class="ali"></icon-svg> -->
     </el-form>
 
     <el-dialog title="第三方登录" :visible.sync="showDialog">
       <social-sign />
     </el-dialog>
-
+    <el-button type="success" @click="testApi">测试</el-button>
   </div>
 </template>
 
@@ -144,7 +142,7 @@ export default {
       }).then((res)=>{
         this.$message.success("接口调用成功");
       }).catch(()=>{
-        this.$message.errer("------qaq");
+        this.$message.error("------qaq");
       })
     }
   }
