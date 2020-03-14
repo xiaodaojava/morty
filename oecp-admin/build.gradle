@@ -16,7 +16,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-	compile group: 'com.alipay.sdk', name: 'alipay-easysdk', version: '1.0.2'
+	compile group: 'com.alipay.sdk', name: 'alipay-sdk-java', version: '4.6.0.ALL'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 }
