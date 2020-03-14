@@ -54,7 +54,7 @@
     </el-form>
 
     <el-dialog title="第三方登录" :visible.sync="showDialog">
-      <social-sign />
+      <social-sign @authCode="getAuthCode"/>
     </el-dialog>
     <el-button type="success" @click="testApi">测试</el-button>
   </div>
@@ -95,7 +95,8 @@ export default {
       loading: false,
       passwordType: 'password',
       redirect: undefined,
-      showDialog: false
+      showDialog: false,
+      authCode:''
     }
   },
   watch: {
@@ -144,6 +145,14 @@ export default {
       }).catch(()=>{
         this.$message.error("------qaq");
       })
+    },
+    getAuthCode(data){
+      this.authCode = data;
+      console.log('authCode为:'+data);
+      if(data != undefined && data != 'undefined' && data != null && data != ''){
+        console.log('code不为空,可以登录请求接口了')
+        this.handleLogin();
+      }
     }
   }
 }

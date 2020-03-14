@@ -8,9 +8,9 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login', '/authRedirect'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
 
@@ -36,7 +36,7 @@ router.beforeEach(async(to, from, next) => {
 
           next()
         } catch (error) {
-          // remove token and go to login page to re-login
+          //remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
@@ -46,7 +46,8 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
+    console.log("to.path");
+    console.log(to.path);
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()

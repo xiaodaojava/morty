@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import { setAuthCode } from '@/utils/auth'
 export default {
   data() {
     return {
@@ -29,8 +30,13 @@ export default {
       console.log('mounted');  
       this.params = this.$route.query;
       this.auth_code = this.params.auth_code;
-      console.log("params =",this.params);  
+      console.log("params =",this.params); 
+       
+      setAuthCode(this.params.auth_code);
+      window.close();
+
       // 提交authCode给后台 然后进行登录 axios.post()
+      //axios.post("")
       //if success 重定向到主页面
   }
 }
@@ -42,7 +48,6 @@ export default {
 }
 .redirect{
    font-size:25px;
-   display:none;
 }
 </style>
 
