@@ -24,7 +24,7 @@ export default {
       //alert('ok')
       this.$store.commit('SET_AUTH_TYPE', thirdpart)
       const appid = '2021001141609481'
-      const redirect_uri = encodeURIComponent('https://oecp.lixiang.red/auth-redirect')
+      const redirect_uri = encodeURIComponent('https://oecp.lixiang.red/#/authRedirect')
       const url = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=' + appid + '&scope= auth_user&redirect_uri=' + redirect_uri
       openWindow(url, thirdpart, 750,600)
       //重复轮询cookies的值有没有改变
