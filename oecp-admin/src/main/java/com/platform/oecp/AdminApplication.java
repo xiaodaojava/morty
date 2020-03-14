@@ -2,7 +2,6 @@ package com.platform.oecp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,7 +12,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
-import io.lettuce.core.api.StatefulRedisConnection;
 import reactor.core.publisher.Mono;
 
 /**
@@ -24,14 +22,7 @@ import reactor.core.publisher.Mono;
 public class AdminApplication {
 
 	public static void main(String[] args) {
-		
-		 ConfigurableApplicationContext context = SpringApplication.run(AdminApplication.class, args);
-		 
-		 //redis客户端初始化
-		 StatefulRedisConnection<String,String> connection = (StatefulRedisConnection<String,String>) context.getBean("statefulRedisConnection");
-	     RedisClientApplication.commands=connection.sync();
-//	     new RedisClientApplication().TestRedisSet();
-
+		SpringApplication.run(AdminApplication.class, args);
 	}
 
 	@Bean
