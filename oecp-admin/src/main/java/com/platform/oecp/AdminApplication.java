@@ -34,20 +34,20 @@ public class AdminApplication {
 
 	}
 
-//	@Bean
-//	public WebFilter contextPathWebFilter() {
-//		String contextPath = "/api";
-//		return (exchange, chain) -> {
-//			ServerHttpRequest request = exchange.getRequest();
-//			if (request.getURI().getPath().startsWith(contextPath)) {
-//				return chain.filter(
-//						exchange.mutate()
-//								.request(request.mutate().contextPath(contextPath).build())
-//								.build());
-//			}
-//			return chain.filter(exchange);
-//		};
-//	}
+	@Bean
+	public WebFilter contextPathWebFilter() {
+		String contextPath = "/api";
+		return (exchange, chain) -> {
+			ServerHttpRequest request = exchange.getRequest();
+			if (request.getURI().getPath().startsWith(contextPath)) {
+				return chain.filter(
+						exchange.mutate()
+								.request(request.mutate().contextPath(contextPath).build())
+								.build());
+			}
+			return chain.filter(exchange);
+		};
+	}
 
 	private static final String ALLOWED_HEADERS = "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN";
 	private static final String ALLOWED_METHODS = "GET, PUT, POST, DELETE, OPTIONS";
