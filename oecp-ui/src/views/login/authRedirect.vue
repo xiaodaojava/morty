@@ -1,6 +1,10 @@
 <template>
   <div class="redirect">
-  How are you?
+  您的appId是{{this.params.app_id}}<br/>
+  source:{{this.params.source}}<br/>
+  scope:{{this.params.scope}}<br/>
+  authCode：{{this.params.auth_code}}
+  
   </div>
 </template>
 
@@ -25,7 +29,7 @@ export default {
       console.log('mounted');  
       this.params = this.$route.query;
       this.auth_code = this.params.auth_code;
-      console.log("auth_code =",this.auth_code);  
+      console.log("params =",this.params);  
       // 提交authCode给后台 然后进行登录 axios.post()
       //if success 重定向到主页面
   }
@@ -37,7 +41,7 @@ export default {
   text-align: center;
 }
 .redirect{
-   font-size:40px;
+   font-size:25px;
 }
 </style>
 
