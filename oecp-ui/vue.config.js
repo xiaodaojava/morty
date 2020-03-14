@@ -19,7 +19,7 @@ module.exports = {
   //防止生成的静态资源
   assetsDir: 'static',
   //eslint-loader是否保存的时候检查
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: false,
   productionSourceMap: false,
   devServer: {
     host: 'localhost',
