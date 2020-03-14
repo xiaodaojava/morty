@@ -56,7 +56,7 @@
     <el-dialog title="第三方登录" :visible.sync="showDialog">
       <social-sign @authCode="getAuthCode"/>
     </el-dialog>
-    <el-button type="success" @click="testApi">测试</el-button>
+    <!-- <el-button type="success" @click="testApi">测试</el-button> -->
   </div>
 </template>
 
@@ -65,6 +65,7 @@ import { validUsername } from '@/utils/validate'
 import { health } from '@/api/test'
 import axios from 'axios'
 import SocialSign from './components/SocialSignin'
+import { getAuthInfo } from '@/api/user'
 export default {
   name: 'Login',
   components: { SocialSign },
@@ -96,7 +97,8 @@ export default {
       passwordType: 'password',
       redirect: undefined,
       showDialog: false,
-      authCode:''
+      authCode:'',
+      accessToken:''
     }
   },
   watch: {
@@ -134,6 +136,28 @@ export default {
         }
       })
     },
+    thirdLogin() {
+      this.loading = true
+      this.$store.dispatch('user/thirdLogin', this.authCode).then(() => {
+        this.$router.push({ path: this.redirect || '/' })
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    getUserInfo(acceccToken){
+      if(acceccToken == null){
+        this.$message.error("accessToken已过期");
+      }
+      this.$message.success("已进入getUserInfo方法");
+      this.loading = true
+        getAuthInfo(acceccToken).then((res) => {
+        console.log(res);  
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
     testApi(){
       //   health().then(response => {
       //    this.$message.success("qweqwesxasfad");
@@ -151,7 +175,22 @@ export default {
       console.log('authCode为:'+data);
       if(data != undefined && data != 'undefined' && data != null && data != ''){
         console.log('code不为空,可以登录请求接口了')
-        this.handleLogin();
+        axios.get('/api/authRedirect',
+        {
+          params:{
+            auth_code: this.authCode
+          }
+         }
+        ).then((res)=>{
+            console.log("获取assToken成功");
+            console.log(res);
+            console.log(res.data);
+            console.log(res.data.accessToken);
+            this.accessToken = res.data.accessToken;
+            this.getUserInfo(res.data.accessToken);
+          }).catch(error=>{
+            this.$message.error("获取token有点问题:",error);
+          })
       }
     }
   }

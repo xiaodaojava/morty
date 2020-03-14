@@ -22,6 +22,7 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
+    // host: 'localhost',
     host: 'localhost',
     port: port,
     overlay: {
@@ -29,37 +30,44 @@ module.exports = {
       errors: true
     },
     //设置跨域
-    // proxy: {
-    //   // '/oecp-ui/': {
-    //   //   target: process.env.VUE_APP_BASE_API,
-    //   //   changeOrigin: true,
-    //   //   pathRewrite: {
-    //   //     '^/oecp-ui/': '/oecp-ui/'
-    //   //   },
-    //   // },
-    //   // '/oecp/': {
-    //   //   target: "http://localhost:9999/",
-    //   //   changeOrigin: true,
-    //   //   ws: true,
-    //   //   pathRewrite: {
-    //   //     '^/oecp/': '/oecp/'
-    //   //   },
-    //   [process.env.VUE_APP_BASE_API + '/user/info']: {
-    //     target: "http://localhost:${port}/mock",
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_BASE_API]: ''
-    //     },
-    //   },
-    //   [process.env.VUE_APP_BASE_API]: {
-    //     target: process.env.BACKGROUND_APPLICATION_URL,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_BASE_API]: ''
-    //     }
-    //   }
-    // },
-    after: require('./mock/mock-server.js'),
+    proxy: {
+      // '/oecp-ui/': {
+      //   target: process.env.VUE_APP_BASE_API,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/oecp-ui/': '/oecp-ui/'
+      //   },
+      // },
+      // '/oecp/': {
+      //   target: "http://localhost:9999/",
+      //   changeOrigin: true,
+      //   ws: true,
+      //   pathRewrite: {
+      //     '^/oecp/': '/oecp/'
+      //   },
+      [process.env.VUE_APP_BASE_API + '/user/info']: {
+        target: "http://localhost:${port}/mock",
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        },
+      },
+      [process.env.VUE_APP_BASE_API]: {
+        target: process.env.BACKGROUND_APPLICATION_URL,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      },
+      '/api': {
+        target: process.env.BACKGROUND_APPLICATION_URL,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        },
+      }
+    },
+    //after: require('./mock/mock-server.js'),
 
   },
   configureWebpack: {

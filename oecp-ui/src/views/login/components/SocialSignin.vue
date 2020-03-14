@@ -31,7 +31,7 @@ export default {
       let interval = setInterval(function(){
         let authCode = getAuthCode();
         console.log('还在找authCode中。。。')
-        if(!(authCode == 'morty_authCode' || !authCode)){
+        if(authCode != 'morty_authCode' && authCode != undefined && authCode != 'undefined' && authCode != null && authCode != ''){
           _this.$emit('authCode',authCode)
           clearInterval(interval);
         }
