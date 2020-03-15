@@ -23,10 +23,13 @@ export function logout() {
   })
 }
 
-export function getAuthInfo(accessToken) {
+export function getAuthInfo(accessToken, appId) {
   return request({
     url: '/api/getAuthInfo',
     method: 'get',
-    params: { access_token: accessToken }
+    params: {
+      accessToken: accessToken,
+      appId: appId
+    }
   })
 }
