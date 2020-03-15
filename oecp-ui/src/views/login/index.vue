@@ -146,15 +146,16 @@ export default {
         this.loading = false
       })
     },
-    getUserInfo(acceccToken){
+    getUserInfo(acceccToken,appId){
+      let _this = this;
       if(acceccToken == null){
-        this.$message.error("accessToken已过期");
+        _this.$message.error("accessToken已过期");
       }
       this.$message.success("已进入getUserInfo方法");
       this.loading = true
-        getAuthInfo(acceccToken).then((res) => {
+      getAuthInfo(acceccToken,appId).then((res) => {
         console.log(res);  
-        this.loading = false
+        this.loading = false;
       }).catch(() => {
         this.loading = false
       })
@@ -179,16 +180,26 @@ export default {
         axios.get('/api/authRedirect',
         {
           params:{
-            auth_code: this.authCode
+            authCode: this.authCode,
+            appId:this.appId
           }
          }
         ).then((res)=>{
-            console.log("获取assToken成功");
+
             console.log(res);
             console.log(res.data);
             console.log(res.data.accessToken);
             this.accessToken = res.data.accessToken;
-            this.getUserInfo(res.data.accessToken);
+            this.getUserInfo(res.data.accessToken,this.appId);
+            console.log("获取assToken成功");
+            console.log("我要去登录了"); 
+            console.log("我要去登录了"); 
+            console.log("我要去登录了"); 
+            console.log("我要去登录了"); 
+            console.log("我要去登录了"); 
+            console.log("我要去登录了"); 
+            console.log("我要去登录了"); 
+            this.handleLogin();
           }).catch(error=>{
             this.$message.error("获取token有点问题:",error);
           })

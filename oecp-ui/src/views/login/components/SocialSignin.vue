@@ -14,7 +14,7 @@
 
 <script>
 import openWindow from '@/utils/open-window'
-import { getAuthCode } from '@/utils/auth'
+import { getAuthCode , removeAuthCode } from '@/utils/auth'
 import axios from 'axios'
 export default {
   name: 'SocialSignin',
@@ -22,7 +22,9 @@ export default {
     alipayHandleClick(thirdpart) {
       let _this = this;
       //alert('ok')
-      this.$store.commit('SET_AUTH_TYPE', thirdpart)
+      //this.$store.commit('SET_AUTH_TYPE', thirdpart)
+      //清除authCode缓存
+      removeAuthCode();
       const appid = '2021001141609481'
       const redirect_uri = encodeURIComponent('https://oecp.lixiang.red/#/authRedirect')
       const url = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=' + appid + '&scope= auth_user&redirect_uri=' + redirect_uri
@@ -32,12 +34,11 @@ export default {
         let authCode = getAuthCode();
         console.log('还在找authCode中。。。')
         if(authCode != 'morty_authCode' && authCode != undefined && authCode != 'undefined' && authCode != null && authCode != ''){
-          _this.$emit('authCode',authCode)
           _this.$emit('appId',appid)
+          _this.$emit('authCode',authCode)
           clearInterval(interval);
         }
       },1000);
-      //进行登录，请求axios.post
 
     },
     tencentHandleClick(thirdpart) {
