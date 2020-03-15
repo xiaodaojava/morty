@@ -49,7 +49,7 @@ public class AliCommonManager {
      * @return: com.alipay.api.response.AlipaySystemOauthTokenResponse
      * @description:
      */
-    public AlipaySystemOauthTokenResponse aliPayAuth(String appId,String authCode) throws AlipayApiException {
+    public AlipaySystemOauthTokenResponse aliPayAuth(String appId, String authCode) throws AlipayApiException {
         // 1. 设置参数（全局只需设置一次）
         AlipayClient alipayClient = new DefaultAlipayClient(SERVER_URL, appId, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
         AlipaySystemOauthTokenRequest request = new AlipaySystemOauthTokenRequest();
@@ -67,18 +67,21 @@ public class AliCommonManager {
      * @return: com.alipay.api.response.AlipayUserInfoShareResponse
      * @description:
      */
-    public AlipayUserInfoShareResponse getAliUserInfo(String accessToken,String appId) throws AlipayApiException {
-        AlipayClient alipayClient = new DefaultAlipayClient(SERVER_URL,appId,APP_PRIVATE_KEY,FORMAT,CHARSET,ALIPAY_PUBLIC_KEY,SIGN_TYPE);
+    public AlipayUserInfoShareResponse getAliUserInfo(String accessToken, String appId) throws AlipayApiException {
+        AlipayClient alipayClient = new DefaultAlipayClient(SERVER_URL, appId, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
         AlipayUserInfoShareRequest request = new AlipayUserInfoShareRequest();
         AlipayUserInfoShareResponse response = null;
-        response = alipayClient.execute(request,accessToken);
-        if(response.isSuccess()){
-            logger.info("获取用户信息成功");
-            userInfoManager.maintainUserInfo(response);
-            return response;
-        } else {
-            logger.info("获取用户信息失败");
+        response = alipayClient.execute(request, accessToken);
+
+        if (!response.isSuccess()) {
+            logger.info("获取用户信息失败:{}", response.getMsg());
+            return null;
         }
-        return null;
+
+        logger.info("获取用户信息成功");
+        userInfoManager.maintainUserInfo(response);
+        return response;
+
+
     }
 }
