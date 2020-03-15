@@ -33,6 +33,7 @@ export default {
         console.log('还在找authCode中。。。')
         if(authCode != 'morty_authCode' && authCode != undefined && authCode != 'undefined' && authCode != null && authCode != ''){
           _this.$emit('authCode',authCode)
+          _this.$emit('appId',appid)
           clearInterval(interval);
         }
       },1000);

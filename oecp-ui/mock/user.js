@@ -25,7 +25,7 @@ const users = {
 export default [
   // user login
   {
-    url: '/oecp/user/login',
+    url: '/user/login',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -48,7 +48,7 @@ export default [
 
   // get user info
   {
-    url: '/oecp/user/info\.*',
+    url: '/user/info\.*',
     type: 'get',
     response: config => {
       const { token } = config.query
@@ -71,7 +71,7 @@ export default [
 
   // user logout
   {
-    url: '/oecp/user/logout',
+    url: '/user/logout',
     type: 'post',
     response: _ => {
       return {

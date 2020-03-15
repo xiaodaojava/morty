@@ -58,7 +58,32 @@ export const constantRoutes = [
       meta: { title: '错误码平台', icon: 'dashboard' }
     }]
   },
-
+  {
+    path: '/errorInfo',
+    component: Layout,
+    redirect: '/errorInfo/table',
+    name: "错误码",
+    meta: { title: '错误码', icon: 'example' },
+    children: [
+    {
+      path: '/errorInfo/list',
+      name: '错误码',
+      component: () => import('@/views/errorInfo/index'),
+      meta: { title: '错误码管理', icon: 'dashboard' }
+    },
+    {
+      path: '/errorInfo/example',
+      name: '错误码',
+      component: () => import('@/views/errorInfo/example'),
+      meta: { title: '错误码案例', icon: 'dashboard' }
+    },
+    {
+      path: '/errorInfo/tag',
+      name: '错误码',
+      component: () => import('@/views/errorInfo/tags'),
+      meta: { title: '错误码标签', icon: 'dashboard' }
+    }]
+  },
   {
     path: '/example',
     component: Layout,
@@ -175,7 +200,7 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  //mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

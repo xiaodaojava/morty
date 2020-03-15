@@ -45,11 +45,13 @@ module.exports = {
       //   pathRewrite: {
       //     '^/oecp/': '/oecp/'
       //   },
-      [process.env.VUE_APP_BASE_API + '/user/info']: {
-        target: "http://localhost:${port}/mock",
+      // },
+      [process.env.VUE_APP_BASE_API]: {
+        target: 'http://localhost:${port}/mock',
+        secure: false,
         changeOrigin: true,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
+          ['^/' + process.env.VUE_APP_BASE_API]: ''
         },
       },
       [process.env.VUE_APP_BASE_API]: {
@@ -67,7 +69,7 @@ module.exports = {
         },
       }
     },
-    //after: require('./mock/mock-server.js'),
+    before: require('./mock/mock-server.js'),
 
   },
   configureWebpack: {

@@ -54,7 +54,7 @@
     </el-form>
 
     <el-dialog title="第三方登录" :visible.sync="showDialog">
-      <social-sign @authCode="getAuthCode"/>
+      <social-sign @authCode="getAuthCode" @appId="getAppId"/>
     </el-dialog>
     <!-- <el-button type="success" @click="testApi">测试</el-button> -->
   </div>
@@ -98,7 +98,8 @@ export default {
       redirect: undefined,
       showDialog: false,
       authCode:'',
-      accessToken:''
+      accessToken:'',
+      appId:''
     }
   },
   watch: {
@@ -192,6 +193,9 @@ export default {
             this.$message.error("获取token有点问题:",error);
           })
       }
+    },
+    getAppId(appId){
+      this.appId = appId;
     }
   }
 }

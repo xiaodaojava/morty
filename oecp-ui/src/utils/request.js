@@ -25,7 +25,7 @@ service.interceptors.request.use(
       config.headers['X-Token'] = getToken()
     }
     config.headers['content-type'] = 'application/json';
-    config.baseURL = process.env.VUE_APP_BASE_API;
+    //config.baseURL = process.env.VUE_APP_BASE_API;
     return config
   },
   error => {
