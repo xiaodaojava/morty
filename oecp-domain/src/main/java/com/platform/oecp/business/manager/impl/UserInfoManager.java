@@ -1,8 +1,8 @@
-package com.platform.oecp.service;
+package com.platform.oecp.business.manager.impl;
 
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.platform.oecp.business.manager.OecpSysUserManager;
-import com.platform.oecp.constants.OecpCommonConstants;
+import com.platform.oecp.models.OecpCommonConstants;
 import com.platform.oecp.factory.OecpSysUserDoFactory;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import org.slf4j.Logger;
@@ -21,12 +21,12 @@ import java.util.Date;
  * @description:
  */
 @Service
-public class UserInfoService {
+public class UserInfoManager {
 
     /**
      * 日志
      */
-    private static final Logger logger = LoggerFactory.getLogger(UserInfoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserInfoManager.class);
 
     @Autowired
     private OecpSysUserManager oecpSysUserManager;

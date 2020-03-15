@@ -11,7 +11,6 @@ compileJava.options.encoding = 'UTF-8'
 dependencies {
 	
 	compile project(":oecp-domain")
-	compile project(":oecp-service")
 
 	compile 'org.apache.commons:commons-pool2:2.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'

@@ -1,4 +1,4 @@
-package com.platform.oecp.constants;
+package com.platform.oecp.models;
 
 /**
  * @version 1.0

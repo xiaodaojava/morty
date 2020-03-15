@@ -1,6 +1,7 @@
-package com.platform.oecp.utils;
+package com.platform.oecp.admin.utils;
 
-import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 /**
  * @version 1.0
@@ -37,20 +38,8 @@ public class GetCustomIpUtil {
      * @return: java.lang.String
      * @description: 获取登录用户IP地址
      */
-    public static String getIp(HttpServletRequest request) {
-        String ip = request.getHeader(HEADER_TYPE_ONE);
-        if (ip == null || ip.length() == 0 || UN_KNOW.equalsIgnoreCase(ip)) {
-            ip = request.getHeader(HEADER_TYPE_TWO);
-        }
-        if (ip == null || ip.length() == 0 || UN_KNOW.equalsIgnoreCase(ip)) {
-            ip = request.getHeader(HEADER_TYPE_THREE);
-        }
-        if (ip == null || ip.length() == 0 || UN_KNOW.equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        if (ip.equals(LOCAL_FLAG)) {
-            ip = LOCAL_NAME;
-        }
+    public static String getIp(ServerHttpRequest request) {
+        String ip = request.getRemoteAddress().getAddress().getHostAddress();
         return ip;
     }
 }

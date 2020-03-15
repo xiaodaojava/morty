@@ -1,7 +1,7 @@
 package com.platform.oecp.factory;
 
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import com.platform.oecp.constants.OecpCommonConstants;
+import com.platform.oecp.models.OecpCommonConstants;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.utils.GenerateAccountUtil;
 import com.platform.oecp.utils.RandomPasswordUtil;
