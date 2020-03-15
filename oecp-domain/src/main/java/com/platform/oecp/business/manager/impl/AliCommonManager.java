@@ -1,4 +1,4 @@
-package com.platform.oecp.service;
+package com.platform.oecp.business.manager.impl;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -7,12 +7,9 @@ import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import com.platform.oecp.business.manager.OecpSysUserManager;
-import com.platform.oecp.models.dos.OecpSysUserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,15 +20,15 @@ import org.springframework.stereotype.Service;
  * @description:
  */
 @Service
-public class AliCommonService {
+public class AliCommonManager {
 
     /**
      * 日志
      */
-    private static final Logger logger = LoggerFactory.getLogger(AliCommonService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AliCommonManager.class);
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoManager userInfoManager;
 
     /**
      * 支付宝第三方授权登陆相关配置信息
@@ -77,7 +74,7 @@ public class AliCommonService {
         response = alipayClient.execute(request,accessToken);
         if(response.isSuccess()){
             logger.info("获取用户信息成功");
-            userInfoService.maintainUserInfo(response);
+            userInfoManager.maintainUserInfo(response);
             return response;
         } else {
             logger.info("获取用户信息失败");
