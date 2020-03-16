@@ -7,7 +7,6 @@ import com.platform.oecp.utils.GenerateAccountUtil;
 import com.platform.oecp.utils.RandomPasswordUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
-import red.lixiang.tools.jdk.SnowflakeGenerator;
 
 import java.util.Date;
 

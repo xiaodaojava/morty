@@ -126,8 +126,8 @@ public class OecpSysUserDO implements Serializable{
    /** 更新人  */
    @SqlField
    private String updateBy;
-
-   
+   /** 用户登陆token  */
+   private String token;
 
 
    
@@ -363,9 +363,16 @@ public class OecpSysUserDO implements Serializable{
         this.updateBy = updateBy;
         return this;
    }
-   
 
-   public static OecpSysUserDO create(){
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public static OecpSysUserDO create(){
        return new OecpSysUserDO();
    }
 

@@ -25,12 +25,9 @@ public class OecpSysUserController  {
     @GetMapping("/oecpSysUser/query")
     @ResponseBody
     public BaseResponse<PageData<OecpSysUserDO>> queryOecpSysUser(OecpSysUserQC qc, Page page ){
-
-
         Long totalCount = oecpSysUserManager.countOecpSysUser(qc);
         qc.setPage(page);
         List<OecpSysUserDO> oecpSysUsers = oecpSysUserManager.queryOecpSysUser(qc);
-
         return  BaseResponse.assemblePageResponse(oecpSysUsers,totalCount,page.getPageIndex(),page.getPageSize());
     }
 

@@ -1,7 +1,6 @@
-package com.platform.oecp.business.manager.impl;
+package com.platform.oecp.business.manager;
 
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import com.platform.oecp.business.manager.OecpSysUserManager;
 import com.platform.oecp.models.OecpCommonConstants;
 import com.platform.oecp.factory.OecpSysUserDoFactory;
 import com.platform.oecp.models.dos.OecpSysUserDO;
@@ -41,8 +40,7 @@ public class UserInfoManager {
      * @return: void
      * @description: 用户信息维护
      */
-    @Async
-    public void maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
+    public OecpSysUserDO maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
         //校验是否平台存在此用户
         OecpSysUserDO oecpSysUser = oecpSysUserManager.getOecpSysUserById(Long.valueOf(alipayUserInfoShareResponse.getUserId()));
         //存在就更新信息
@@ -72,6 +70,8 @@ public class UserInfoManager {
             OecpSysUserDO newOecpSysUserDO = oecpSysUserDoFactory.createNewInstance(alipayUserInfoShareResponse);
             newOecpSysUserDO = oecpSysUserManager.saveOecpSysUser(newOecpSysUserDO);
             logger.info("新用户信息已被平台创建，信息内容为:{}", newOecpSysUserDO);
+            return newOecpSysUserDO;
         }
+        return oecpSysUser;
     }
 }
