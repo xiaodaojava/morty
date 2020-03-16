@@ -62,136 +62,141 @@ export const constantRoutes = [
     path: '/errorInfo',
     component: Layout,
     redirect: '/errorInfo/table',
-    name: "错误码",
-    meta: { title: '错误码', icon: 'example' },
+    meta: { title: '错误码管理', icon: 'example' },
     children: [
     {
       path: '/errorInfo/list',
-      name: '错误码',
       component: () => import('@/views/errorInfo/index'),
-      meta: { title: '错误码管理', icon: 'dashboard' }
+      meta: { title: '错误码编辑', icon: 'dashboard' }
     },
     {
       path: '/errorInfo/example',
-      name: '错误码',
       component: () => import('@/views/errorInfo/example'),
       meta: { title: '错误码案例', icon: 'dashboard' }
     },
     {
+      path: '/errorInfo/example-add',
+      component: () => import('@/views/errorInfo/example-add'),
+      meta: { title: '错误码案例增加', icon: 'dashboard' },
+      hidden: true
+    },
+    {
       path: '/errorInfo/tag',
-      name: '错误码',
       component: () => import('@/views/errorInfo/tags'),
       meta: { title: '错误码标签', icon: 'dashboard' }
     }]
   },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: '分析',
-    meta: { title: '分析', icon: 'example' },
-    children: [
-    {
-      path: 'table',
-      name: '错误码',
-      component: () => import('@/views/table/index'),
-      meta: { title: '错误码', icon: 'table' }
-    },
-    {
-      path: 'tree',
-      name: '错误码案例',
-      component: () => import('@/views/tree/index'),
-      meta: { title: 'Tree', icon: 'tree' }
-    }]
-  },
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: '/example/table',
+  //   name: '分析',
+  //   meta: { title: '分析', icon: 'example' },
+  //   children: [
+  //   {
+  //     path: 'table',
+  //     name: '错误码',
+  //     component: () => import('@/views/table/index'),
+  //     meta: { title: '错误码', icon: 'table' }
+  //   },
+  //   {
+  //     path: 'tree',
+  //     name: '错误码案例',
+  //     component: () => import('@/views/tree/index'),
+  //     meta: { title: 'Tree', icon: 'tree' }
+  //   }]
+  // },
 
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //   {
+  //     path: 'index',
+  //     name: '权限设置',
+  //     component: () => import('@/views/form/index'),
+  //     meta: { title: '权限设置', icon: 'form' }
+  //   }]
+  // },
+
+  // {
+  //   path: '/nested',
+  //   component: Layout,
+  //   redirect: '/nested/menu1',
+  //   name: '用户',
+  //   meta: {
+  //     title: '用户',
+  //     icon: 'nested'
+  //   },
+  //   children: [
+  //   {
+  //     path: 'menu1',
+  //     component: () => import('@/views/nested/menu1/index'), // Parent router-view
+  //     name: 'Menu1',
+  //     meta: { title: 'Menu1' },
+  //     children: [
+  //     {
+  //       path: 'menu1-1',
+  //       component: () => import('@/views/nested/menu1/menu1-1'),
+  //       name: 'Menu1-1',
+  //       meta: { title: 'Menu1-1' }
+  //     },
+  //     {
+  //       path: 'menu1-2',
+  //       component: () => import('@/views/nested/menu1/menu1-2'),
+  //       name: 'Menu1-2',
+  //       meta: { title: 'Menu1-2' },
+  //       children: [
+  //       {
+  //         path: 'menu1-2-1',
+  //         component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+  //         name: 'Menu1-2-1',
+  //         meta: { title: 'Menu1-2-1' }
+  //       },
+  //       {
+  //         path: 'menu1-2-2',
+  //         component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+  //         name: 'Menu1-2-2',
+  //         meta: { title: 'Menu1-2-2' }
+  //       }]
+  //     },
+  //     {
+  //       path: 'menu1-3',
+  //       component: () => import('@/views/nested/menu1/menu1-3'),
+  //       name: 'Menu1-3',
+  //       meta: { title: 'Menu1-3' }
+  //     }]
+  //   },
+  //   {
+  //     path: 'menu2',
+  //     component: () => import('@/views/nested/menu2/index'),
+  //     meta: { title: 'menu2' }
+  //   }]
+  // },
+  // {
+  //   path: '/testboard',
+  //   component: Layout,
+  //   redirect: '/testboard',
+  //   children: [
+  //     {
+  //       path: 'testboard',
+  //       name: '模拟请求转发',
+  //       component: () => import('@/views/testboard/index'),
+  //       meta: { title: '模拟请求转发', icon: 'ali' }
+  //     }
+
+  //   ]
+  // },
   {
-    path: '/form',
+    path: '/user',
     component: Layout,
+    name: '个人信息',
     children: [
     {
       path: 'index',
-      name: '权限设置',
-      component: () => import('@/views/form/index'),
-      meta: { title: '权限设置', icon: 'form' }
-    }]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: '用户',
-    meta: {
-      title: '用户',
-      icon: 'nested'
-    },
-    children: [
-    {
-      path: 'menu1',
-      component: () => import('@/views/nested/menu1/index'), // Parent router-view
-      name: 'Menu1',
-      meta: { title: 'Menu1' },
-      children: [
-      {
-        path: 'menu1-1',
-        component: () => import('@/views/nested/menu1/menu1-1'),
-        name: 'Menu1-1',
-        meta: { title: 'Menu1-1' }
-      },
-      {
-        path: 'menu1-2',
-        component: () => import('@/views/nested/menu1/menu1-2'),
-        name: 'Menu1-2',
-        meta: { title: 'Menu1-2' },
-        children: [
-        {
-          path: 'menu1-2-1',
-          component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-          name: 'Menu1-2-1',
-          meta: { title: 'Menu1-2-1' }
-        },
-        {
-          path: 'menu1-2-2',
-          component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-          name: 'Menu1-2-2',
-          meta: { title: 'Menu1-2-2' }
-        }]
-      },
-      {
-        path: 'menu1-3',
-        component: () => import('@/views/nested/menu1/menu1-3'),
-        name: 'Menu1-3',
-        meta: { title: 'Menu1-3' }
-      }]
-    },
-    {
-      path: 'menu2',
-      component: () => import('@/views/nested/menu2/index'),
-      meta: { title: 'menu2' }
-    }]
-  },
-  {
-    path: '/testboard',
-    component: Layout,
-    redirect: '/testboard',
-    children: [
-      {
-        path: 'testboard',
-        name: '模拟请求转发',
-        component: () => import('@/views/testboard/index'),
-        meta: { title: '模拟请求转发', icon: 'ali' }
-      }
-
-    ]
-  },
-  {
-    path: '外链引用',
-    component: Layout,
-    children: [
-    {
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: { title: '外链引用', icon: 'link' }
+      name: '个人信息设置',
+      component: () => import('@/views/user/index'),
+      meta: { title: '个人信息设置', icon: 'user' }
     }]
   },
 

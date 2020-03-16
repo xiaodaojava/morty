@@ -1,12 +1,14 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, removeAuthCode } from '@/utils/auth'
+import { getAuthInfo } from '@/api/aliLogin'
+import { getToken, setToken, removeToken, removeAuthCode, setUserInfo, getUserInfo } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    userInfo: getUserInfo()
   }
 }
 
@@ -24,6 +26,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_USER_INFO: (state, userInfo) => {
+    state.userInfo = userInfo
   }
 }
 
@@ -43,20 +48,41 @@ const actions = {
     })
   },
 
-  // get user info
+  //获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
+        console.log(data)
 
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
         const { name, avatar } = data
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+  // get user info
+  getAliInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getUserInfo().then(response => {
+        const { data } = response
+        console.log(data)
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const { nickName, avatar } = data
+
+        commit('SET_NAME', response.userInfo.nickName)
+        commit('SET_AVATAR', response.userInfo.avatar)
+        commit('SET_USER_INFO', response.userInfo)
+        commit('SET_TOKEN', response.token)
+        setToken(response.token)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -86,7 +112,28 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
-  }
+  },
+
+  aliLogin({ commit }, aliLoginForm) {
+    return new Promise((resolve, reject) => {
+      getAuthInfo(aliLoginForm.accessToken, aliLoginForm.appId).then(response => {
+        const { data } = response
+        console.log(response)
+        //   reject('Verification failed, please Login again.')
+        // }
+        commit('SET_NAME', response.userInfo.nickName)
+        commit('SET_AVATAR', response.userInfo.avatar)
+        commit('SET_USER_INFO', response.userInfo)
+        commit('SET_TOKEN', response.token)
+        setUserInfo(response.userInfo)
+        setToken(response.token)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
 }
 
 export default {

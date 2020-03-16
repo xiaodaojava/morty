@@ -4,6 +4,8 @@ const TokenKey = 'morty_token'
 
 const authCodeKey = 'morty_authCode'
 
+const userInfoKey = 'user_info'
+
 export function getToken() {
   return Cookies.get(TokenKey)
 }
@@ -26,4 +28,16 @@ export function setAuthCode(authCode) {
 
 export function removeAuthCode() {
   return Cookies.remove(authCodeKey)
+}
+
+export function getUserInfo() {
+  return Cookies.get(userInfoKey)
+}
+
+export function setUserInfo(userInfo) {
+  return Cookies.set(userInfoKey, userInfo)
+}
+
+export function removeUserInfo() {
+  return Cookies.remove(userInfo)
 }

@@ -46,7 +46,7 @@ module.exports = {
       //     '^/oecp/': '/oecp/'
       //   },
       // },
-      [process.env.VUE_APP_BASE_API]: {
+      '/user': {
         target: 'http://localhost:${port}/mock',
         secure: false,
         changeOrigin: true,
@@ -54,11 +54,11 @@ module.exports = {
           ['^/' + process.env.VUE_APP_BASE_API]: ''
         },
       },
-      [process.env.VUE_APP_BASE_API]: {
+      [process.env.VUE_APP_BASE_API + '/aliLogin']: {
         target: process.env.BACKGROUND_APPLICATION_URL,
         changeOrigin: true,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
+          ['^' + process.env.VUE_APP_BASE_API + '/aliLogin']: ''
         }
       },
       '/api': {
