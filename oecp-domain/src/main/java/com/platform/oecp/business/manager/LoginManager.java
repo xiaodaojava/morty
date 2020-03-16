@@ -60,11 +60,16 @@ public class LoginManager {
     public Map<String,Object> login(String username,String password){
         //验证是否存在此信息用户
         OecpSysUserQC qc = new OecpSysUserQC();
+        qc.setAccountId(username);
         qc.setPage(Page.getOne());
         List<OecpSysUserDO> oecpSysUsers = oecpSysUserManager.queryOecpSysUser(qc);
         OecpSysUserDO oecpSysUserDO = ListTools.getOne(oecpSysUsers);
         if(oecpSysUserDO == null){
             throw new BusinessException("please register");
+        }
+        //验证密码是否正确
+        if(!DigestUtils.md5DigestAsHex(password.getBytes()).equals(oecpSysUserDO.getPassword())){
+            throw new BusinessException("password is wrong");
         }
         Map<String,Object> result = tokenAndUserResponse(username,password,oecpSysUserDO);
         return result;
