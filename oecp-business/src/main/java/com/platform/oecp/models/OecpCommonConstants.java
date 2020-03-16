@@ -37,6 +37,14 @@ public class OecpCommonConstants {
      * token为空-异常码
      */
     public static final int TOKEN_IS_NULL = 407;
+    /**
+     * 新密码和老密码不能一样-异常码
+     */
+    public static final int SET_PASSWORD_ERROR = 408;
 
+    /**
+     * 老密码错误-异常码
+     */
+    public static final int OLD_PASSWORD_ERROR = 409;
 
 }

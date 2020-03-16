@@ -1,6 +1,7 @@
 package com.platform.oecp.business.manager;
 
 
+import com.platform.oecp.dto.OecpUserInfoRequestDto;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.qc.OecpSysUserQC;
 
@@ -25,6 +26,13 @@ public interface OecpSysUserManager {
     public Long countOecpSysUser(OecpSysUserQC oecpSysUser);
 
     public OecpSysUserDO saveOecpSysUser(OecpSysUserDO oecpSysUser);
+
+    /**
+     * @description 更新用户信息
+     * @param oecpUserInfoRequestDto
+     * @return
+     */
+    public OecpSysUserDO updateUserInfo(OecpUserInfoRequestDto oecpUserInfoRequestDto);
 
     public int removeOecpSysUserById(Long id);
 
