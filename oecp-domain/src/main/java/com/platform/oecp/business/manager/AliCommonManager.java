@@ -1,4 +1,4 @@
-package com.platform.oecp.business.manager.impl;
+package com.platform.oecp.business.manager;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -7,10 +7,13 @@ import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
+import com.platform.oecp.models.dos.OecpSysUserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -67,21 +70,17 @@ public class AliCommonManager {
      * @return: com.alipay.api.response.AlipayUserInfoShareResponse
      * @description:
      */
-    public AlipayUserInfoShareResponse getAliUserInfo(String accessToken, String appId) throws AlipayApiException {
+    public Map<String,Object> getAliUserInfo(String accessToken, String appId) throws AlipayApiException {
         AlipayClient alipayClient = new DefaultAlipayClient(SERVER_URL, appId, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
         AlipayUserInfoShareRequest request = new AlipayUserInfoShareRequest();
         AlipayUserInfoShareResponse response = null;
         response = alipayClient.execute(request, accessToken);
-
         if (!response.isSuccess()) {
             logger.info("获取用户信息失败:{}", response.getMsg());
             return null;
         }
-
         logger.info("获取用户信息成功");
-        userInfoManager.maintainUserInfo(response);
-        return response;
-
-
+        Map<String,Object> result = userInfoManager.maintainUserInfo(response);
+        return result;
     }
 }

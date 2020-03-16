@@ -21,6 +21,30 @@ public class OecpCommonConstants {
      * 微信登陆方式类型值
      */
     public static final int WEI_XIN_LOGIN_TYPE = 2;
+    /**
+     * 请注册-异常码
+     */
+    public static final int PLEASE_REGISTER_ERROR = 302;
+    /**
+     * 请登录-异常码
+     */
+    public static final int PLEASE_LOGIN_ERROR = 405;
+    /**
+     * 密码错误-异常码
+     */
+    public static final int PASSWORD_IS_WRONG = 406;
+    /**
+     * token为空-异常码
+     */
+    public static final int TOKEN_IS_NULL = 407;
+    /**
+     * 新密码和老密码不能一样-异常码
+     */
+    public static final int SET_PASSWORD_ERROR = 408;
 
+    /**
+     * 老密码错误-异常码
+     */
+    public static final int OLD_PASSWORD_ERROR = 409;
 
 }

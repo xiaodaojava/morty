@@ -1,17 +1,16 @@
-package com.platform.oecp.business.manager.impl;
+package com.platform.oecp.business.manager;
 
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import com.platform.oecp.business.manager.OecpSysUserManager;
-import com.platform.oecp.models.OecpCommonConstants;
 import com.platform.oecp.factory.OecpSysUserDoFactory;
+import com.platform.oecp.models.OecpCommonConstants;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -32,19 +31,21 @@ public class UserInfoManager {
     private OecpSysUserManager oecpSysUserManager;
 
     @Autowired
+    private LoginManager loginManager;
+
+    @Autowired
     private OecpSysUserDoFactory oecpSysUserDoFactory;
 
     /**
      * @author: LILIANG
      * @date: 2020/3/15 11:15
      * @Param : userId
-     * @return: void
+     * @return: Map<String,Object>
      * @description: 用户信息维护
      */
-    @Async
-    public void maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
+    public Map<String,Object> maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
         //校验是否平台存在此用户
-        OecpSysUserDO oecpSysUser = oecpSysUserManager.getOecpSysUserById(Long.valueOf(alipayUserInfoShareResponse.getUserId()));
+        OecpSysUserDO oecpSysUser = oecpSysUserManager.getOecpSysUserByThirdPartyId(alipayUserInfoShareResponse.getUserId());
         //存在就更新信息
         if(oecpSysUser != null){
             oecpSysUser.setId(oecpSysUser.getId());
@@ -72,6 +73,9 @@ public class UserInfoManager {
             OecpSysUserDO newOecpSysUserDO = oecpSysUserDoFactory.createNewInstance(alipayUserInfoShareResponse);
             newOecpSysUserDO = oecpSysUserManager.saveOecpSysUser(newOecpSysUserDO);
             logger.info("新用户信息已被平台创建，信息内容为:{}", newOecpSysUserDO);
+            oecpSysUser = newOecpSysUserDO;
         }
+        Map<String,Object> result = loginManager.tokenAndUserResponse(oecpSysUser.getAccountId(),oecpSysUser.getPassword(),oecpSysUser);
+        return result;
     }
 }

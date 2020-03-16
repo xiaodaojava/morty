@@ -8,6 +8,7 @@ import java.util.Date;
 /**
  * @author lixiang
  */
+
 public class OecpSysUserDO implements Serializable{
 
    
@@ -126,10 +127,6 @@ public class OecpSysUserDO implements Serializable{
    /** 更新人  */
    @SqlField
    private String updateBy;
-
-   
-
-
    
    public Long getId() {
         return this.id;
@@ -363,9 +360,8 @@ public class OecpSysUserDO implements Serializable{
         this.updateBy = updateBy;
         return this;
    }
-   
 
-   public static OecpSysUserDO create(){
+    public static OecpSysUserDO create(){
        return new OecpSysUserDO();
    }
 

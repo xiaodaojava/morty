@@ -3,7 +3,8 @@ package com.platform.oecp.admin.controller;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import com.platform.oecp.business.manager.impl.AliCommonManager;
+import com.platform.oecp.business.manager.AliCommonManager;
+import com.platform.oecp.models.dos.OecpSysUserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 /**
  * @author lixiang
@@ -47,7 +49,7 @@ public class AliAuthController {
         } catch (Exception e) {
             logger.info("调用遭遇异常，原因:{}",e.getMessage());
         }
-        logger.info("前端获取token失败！auth_code:{}",authCode);
+        logger.info("前端获取access_token失败！auth_code:{}",authCode);
         return null;
     }
 
@@ -59,10 +61,10 @@ public class AliAuthController {
      * @description:
      */
     @GetMapping("getAuthInfo")
-    public AlipayUserInfoShareResponse getAuthInfo(@NotNull(message = "accessToken不能为空") @Valid @RequestParam("accessToken") String accessToken,
-                                                   @NotNull(message = "appId不能为空") @Valid @RequestParam("appId") String appId){
+    public Map<String,Object> getAuthInfo(@NotNull(message = "accessToken不能为空") @Valid @RequestParam("accessToken") String accessToken,
+                                          @NotNull(message = "appId不能为空") @Valid @RequestParam("appId") String appId){
         try {
-            AlipayUserInfoShareResponse response = aliCommonManager.getAliUserInfo(accessToken,appId);
+            Map<String,Object> response = aliCommonManager.getAliUserInfo(accessToken,appId);
             return response;
         } catch (AlipayApiException e) {
             logger.info("获取用户信息失败！异常错误码为：{},异常内容为:{}",e.getErrCode(),e.getErrMsg());
