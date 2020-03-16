@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -30,16 +31,19 @@ public class UserInfoManager {
     private OecpSysUserManager oecpSysUserManager;
 
     @Autowired
+    private LoginManager loginManager;
+
+    @Autowired
     private OecpSysUserDoFactory oecpSysUserDoFactory;
 
     /**
      * @author: LILIANG
      * @date: 2020/3/15 11:15
      * @Param : userId
-     * @return: void
+     * @return: Map<String,Object>
      * @description: 用户信息维护
      */
-    public OecpSysUserDO maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
+    public Map<String,Object> maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
         //校验是否平台存在此用户
         OecpSysUserDO oecpSysUser = oecpSysUserManager.getOecpSysUserByThirdPartyId(alipayUserInfoShareResponse.getUserId());
         //存在就更新信息
@@ -69,8 +73,9 @@ public class UserInfoManager {
             OecpSysUserDO newOecpSysUserDO = oecpSysUserDoFactory.createNewInstance(alipayUserInfoShareResponse);
             newOecpSysUserDO = oecpSysUserManager.saveOecpSysUser(newOecpSysUserDO);
             logger.info("新用户信息已被平台创建，信息内容为:{}", newOecpSysUserDO);
-            return newOecpSysUserDO;
+            oecpSysUser = newOecpSysUserDO;
         }
-        return oecpSysUser;
+        Map<String,Object> result = loginManager.tokenAndUserResponse(oecpSysUser.getAccountId(),oecpSysUser.getPassword(),oecpSysUser);
+        return result;
     }
 }

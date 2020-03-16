@@ -58,11 +58,6 @@ public class LoginManager {
      * @description: 登陆token
      */
     public Map<String,Object> login(String username,String password){
-        Map<String,Object> result = new HashMap<>();
-        Map<String, Object> claims = new HashMap<String,Object>();
-        claims.put(USER_NAME_KEY, username);
-        claims.put(PASSWORD_KEY, password);
-        String md5Pass = DigestUtils.md5DigestAsHex(password.getBytes());
         //验证是否存在此信息用户
         OecpSysUserQC qc = new OecpSysUserQC();
         qc.setPage(Page.getOne());
@@ -71,6 +66,25 @@ public class LoginManager {
         if(oecpSysUserDO == null){
             throw new BusinessException("please register");
         }
+        Map<String,Object> result = tokenAndUserResponse(username,password,oecpSysUserDO);
+        return result;
+    }
+
+    /**
+     * @author: LILIANG
+     * @date: 2020/3/16 16:59
+     * @Param : username
+     * @Param : password
+     * @Param : oecpSysUserDO
+     * @return: java.util.Map<java.lang.String,java.lang.Object>
+     * @description:
+     */
+    public Map<String,Object> tokenAndUserResponse(String username,String password,OecpSysUserDO oecpSysUserDO){
+        Map<String,Object> result = new HashMap<>();
+        Map<String, Object> claims = new HashMap<String,Object>();
+        claims.put(USER_NAME_KEY, username);
+        claims.put(PASSWORD_KEY, password);
+        String md5Pass = DigestUtils.md5DigestAsHex(password.getBytes());
         String token = JavaWebToken.createToken(claims);
         redisUtils.set(username + md5Pass,token, Long.valueOf(1800));
         String accountJSON = JSON.toJSONString(oecpSysUserDO);
