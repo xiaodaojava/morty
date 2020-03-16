@@ -1,7 +1,6 @@
 package com.platform.oecp.admin.controller;
 
 import com.platform.oecp.business.manager.LoginManager;
-import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.response.ResponseBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

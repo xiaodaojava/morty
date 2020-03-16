@@ -7,6 +7,7 @@ import com.platform.oecp.utils.JavaWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import red.lixiang.tools.base.exception.BusinessException;
@@ -17,6 +18,9 @@ import red.lixiang.tools.spring.redis.RedisTools;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.platform.oecp.models.OecpCommonConstants.PASSWORD_IS_WRONG;
+import static com.platform.oecp.models.OecpCommonConstants.PLEASE_REGISTER_ERROR;
 
 /**
  * @version 1.0
@@ -46,6 +50,12 @@ public class LoginManager {
     @Autowired
     private OecpSysUserManager oecpSysUserManager;
 
+    /**
+     * 项目编码
+     */
+    @Value("${project.code}")
+    private int projectCode;
+
     @Autowired
     private RedisTools redisUtils;
 
@@ -65,11 +75,11 @@ public class LoginManager {
         List<OecpSysUserDO> oecpSysUsers = oecpSysUserManager.queryOecpSysUser(qc);
         OecpSysUserDO oecpSysUserDO = ListTools.getOne(oecpSysUsers);
         if(oecpSysUserDO == null){
-            throw new BusinessException("please register");
+            throw new BusinessException("please register",projectCode+PLEASE_REGISTER_ERROR);
         }
         //验证密码是否正确
         if(!DigestUtils.md5DigestAsHex(password.getBytes()).equals(oecpSysUserDO.getPassword())){
-            throw new BusinessException("password is wrong");
+            throw new BusinessException("password is wrong",projectCode+PASSWORD_IS_WRONG);
         }
         Map<String,Object> result = tokenAndUserResponse(username,password,oecpSysUserDO);
         return result;
