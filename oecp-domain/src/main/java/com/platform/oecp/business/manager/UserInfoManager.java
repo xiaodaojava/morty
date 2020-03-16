@@ -42,7 +42,7 @@ public class UserInfoManager {
      */
     public OecpSysUserDO maintainUserInfo(AlipayUserInfoShareResponse alipayUserInfoShareResponse){
         //校验是否平台存在此用户
-        OecpSysUserDO oecpSysUser = oecpSysUserManager.getOecpSysUserById(Long.valueOf(alipayUserInfoShareResponse.getUserId()));
+        OecpSysUserDO oecpSysUser = oecpSysUserManager.getOecpSysUserByThirdPartyId(alipayUserInfoShareResponse.getUserId());
         //存在就更新信息
         if(oecpSysUser != null){
             oecpSysUser.setId(oecpSysUser.getId());

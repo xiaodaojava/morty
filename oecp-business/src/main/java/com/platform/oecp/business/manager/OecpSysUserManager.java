@@ -11,6 +11,13 @@ public interface OecpSysUserManager {
 
     public OecpSysUserDO getOecpSysUserById (Long id);
 
+    /**
+     * @description 使用第三方唯一ID获取用户
+     * @param thirdPartyId
+     * @return
+     */
+    public OecpSysUserDO getOecpSysUserByThirdPartyId(String thirdPartyId);
+
 
     public List<OecpSysUserDO> queryOecpSysUser(OecpSysUserQC qc);
 

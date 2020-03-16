@@ -267,7 +267,7 @@ CREATE TABLE `oecp_sys_user`  (
   `is_certified` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否通过实名认证，T是通过F是没有实名认证',
   `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别（F:女性；M:男性）',
   `account_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '错误平台用户登陆账号',
-  `password` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '如果为第三方登录，密码则为空，如果为本平台登录，密码必填',
+  `password` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '如果为第三方登录，密码则为空，如果为本平台登录，密码必填',
   `email` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系邮箱',
   `telephone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联系手机',
   `login_type` tinyint(3) NULL DEFAULT NULL COMMENT '登陆方式',

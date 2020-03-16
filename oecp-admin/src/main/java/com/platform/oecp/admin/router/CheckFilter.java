@@ -69,8 +69,8 @@ public class CheckFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
 
         List<String> skipUrls = Arrays.asList("/account/login"
-                ,"/consult/audit"
-                ,"/reply/audit"
+                ,"/authRedirect"
+                ,"/getAuthInfo"
                 ,"/account/loginByAccountName","/account/register");
         String path = request.getPath().toString();
         if(skipUrls.contains(path)){
@@ -80,12 +80,14 @@ public class CheckFilter implements WebFilter {
         // 从header里面取出Jwt
         String token = request.getHeaders().getFirst("token");
         if(null ==token){
+            logger.info("访问异常，token为空！");
             throw new BusinessException("token is null");
         }
         // token不为空,则取出用户信息
         AccountRepo.setToken(token);
         String accountJSON = (String)redisUtils.get("TOKEN_TELL_KEY_" + token);
         if(StringTools.isBlank(accountJSON)){
+            logger.info("访问异常，token不为空，但是已经失效！");
             throw new BusinessException("please login");
         }
         if(null != accountJSON){

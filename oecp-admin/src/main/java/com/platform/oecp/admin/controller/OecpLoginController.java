@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -45,8 +46,8 @@ public class OecpLoginController {
     public ResponseBase userLogin(@NotNull(message = "用户名不能为空") @Valid @RequestParam("userName")String username,
                                   @NotNull(message = "用户密码不能为空") @Valid @RequestParam("passWord")String password) {
         ResponseBase responseBase = new ResponseBase();
-        OecpSysUserDO oecpSysUserDO = loginManager.login(username,password);
-        responseBase.setData(oecpSysUserDO);
+        Map<String,Object> map = loginManager.login(username,password);
+        responseBase.setData(map);
         responseBase.setCode(200);
         responseBase.setMsg("success");
         return responseBase;

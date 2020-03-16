@@ -40,6 +40,8 @@ public class LoginManager {
      * 密码key
      */
     private static final String PASSWORD_KEY = "password";
+    private static final String USER_KEY = "userInfo";
+    private static final String TOKEN_KEY = "token";
 
     @Autowired
     private OecpSysUserManager oecpSysUserManager;
@@ -55,7 +57,8 @@ public class LoginManager {
      * @return: com.platform.oecp.models.dos.OecpSysUserDO
      * @description: 登陆token
      */
-    public OecpSysUserDO login(String username,String password){
+    public Map<String,Object> login(String username,String password){
+        Map<String,Object> result = new HashMap<>();
         Map<String, Object> claims = new HashMap<String,Object>();
         claims.put(USER_NAME_KEY, username);
         claims.put(PASSWORD_KEY, password);
@@ -72,7 +75,8 @@ public class LoginManager {
         redisUtils.set(username + md5Pass,token, Long.valueOf(1800));
         String accountJSON = JSON.toJSONString(oecpSysUserDO);
         redisUtils.set("TOKEN_TELL_KEY_" + token,accountJSON,Long.valueOf(1800));
-        oecpSysUserDO.setToken(token);
-        return oecpSysUserDO;
+        result.put(USER_KEY,oecpSysUserDO);
+        result.put(TOKEN_KEY,token);
+        return result;
     }
 }

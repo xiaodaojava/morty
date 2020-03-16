@@ -8,6 +8,7 @@ import java.util.Date;
 /**
  * @author lixiang
  */
+
 public class OecpSysUserDO implements Serializable{
 
    
@@ -126,10 +127,6 @@ public class OecpSysUserDO implements Serializable{
    /** 更新人  */
    @SqlField
    private String updateBy;
-   /** 用户登陆token  */
-   private String token;
-
-
    
    public Long getId() {
         return this.id;
@@ -363,14 +360,6 @@ public class OecpSysUserDO implements Serializable{
         this.updateBy = updateBy;
         return this;
    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public static OecpSysUserDO create(){
        return new OecpSysUserDO();

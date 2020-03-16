@@ -1,15 +1,13 @@
 package com.platform.oecp.business.manager.impl;
 
-import com.platform.oecp.models.dos.OecpSysUserDO;
-import com.platform.oecp.models.qc.OecpSysUserQC;
-import red.lixiang.tools.jdk.ListTools;
 import com.platform.oecp.business.manager.OecpSysUserManager;
 import com.platform.oecp.dao.OecpSysUserMapper;
-import red.lixiang.tools.common.mybatis.model.Page;
-import red.lixiang.tools.common.mybatis.model.Sort;
-import org.springframework.beans.BeanUtils;
+import com.platform.oecp.models.dos.OecpSysUserDO;
+import com.platform.oecp.models.qc.OecpSysUserQC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import red.lixiang.tools.common.mybatis.model.Page;
+import red.lixiang.tools.jdk.ListTools;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +26,16 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
         List<OecpSysUserDO> oecpSysUserDOS = queryOecpSysUser(qc);
         return ListTools.getOne(oecpSysUserDOS);
     }
-    
+
+    @Override
+    public OecpSysUserDO getOecpSysUserByThirdPartyId(String thirdPartyId) {
+        OecpSysUserQC qc = new OecpSysUserQC();
+        qc.setThirdPartyId(thirdPartyId);
+        qc.setPage(Page.getOne());
+        List<OecpSysUserDO> oecpSysUserDOS = queryOecpSysUser(qc);
+        return ListTools.getOne(oecpSysUserDOS);
+    }
+
 
     @Override
     public List<OecpSysUserDO> queryOecpSysUser(OecpSysUserQC qc){
