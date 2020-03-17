@@ -76,12 +76,12 @@ public class CheckFilter implements WebFilter {
     public ServerWebExchange doFilter(ServerWebExchange exchange, WebFilterChain chain){
         ServerHttpRequest request = exchange.getRequest();
 
-        List<String> skipUrls = Arrays.asList("/account/login"
+        List<String> skipUrls = Arrays.asList("/","/account/login"
                 ,"/authRedirect"
                 ,"/getAuthInfo"
                 ,"/account/loginByAccountName","/account/register");
         String path = request.getPath().toString();
-        if(skipUrls.contains(path)){
+        if(skipUrls.contains(path) || path.contains("static")|| path.contains("favicon.ico")){
             return exchange;
         }
 
