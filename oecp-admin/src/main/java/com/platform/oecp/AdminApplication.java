@@ -3,6 +3,7 @@ package com.platform.oecp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class AdminApplication {
 	}
 
 	@Bean
+	@Order(-1)
 	public WebFilter contextPathWebFilter() {
 		String contextPath = "/api";
 		return (exchange, chain) -> {

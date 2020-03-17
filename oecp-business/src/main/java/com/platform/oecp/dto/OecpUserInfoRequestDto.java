@@ -1,5 +1,8 @@
 package com.platform.oecp.dto;
 
+import org.springframework.lang.NonNull;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -16,14 +19,19 @@ public class OecpUserInfoRequestDto implements Serializable {
     /** 部门ID  */
     private String officeId;
 
-    /** 错误平台用户登陆账号  */
+    /** 错误平台用户登陆账号  必填*/
+    @NotNull(message = "账号不能为空")
     private String accountId;
 
-    /** 为本平台登录旧密码必填  */
+    /** 为本平台登录旧密码  ;isThirtyLogin为false时必填*/
     private String oldPassword;
 
-    /** 为本平台登录新密码必填  */
+    /** 为本平台登录新密码,为空默认不修改  */
     private String newPassword;
+
+    /** 是否第三方登陆 必填  ;第三方登陆修改用户信息不需要填写老密码*/
+    @NotNull(message = "是否第三方登陆标志不能为空")
+    private Boolean isThirtyLogin;
 
     public Long getId() {
         return id;
@@ -65,6 +73,14 @@ public class OecpUserInfoRequestDto implements Serializable {
         this.newPassword = newPassword;
     }
 
+    public Boolean getThirtyLogin() {
+        return isThirtyLogin;
+    }
+
+    public void setThirtyLogin(Boolean thirtyLogin) {
+        isThirtyLogin = thirtyLogin;
+    }
+
     @Override
     public String toString() {
         return "OecpUserInfoRequestDto{" +
@@ -73,6 +89,7 @@ public class OecpUserInfoRequestDto implements Serializable {
                 ", accountId='" + accountId + '\'' +
                 ", oldPassword='" + oldPassword + '\'' +
                 ", newPassword='" + newPassword + '\'' +
+                ", isThirtyLogin=" + isThirtyLogin +
                 '}';
     }
 }
