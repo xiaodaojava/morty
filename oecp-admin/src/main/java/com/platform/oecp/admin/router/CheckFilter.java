@@ -76,7 +76,7 @@ public class CheckFilter implements WebFilter {
     public ServerWebExchange doFilter(ServerWebExchange exchange, WebFilterChain chain){
         ServerHttpRequest request = exchange.getRequest();
 
-        List<String> skipUrls = Arrays.asList("/","/api/account/login"
+        List<String> skipUrls = Arrays.asList("/","/index.html","/api/account/login"
                 ,"/api/authRedirect"
                 ,"/api/getAuthInfo"
                 ,"/api/account/loginByAccountName","/api/account/register");
