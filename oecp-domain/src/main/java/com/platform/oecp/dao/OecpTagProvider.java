@@ -24,6 +24,16 @@ public class OecpTagProvider implements ProviderMethodResolver {
         return sql.toString();
     }
 
+    public String searchOecpTagsByTag(String tag) {
+        SQL sql = new SQL() {{
+            SELECT(TABLE_FIELDS);
+            FROM("oecp_tag");
+            WHERE("tag like '%" + tag + "'");
+            LIMIT(20);
+        }};
+        return sql.toString();
+    }
+
     public String countOecpTags(OecpTagQC oecpTagQC){
         SQL sql = new SQL() {{
             SELECT("count(1)");

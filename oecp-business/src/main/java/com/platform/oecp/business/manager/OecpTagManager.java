@@ -14,6 +14,8 @@ public interface OecpTagManager {
 
     public List<OecpTagDO> queryOecpTag(OecpTagQC qc);
 
+    public List<OecpTagDO> searchByTag(String tag);
+
 
     public Long countOecpTag(OecpTagQC oecpTag);
 

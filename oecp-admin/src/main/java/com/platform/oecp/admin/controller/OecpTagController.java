@@ -34,6 +34,14 @@ public class OecpTagController  {
         return  BaseResponse.assemblePageResponse(oecpTags,totalCount,page.getPageIndex(),page.getPageSize());
     }
 
+    @GetMapping("/oecpTag/search")
+    @ResponseBody
+    public BaseResponse<List<OecpTagDO>> searchByTag(String tag) {
+        BaseResponse<List<OecpTagDO>> baseResponse = new BaseResponse<>();
+        baseResponse.setData(oecpTagManager.searchByTag(tag));
+        return baseResponse;
+    }
+
     @PostMapping("/oecpTag/save")
     @ResponseBody
     public BaseResponse<String> saveOecpTag(OecpTagDO oecpTag){

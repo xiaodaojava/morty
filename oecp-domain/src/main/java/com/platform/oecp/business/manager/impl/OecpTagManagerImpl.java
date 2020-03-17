@@ -36,7 +36,12 @@ public class OecpTagManagerImpl implements OecpTagManager{
         List<OecpTagDO> oecpTags = oecpTagMapper.listOecpTags(qc);
         return oecpTags;
     }
-    
+
+    @Override
+    public List<OecpTagDO> searchByTag(String tag) {
+        return oecpTagMapper.searchOecpTagsByTag(tag);
+    }
+
 
     @Override
     public Long countOecpTag(OecpTagQC qc){

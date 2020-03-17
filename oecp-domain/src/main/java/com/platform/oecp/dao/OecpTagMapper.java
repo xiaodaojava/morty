@@ -24,6 +24,14 @@ public interface OecpTagMapper {
     List<OecpTagDO> listOecpTags(OecpTagQC oecpTagQC);
 
     /**
+     * 根据 tag 模糊匹配获取列表
+     * @param tag 查询的 tag
+     * @return tag 列表
+     */
+    @SelectProvider(type = OecpTagProvider.class)
+    List<OecpTagDO> searchOecpTagsByTag(String tag);
+
+    /**
      * 获取数量
      * @param oecpTagQC
      * @return
