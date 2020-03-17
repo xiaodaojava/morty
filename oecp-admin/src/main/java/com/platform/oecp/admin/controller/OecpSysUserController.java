@@ -57,10 +57,11 @@ public class OecpSysUserController  {
      */
     @PostMapping("/updateUserInfo")
     @ResponseBody
-    public BaseResponse<OecpSysUserDO> updateUserInfo(OecpUserInfoRequestDto oecpUserInfoRequestDto){
+    public BaseResponse<OecpSysUserDO> updateUserInfo(@NotNull(message = "请求参数不能为空") @Valid OecpUserInfoRequestDto oecpUserInfoRequestDto){
         BaseResponse<OecpSysUserDO> baseResponse = new BaseResponse<>();
-        if(StringUtils.isEmpty(oecpUserInfoRequestDto.getOldPassword()) || StringUtils.isEmpty(oecpUserInfoRequestDto.getNewPassword()) ||
-        StringUtils.isEmpty(oecpUserInfoRequestDto.getAccountId())) {
+        if((StringUtils.isEmpty(oecpUserInfoRequestDto.getOldPassword()) && oecpUserInfoRequestDto.getThirtyLogin() == false) ||
+                StringUtils.isEmpty(oecpUserInfoRequestDto.getNewPassword()) ||
+                StringUtils.isEmpty(oecpUserInfoRequestDto.getAccountId())) {
             baseResponse.setResult(false);
             baseResponse.setMsg("账号和密码信息填写有误！");
         }
