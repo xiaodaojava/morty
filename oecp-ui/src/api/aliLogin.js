@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getAuthInfo(accessToken, appId) {
   return request({
-    url: '/aliLogin/getAuthInfo',
+    url: '/getAuthInfo',
     method: 'get',
     params: {
       accessToken: accessToken,
@@ -13,7 +13,7 @@ export function getAuthInfo(accessToken, appId) {
 
 export function authRedirect(authCode, appId) {
   return request({
-    url: '/aliLogin/authRedirect',
+    url: '/authRedirect',
     method: 'get',
     params: {
       authCode: authCode,

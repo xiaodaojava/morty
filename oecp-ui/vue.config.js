@@ -31,21 +31,13 @@ module.exports = {
     },
     //设置跨域
     proxy: {
-      // '/oecp-ui/': {
-      //   target: process.env.VUE_APP_BASE_API,
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/oecp-ui/': '/oecp-ui/'
-      //   },
-      // },
-      // '/oecp/': {
-      //   target: "http://localhost:9999/",
-      //   changeOrigin: true,
-      //   ws: true,
-      //   pathRewrite: {
-      //     '^/oecp/': '/oecp/'
-      //   },
-      // },
+      '/': {
+        target: process.env.BACKGROUND_APPLICATION_URL,
+        changeOrigin: true,
+        pathRewrite: {
+          '': ''
+        }
+      },
       '/user': {
         target: 'http://localhost:${port}/mock',
         secure: false,
@@ -54,20 +46,20 @@ module.exports = {
           ['^/' + process.env.VUE_APP_BASE_API]: ''
         },
       },
-      [process.env.VUE_APP_BASE_API + '/aliLogin']: {
-        target: process.env.BACKGROUND_APPLICATION_URL,
-        changeOrigin: true,
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API + '/aliLogin']: ''
-        }
-      },
-      '/api': {
-        target: process.env.BACKGROUND_APPLICATION_URL,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        },
-      }
+      // [process.env.VUE_APP_BASE_API + '/aliLogin']: {
+      //   target: process.env.BACKGROUND_APPLICATION_URL,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     ['^' + process.env.VUE_APP_BASE_API + '/aliLogin']: ''
+      //   }
+      // },
+      // '/api': {
+      //   target: process.env.BACKGROUND_APPLICATION_URL,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '': ''
+      //   },
+      // }
     },
     before: require('./mock/mock-server.js'),
 
