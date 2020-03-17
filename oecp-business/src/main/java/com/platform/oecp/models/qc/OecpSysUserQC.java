@@ -15,6 +15,9 @@ public class OecpSysUserQC extends BaseQC {
    
    /** 第三方用户ID，唯一  */
    private String thirdPartyId;
+
+    /** 错误码平台登陆账号，唯一  */
+   private String accountId;
    
    
    
@@ -67,36 +70,15 @@ public class OecpSysUserQC extends BaseQC {
         this.thirdPartyId = thirdPartyId;
         return this;
     }
-     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 
     public static OecpSysUserQC create(){
         return new OecpSysUserQC();

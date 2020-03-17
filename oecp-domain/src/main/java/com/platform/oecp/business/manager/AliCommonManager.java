@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * @version 1.0
  * @className: AliCommonService
@@ -68,7 +70,7 @@ public class AliCommonManager {
      * @return: com.alipay.api.response.AlipayUserInfoShareResponse
      * @description:
      */
-    public OecpSysUserDO getAliUserInfo(String accessToken, String appId) throws AlipayApiException {
+    public Map<String,Object> getAliUserInfo(String accessToken, String appId) throws AlipayApiException {
         AlipayClient alipayClient = new DefaultAlipayClient(SERVER_URL, appId, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
         AlipayUserInfoShareRequest request = new AlipayUserInfoShareRequest();
         AlipayUserInfoShareResponse response = null;
@@ -78,9 +80,7 @@ public class AliCommonManager {
             return null;
         }
         logger.info("获取用户信息成功");
-        OecpSysUserDO oecpSysUserDO = userInfoManager.maintainUserInfo(response);
-        return oecpSysUserDO;
-
-
+        Map<String,Object> result = userInfoManager.maintainUserInfo(response);
+        return result;
     }
 }

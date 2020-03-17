@@ -16,6 +16,7 @@
 import openWindow from '@/utils/open-window'
 import { getAuthCode , removeAuthCode } from '@/utils/auth'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 export default {
   name: 'SocialSignin',
   methods: {
@@ -25,9 +26,13 @@ export default {
       //this.$store.commit('SET_AUTH_TYPE', thirdpart)
       //清除authCode缓存
       removeAuthCode();
+      let authCodetemp = getAuthCode();
+      console.log(authCodetemp)
       const appid = '2021001141609481'
       const redirect_uri = encodeURIComponent('https://oecp.lixiang.red/#/authRedirect')
-      const url = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=' + appid + '&scope= auth_user&redirect_uri=' + redirect_uri
+      const url = 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=' + appid + '&scope= auth_user&redirect_uri=' + redirect_uri;
+      console.log(Cookies.get());
+
       openWindow(url, thirdpart, 750,600)
       //重复轮询cookies的值有没有改变
       let interval = setInterval(function(){

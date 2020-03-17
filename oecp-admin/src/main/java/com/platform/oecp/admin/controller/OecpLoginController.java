@@ -1,7 +1,6 @@
 package com.platform.oecp.admin.controller;
 
 import com.platform.oecp.business.manager.LoginManager;
-import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.response.ResponseBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +42,8 @@ public class OecpLoginController {
      * @description: 用户登陆
      */
     @PostMapping("/login")
-    public ResponseBase userLogin(@NotNull(message = "用户名不能为空") @Valid @RequestParam("userName")String username,
-                                  @NotNull(message = "用户密码不能为空") @Valid @RequestParam("passWord")String password) {
+    public ResponseBase userLogin(@NotNull(message = "用户名不能为空") @Valid @RequestParam("username")String username,
+                                  @NotNull(message = "用户密码不能为空") @Valid @RequestParam("password")String password) {
         ResponseBase responseBase = new ResponseBase();
         Map<String,Object> map = loginManager.login(username,password);
         responseBase.setData(map);

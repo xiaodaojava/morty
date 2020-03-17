@@ -56,7 +56,6 @@
     <el-dialog title="第三方登录" :visible.sync="showDialog">
       <social-sign @authCode="getAuthCode" @appId="getAppId"/>
     </el-dialog>
-    <!-- <el-button type="success" @click="testApi">测试</el-button> -->
   </div>
 </template>
 
@@ -65,7 +64,7 @@ import { validUsername } from '@/utils/validate'
 import { health } from '@/api/test'
 import axios from 'axios'
 import SocialSign from './components/SocialSignin'
-import { getAuthInfo } from '@/api/user'
+import { getAuthInfo,authRedirect } from '@/api/aliLogin'
 export default {
   name: 'Login',
   components: { SocialSign },
@@ -89,6 +88,10 @@ export default {
         username: 'admin',
         password: '111111'
       },
+      aliLoginForm: {
+      accessToken:'',
+      appId:''
+      },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -97,9 +100,8 @@ export default {
       passwordType: 'password',
       redirect: undefined,
       showDialog: false,
-      authCode:'',
-      accessToken:'',
-      appId:''
+      authCode:''
+      
     }
   },
   watch: {
@@ -137,76 +139,32 @@ export default {
         }
       })
     },
-    thirdLogin() {
-      this.loading = true
-      this.$store.dispatch('user/thirdLogin', this.authCode).then(() => {
-        this.$router.push({ path: this.redirect || '/' })
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-      })
-    },
-    getUserInfo(acceccToken,appId){
-      let _this = this;
-      if(acceccToken == null){
-        _this.$message.error("accessToken已过期");
-      }
-      this.$message.success("已进入getUserInfo方法");
-      this.loading = true
-      getAuthInfo(acceccToken,appId).then((res) => {
-        console.log(res);  
-        this.loading = false;
-      }).catch(() => {
-        this.loading = false
-      })
-    },
-    testApi(){
-      //   health().then(response => {
-      //    this.$message.success("qweqwesxasfad");
-      // })
-      axios.post('/oecp/health.do',{
-
-      }).then((res)=>{
-        this.$message.success("接口调用成功");
-      }).catch(()=>{
-        this.$message.error("------qaq");
-      })
-    },
     getAuthCode(data){
-      this.authCode = data;
-      console.log('authCode为:'+data);
+      let _this = this
+      this.authCode = data
+      console.log('authCode为:'+data)
       if(data != undefined && data != 'undefined' && data != null && data != ''){
-        console.log('code不为空,可以登录请求接口了')
-        axios.get('/api/authRedirect',
-        {
-          params:{
-            authCode: this.authCode,
-            appId:this.appId
-          }
-         }
-        ).then((res)=>{
-
-            console.log(res);
-            console.log(res.data);
-            console.log(res.data.accessToken);
-            this.accessToken = res.data.accessToken;
-            this.getUserInfo(res.data.accessToken,this.appId);
-            console.log("获取assToken成功");
-            console.log("我要去登录了"); 
-            console.log("我要去登录了"); 
-            console.log("我要去登录了"); 
-            console.log("我要去登录了"); 
-            console.log("我要去登录了"); 
-            console.log("我要去登录了"); 
-            console.log("我要去登录了"); 
-            this.handleLogin();
-          }).catch(error=>{
-            this.$message.error("获取token有点问题:",error);
-          })
+        
+      console.log('authCode为:'+data)
+         authRedirect(data,this.aliLoginForm.appId).then(res =>{
+           console.log(res)
+           if(res.code != 20000 && res.code != null){
+             this.$message.error("登陆出错,请刷新页面重新尝试");
+             return;
+           }
+           this.aliLoginForm.accessToken = res.accessToken;
+           this.$store.dispatch('user/aliLogin',this.aliLoginForm).then(()=>{
+              this.$router.push({ path: this.redirect || '/' })
+           })
+           console.log("登录成功"); 
+         }).catch(error=>{
+            console.log(error);
+            this.$message.error("获取token错误:",error)
+         })
       }
     },
     getAppId(appId){
-      this.appId = appId;
+      this.aliLoginForm.appId = appId;
     }
   }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 /**
  * @author lixiang
@@ -60,10 +61,10 @@ public class AliAuthController {
      * @description:
      */
     @GetMapping("getAuthInfo")
-    public OecpSysUserDO getAuthInfo(@NotNull(message = "accessToken不能为空") @Valid @RequestParam("accessToken") String accessToken,
-                                                   @NotNull(message = "appId不能为空") @Valid @RequestParam("appId") String appId){
+    public Map<String,Object> getAuthInfo(@NotNull(message = "accessToken不能为空") @Valid @RequestParam("accessToken") String accessToken,
+                                          @NotNull(message = "appId不能为空") @Valid @RequestParam("appId") String appId){
         try {
-            OecpSysUserDO response = aliCommonManager.getAliUserInfo(accessToken,appId);
+            Map<String,Object> response = aliCommonManager.getAliUserInfo(accessToken,appId);
             return response;
         } catch (AlipayApiException e) {
             logger.info("获取用户信息失败！异常错误码为：{},异常内容为:{}",e.getErrCode(),e.getErrMsg());

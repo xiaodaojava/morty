@@ -2,10 +2,10 @@ package com.platform.oecp.admin.router;
 
 import com.alibaba.fastjson.JSON;
 import com.platform.oecp.models.dos.OecpSysUserDO;
-import eu.bitwalker.useragentutils.UserAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
@@ -19,6 +19,9 @@ import red.lixiang.tools.spring.redis.RedisTools;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.platform.oecp.models.OecpCommonConstants.PLEASE_LOGIN_ERROR;
+import static com.platform.oecp.models.OecpCommonConstants.TOKEN_IS_NULL;
+
 /**
  *
  * @Author lixiang
@@ -31,6 +34,11 @@ public class CheckFilter implements WebFilter {
      * 日志
      */
     Logger logger = LoggerFactory.getLogger(CheckFilter.class);
+    /**
+     * 项目编码
+     */
+    @Value("${project.code}")
+    private int projectCode;
 
     @Autowired
     private RedisTools redisUtils;
@@ -81,14 +89,14 @@ public class CheckFilter implements WebFilter {
         String token = request.getHeaders().getFirst("token");
         if(null ==token){
             logger.info("访问异常，token为空！");
-            throw new BusinessException("token is null");
+            throw new BusinessException("token is null", projectCode+ TOKEN_IS_NULL);
         }
         // token不为空,则取出用户信息
         AccountRepo.setToken(token);
         String accountJSON = (String)redisUtils.get("TOKEN_TELL_KEY_" + token);
         if(StringTools.isBlank(accountJSON)){
             logger.info("访问异常，token不为空，但是已经失效！");
-            throw new BusinessException("please login");
+            throw new BusinessException("please login",projectCode+ PLEASE_LOGIN_ERROR);
         }
         if(null != accountJSON){
             OecpSysUserDO vo = JSON.parseObject(accountJSON,OecpSysUserDO.class);

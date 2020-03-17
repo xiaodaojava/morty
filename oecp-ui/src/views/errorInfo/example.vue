@@ -1,5 +1,17 @@
 <template>
   <div class="app-container">
+  <el-form :inline="true" :model="formInline" class="demo-form-inline">
+  <div class="searchInput">
+   <el-input v-model="exampleSearchText" placeholder="请输入案例相关信息"></el-input>
+   </div>
+     <el-form-item>
+    <el-button type="primary" @click="onSubmit">查询</el-button>
+  </el-form-item>
+    <el-form-item style="float:right">
+    <el-button icon="el-icon-plus" @click="addExample" type="success">增加案例</el-button>
+  </el-form-item>
+  </el-form>
+
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -45,7 +57,6 @@
 
 <script>
 import { getList } from '@/api/table'
-
 export default {
   filters: {
     statusFilter(status) {
@@ -60,7 +71,9 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      exampleSearchText:'',
+      formInline:{}
     }
   },
   created() {
@@ -73,7 +86,21 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    onSubmit() {
+      console.log('submit!');
+    },
+    addExample(){
+       this.$router.push('/errorInfo/example-add');
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.searchInput{
+  width:30%;
+  display:inline-block;
+  margin-right:1%;
+}
+</style>
