@@ -19,6 +19,12 @@ public interface OecpSysUserManager {
      */
     public OecpSysUserDO getOecpSysUserByThirdPartyId(String thirdPartyId);
 
+    /**
+     * @description 通过账号获取用户信息
+     * @param accountId
+     * @return
+     */
+    public OecpSysUserDO getOecpSysUserByAccountId(String accountId);
 
     public List<OecpSysUserDO> queryOecpSysUser(OecpSysUserQC qc);
 
