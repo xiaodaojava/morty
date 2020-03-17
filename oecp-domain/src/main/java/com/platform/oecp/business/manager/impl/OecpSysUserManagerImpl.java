@@ -49,6 +49,15 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
         return ListTools.getOne(oecpSysUserDOS);
     }
 
+    @Override
+    public OecpSysUserDO getOecpSysUserByAccountId(String accountId) {
+        OecpSysUserQC qc = new OecpSysUserQC();
+        qc.setAccountId(accountId);
+        qc.setPage(Page.getOne());
+        List<OecpSysUserDO> oecpSysUserDOS = queryOecpSysUser(qc);
+        return ListTools.getOne(oecpSysUserDOS);
+    }
+
 
     @Override
     public List<OecpSysUserDO> queryOecpSysUser(OecpSysUserQC qc){

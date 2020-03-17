@@ -4,16 +4,22 @@ import com.platform.oecp.business.manager.OecpSysUserManager;
 import com.platform.oecp.dto.OecpUserInfoRequestDto;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.qc.OecpSysUserQC;
+import com.platform.oecp.models.response.BaseApi;
+import com.platform.oecp.models.response.ResponseBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import red.lixiang.tools.base.BaseResponse;
 import red.lixiang.tools.base.PageData;
 import red.lixiang.tools.common.mybatis.model.Page;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -68,6 +74,20 @@ public class OecpSysUserController  {
         baseResponse.setMsg("success");
         baseResponse.setCode("200");
         return  baseResponse;
+    }
+
+    /**
+     * @author: LILIANG
+     * @date: 2020/3/17 11:14
+     * @Param : accountId
+     * @return: red.lixiang.tools.base.BaseResponse<com.platform.oecp.models.dos.OecpSysUserDO>
+     * @description: 验证账户名是否重复，重复返回信息，不重复返回null
+     */
+    @GetMapping("/checkRepeatAccount")
+    @ResponseBody
+    public OecpSysUserDO checkRepeatAccount(@NotNull(message = "账号不能为空") @Valid @RequestParam("accountId")String accountId){
+        OecpSysUserDO oecpSysUserDO = oecpSysUserManager.getOecpSysUserByAccountId(accountId);
+        return oecpSysUserDO;
     }
 
     @GetMapping("/oecpSysUser/get")
