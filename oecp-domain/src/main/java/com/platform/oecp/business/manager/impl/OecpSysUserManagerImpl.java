@@ -103,7 +103,7 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
                 String oldPassMd5 = DigestUtils.md5DigestAsHex(oecpUserInfoRequestDto.getOldPassword().getBytes());
                 //先校验老密码与新密码是否相同，相同不容许，必须不一样
                 if (oldPassMd5.equals(DigestUtils.md5DigestAsHex(oecpUserInfoRequestDto.getNewPassword().getBytes()))) {
-                    throw new BusinessException("新密码和老密码不能设置成一样！", projectCode + SET_PASSWORD_ERROR);
+                    throw new BusinessException("新密码和老密码不能设置成一样！", Integer.valueOf(projectCode+""+ SET_PASSWORD_ERROR));
                 }
                 //再验证老密码是否正确
                 OecpSysUserQC qc = new OecpSysUserQC();
@@ -113,7 +113,7 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
                 List<OecpSysUserDO> oecpSysUserDOS = queryOecpSysUser(qc);
                 oecpSysUserDO = ListTools.getOne(oecpSysUserDOS);
                 if (!oldPassMd5.equals(DigestUtils.md5DigestAsHex(oecpSysUserDO.getPassword().getBytes()))) {
-                    throw new BusinessException("填写老密码错误！", projectCode + OLD_PASSWORD_ERROR);
+                    throw new BusinessException("填写老密码错误！", Integer.valueOf(projectCode +""+ OLD_PASSWORD_ERROR));
                 }
             }
             oecpSysUserDO.setPassword(DigestUtils.md5DigestAsHex(oecpUserInfoRequestDto.getNewPassword().getBytes()));
