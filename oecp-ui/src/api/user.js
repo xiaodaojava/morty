@@ -23,9 +23,22 @@ export function logout() {
   })
 }
 
+// 第三方登录第二步 获取用户信息
 export function getAuthInfo(accessToken, appId) {
   return request({
     url: '/api/getAuthInfo',
+    method: 'get',
+    params: {
+      accessToken: accessToken,
+      appId: appId
+    }
+  })
+}
+
+// 修改用户密码
+export function updateUserInfo(account, appId) {
+  return request({
+    url: '/api/updateUserInfo',
     method: 'get',
     params: {
       accessToken: accessToken,
