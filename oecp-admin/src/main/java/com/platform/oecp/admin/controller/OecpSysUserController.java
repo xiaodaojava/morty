@@ -86,9 +86,14 @@ public class OecpSysUserController  {
      */
     @GetMapping("/checkRepeatAccount")
     @ResponseBody
-    public OecpSysUserDO checkRepeatAccount(@NotNull(message = "账号不能为空") @Valid @RequestParam("accountId")String accountId){
+    public BaseResponse<OecpSysUserDO> checkRepeatAccount(@NotNull(message = "账号不能为空") @Valid @RequestParam("accountId")String accountId){
+        BaseResponse<OecpSysUserDO> baseResponse = new BaseResponse<>();
         OecpSysUserDO oecpSysUserDO = oecpSysUserManager.getOecpSysUserByAccountId(accountId);
-        return oecpSysUserDO;
+        if(oecpSysUserDO == null){
+            baseResponse.setData(null);
+        }
+        baseResponse.setData(oecpSysUserDO);
+        return baseResponse;
     }
 
     @GetMapping("/oecpSysUser/get")
