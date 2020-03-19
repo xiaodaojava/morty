@@ -1,5 +1,6 @@
 package com.platform.oecp.models.dos;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import red.lixiang.tools.common.mybatis.model.SqlField;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.util.Date;
 /**
  * @author lixiang
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OecpSysUserDO implements Serializable{
 
    
