@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -16,6 +17,9 @@ import red.lixiang.tools.base.exception.BusinessException;
 import red.lixiang.tools.jdk.StringTools;
 import red.lixiang.tools.spring.redis.RedisTools;
 
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,10 +61,10 @@ public class CheckFilter implements WebFilter {
 
         try {
             serverWebExchange = doFilter(exchange, chain);
-        } catch (Exception e) {
-            logger.error("wrong in filter ",e);
+        } catch (BusinessException e) {
             //如果jwt为空的话, 构建一个新的请求,在那个请求里面进行处理返回
-            ServerHttpRequest authErrorReq = exchange.getRequest().mutate().path("/common/error?msg=系统处理异常").build();
+            String url = String.format("msg=%s&code=%s",URLEncoder.encode(e.getErrorMessage(),StandardCharsets.UTF_8),e.getErrorCode());
+            ServerHttpRequest authErrorReq = exchange.getRequest().mutate().uri(URI.create("/api/common/error?"+url)).build();
             ServerWebExchange authErrorExchange = exchange.mutate().request(authErrorReq).build();
             return chain.filter(authErrorExchange);
         }
