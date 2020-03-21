@@ -17,4 +17,10 @@ dependencies {
 	compile group:'eu.bitwalker', name:'UserAgentUtils', version:'1.21'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+	compile 'org.elasticsearch:elasticsearch:7.6.1'
+	compile 'org.elasticsearch.client:elasticsearch-rest-client:7.6.1'
+	compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.1'
+	compile 'commons-io:commons-io:2.5'
+	compile 'com.google.code.gson:gson:2.8.6'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
 }
