@@ -54,9 +54,10 @@ public class OecpTagManagerImpl implements OecpTagManager{
     public OecpTagDO saveOecpTag(OecpTagDO oecpTag){
 
         if(oecpTag.getId()!=null){
+            oecpTag.preUpdate();
              oecpTagMapper.updateOecpTag(oecpTag);
         }else {
-            oecpTag.setCreateDate(new Date());
+            oecpTag.preInsert();
              oecpTagMapper.insertOecpTag(oecpTag);
         }
         return oecpTag;

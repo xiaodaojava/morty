@@ -79,9 +79,10 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
     public OecpSysUserDO saveOecpSysUser(OecpSysUserDO oecpSysUser){
 
         if(oecpSysUser.getId()!=null){
+            oecpSysUser.preUpdate();
              oecpSysUserMapper.updateOecpSysUser(oecpSysUser);
         }else {
-            oecpSysUser.setCreateDate(new Date());
+            oecpSysUser.preInsert();
              oecpSysUserMapper.insertOecpSysUser(oecpSysUser);
         }
         return oecpSysUser;

@@ -49,9 +49,10 @@ public class OecpOrgManagerImpl implements OecpOrgManager{
     public OecpOrgDO saveOecpOrg(OecpOrgDO oecpOrg){
 
         if(oecpOrg.getId()!=null){
+            oecpOrg.preUpdate();
              oecpOrgMapper.updateOecpOrg(oecpOrg);
         }else {
-            oecpOrg.setCreateDate(new Date());
+            oecpOrg.preInsert();
              oecpOrgMapper.insertOecpOrg(oecpOrg);
         }
         return oecpOrg;

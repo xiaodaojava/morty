@@ -49,9 +49,10 @@ public class OecpUserRoleManagerImpl implements OecpUserRoleManager{
     public OecpUserRoleDO saveOecpUserRole(OecpUserRoleDO oecpUserRole){
 
         if(oecpUserRole.getId()!=null){
+            oecpUserRole.preUpdate();
              oecpUserRoleMapper.updateOecpUserRole(oecpUserRole);
         }else {
-            oecpUserRole.setCreateDate(new Date());
+            oecpUserRole.preInsert();
              oecpUserRoleMapper.insertOecpUserRole(oecpUserRole);
         }
         return oecpUserRole;

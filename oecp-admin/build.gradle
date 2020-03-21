@@ -9,7 +9,8 @@ sourceCompatibility = '11'
 compileJava.options.encoding = 'UTF-8'
 
 dependencies {
-	
+
+	compile project(":oecp-business")
 	compile project(":oecp-domain")
 
 	compile 'org.apache.commons:commons-pool2:2.0'

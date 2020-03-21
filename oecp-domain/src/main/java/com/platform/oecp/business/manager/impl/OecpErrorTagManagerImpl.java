@@ -49,9 +49,10 @@ public class OecpErrorTagManagerImpl implements OecpErrorTagManager{
     public OecpErrorTagDO saveOecpErrorTag(OecpErrorTagDO oecpErrorTag){
 
         if(oecpErrorTag.getId()!=null){
+            oecpErrorTag.preUpdate();
              oecpErrorTagMapper.updateOecpErrorTag(oecpErrorTag);
         }else {
-            oecpErrorTag.setCreateDate(new Date());
+            oecpErrorTag.preInsert();
              oecpErrorTagMapper.insertOecpErrorTag(oecpErrorTag);
         }
         return oecpErrorTag;

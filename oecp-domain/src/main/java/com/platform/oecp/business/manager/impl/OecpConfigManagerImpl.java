@@ -49,9 +49,10 @@ public class OecpConfigManagerImpl implements OecpConfigManager{
     public OecpConfigDO saveOecpConfig(OecpConfigDO oecpConfig){
 
         if(oecpConfig.getId()!=null){
+            oecpConfig.preUpdate();
              oecpConfigMapper.updateOecpConfig(oecpConfig);
         }else {
-            oecpConfig.setCreateDate(new Date());
+            oecpConfig.preInsert();
              oecpConfigMapper.insertOecpConfig(oecpConfig);
         }
         return oecpConfig;

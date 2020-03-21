@@ -49,9 +49,10 @@ public class OecpErrorCaseManagerImpl implements OecpErrorCaseManager{
     public OecpErrorCaseDO saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
 
         if(oecpErrorCase.getId()!=null){
+            oecpErrorCase.preUpdate();
              oecpErrorCaseMapper.updateOecpErrorCase(oecpErrorCase);
         }else {
-            oecpErrorCase.setCreateDate(new Date());
+            oecpErrorCase.preInsert();
              oecpErrorCaseMapper.insertOecpErrorCase(oecpErrorCase);
         }
         return oecpErrorCase;
