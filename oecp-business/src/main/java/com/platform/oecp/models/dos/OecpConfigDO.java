@@ -1,19 +1,14 @@
 package com.platform.oecp.models.dos;
 
+import com.platform.oecp.common.DataEntity;
 import red.lixiang.tools.common.mybatis.model.SqlField;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author lixiang
  */
-public class OecpConfigDO implements Serializable{
-
-   
-   /** 主键UUID  */
-   @SqlField
-   private Long id;
+public class OecpConfigDO extends DataEntity<OecpConfigDO> implements Serializable{
 
    /** 邮箱服务器地址  */
    @SqlField
@@ -75,42 +70,6 @@ public class OecpConfigDO implements Serializable{
    @SqlField
    private String defaultLayout;
 
-   /** 备注信息  */
-   @SqlField
-   private String remarks;
-
-   /** 逻辑删除标记（0：显示；1：隐藏）  */
-   @SqlField
-   private Integer delFlag;
-
-   /** 创建时间  */
-   @SqlField
-   private Date createDate;
-
-   /** 创建人  */
-   @SqlField
-   private String createBy;
-
-   /** 更新时间  */
-   @SqlField
-   private Date updateDate;
-
-   /** 更新人  */
-   @SqlField
-   private String updateBy;
-
-   
-
-
-   
-   public Long getId() {
-        return this.id;
-   }
-
-   public OecpConfigDO setId(Long id) {
-        this.id = id;
-        return this;
-   }
    public String getSmtp() {
         return this.smtp;
    }
@@ -231,55 +190,6 @@ public class OecpConfigDO implements Serializable{
         this.defaultLayout = defaultLayout;
         return this;
    }
-   public String getRemarks() {
-        return this.remarks;
-   }
-
-   public OecpConfigDO setRemarks(String remarks) {
-        this.remarks = remarks;
-        return this;
-   }
-   public Integer getDelFlag() {
-        return this.delFlag;
-   }
-
-   public OecpConfigDO setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
-        return this;
-   }
-   public Date getCreateDate() {
-        return this.createDate;
-   }
-
-   public OecpConfigDO setCreateDate(Date createDate) {
-        this.createDate = createDate;
-        return this;
-   }
-   public String getCreateBy() {
-        return this.createBy;
-   }
-
-   public OecpConfigDO setCreateBy(String createBy) {
-        this.createBy = createBy;
-        return this;
-   }
-   public Date getUpdateDate() {
-        return this.updateDate;
-   }
-
-   public OecpConfigDO setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-        return this;
-   }
-   public String getUpdateBy() {
-        return this.updateBy;
-   }
-
-   public OecpConfigDO setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-        return this;
-   }
-   
 
    public static OecpConfigDO create(){
        return new OecpConfigDO();

@@ -49,9 +49,10 @@ public class OecpRoleManagerImpl implements OecpRoleManager{
     public OecpRoleDO saveOecpRole(OecpRoleDO oecpRole){
 
         if(oecpRole.getId()!=null){
+            oecpRole.preUpdate();
              oecpRoleMapper.updateOecpRole(oecpRole);
         }else {
-            oecpRole.setCreateDate(new Date());
+            oecpRole.preInsert();
              oecpRoleMapper.insertOecpRole(oecpRole);
         }
         return oecpRole;

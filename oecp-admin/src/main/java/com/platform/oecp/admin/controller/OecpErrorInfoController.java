@@ -25,12 +25,9 @@ public class OecpErrorInfoController  {
     @GetMapping("/oecpErrorInfo/query")
     @ResponseBody
     public BaseResponse<PageData<OecpErrorInfoDO>> queryOecpErrorInfo(OecpErrorInfoQC qc, Page page ){
-
-
         Long totalCount = oecpErrorInfoManager.countOecpErrorInfo(qc);
         qc.setPage(page);
         List<OecpErrorInfoDO> oecpErrorInfos = oecpErrorInfoManager.queryOecpErrorInfo(qc);
-
         return  BaseResponse.assemblePageResponse(oecpErrorInfos,totalCount,page.getPageIndex(),page.getPageSize());
     }
 

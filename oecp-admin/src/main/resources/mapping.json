@@ -1,0 +1,28 @@
+{
+  "properties": {
+    "id":{
+      "type":"keyword"
+    },
+    "errorCode":{
+      "type": "keyword"
+    },
+    "errorMsg":{
+      "type":"text",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word",
+      "fields": {
+        "msgSuggest":{
+          "type":"completion"
+        }
+      }
+    },
+    "errorDesc":{
+      "type":"text",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word"
+    },
+    "errorTag":{
+      "type":"keyword"
+    }
+  }
+}

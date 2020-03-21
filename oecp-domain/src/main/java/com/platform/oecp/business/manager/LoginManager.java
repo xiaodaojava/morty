@@ -75,11 +75,11 @@ public class LoginManager {
         List<OecpSysUserDO> oecpSysUsers = oecpSysUserManager.queryOecpSysUser(qc);
         OecpSysUserDO oecpSysUserDO = ListTools.getOne(oecpSysUsers);
         if(oecpSysUserDO == null){
-            throw new BusinessException("please register",projectCode+PLEASE_REGISTER_ERROR);
+            throw new BusinessException("please register",Integer.valueOf(projectCode+""+PLEASE_REGISTER_ERROR));
         }
         //验证密码是否正确
         if(!DigestUtils.md5DigestAsHex(password.getBytes()).equals(oecpSysUserDO.getPassword())){
-            throw new BusinessException("password is wrong",projectCode+PASSWORD_IS_WRONG);
+            throw new BusinessException("password is wrong",Integer.valueOf(projectCode+""+PASSWORD_IS_WRONG));
         }
         Map<String,Object> result = tokenAndUserResponse(username,password,oecpSysUserDO);
         return result;

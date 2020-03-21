@@ -8,7 +8,7 @@ function resolve(dir) {
 
 const name = defaultSettings.title || 'oecp-ui' // 网址标题
 
-const port = 9528 // 端口配置
+const port = 80 // 端口配置
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
-    // host: 'localhost',
+    disableHostCheck: true,
     host: 'localhost',
     port: port,
     overlay: {
@@ -36,14 +36,15 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '': ''
-        }
+        },
+        ws: false
       },
-      '/user': {
+      '/oecp': {
         target: 'http://localhost:${port}/mock',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
-          ['^/' + process.env.VUE_APP_BASE_API]: ''
+          '/api': ''
         },
       },
       // [process.env.VUE_APP_BASE_API + '/aliLogin']: {

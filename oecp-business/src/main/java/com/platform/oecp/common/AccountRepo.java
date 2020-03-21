@@ -1,4 +1,4 @@
-package com.platform.oecp.admin.router;
+package com.platform.oecp.common;
 
 import com.platform.oecp.models.dos.OecpSysUserDO;
 

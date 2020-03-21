@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @date 2020/3/17
  **/
 @Component
+@Order(-2)
 public class GlobalErrorHandler extends AbstractErrorWebExceptionHandler {
 
 
@@ -55,7 +57,7 @@ public class GlobalErrorHandler extends AbstractErrorWebExceptionHandler {
 
         Map<String, Object> errorPropertiesMap = getErrorAttributes(request, false);
         BaseResponse baseResponse = BaseResponse.fail(errorPropertiesMap.get("status").toString(),
-                errorPropertiesMap.get("message").toString());
+                (String) errorPropertiesMap.get("message"));
         return ServerResponse.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(baseResponse));

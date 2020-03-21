@@ -1,7 +1,13 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">oecp-账号登录</h3>
       </div>
@@ -13,7 +19,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入用户名"
           name="username"
           type="text"
           tabindex="1"
@@ -30,7 +36,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -41,141 +47,160 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >登录</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+        <span style="margin-right:20px;">username: 你的accountId</span>
+        <span>password: 更改后的密码</span>
       </div>
-       <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          第三方登录
-        </el-button>
+      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">第三方登录</el-button>
       <!-- <icon-svg icon-class="ali"></icon-svg> -->
     </el-form>
 
     <el-dialog title="第三方登录" :visible.sync="showDialog">
-      <social-sign @authCode="getAuthCode" @appId="getAppId"/>
+      <social-sign @authCode="getAuthCode" @appId="getAppId" />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import { health } from '@/api/test'
-import axios from 'axios'
-import SocialSign from './components/SocialSignin'
-import { getAuthInfo,authRedirect } from '@/api/aliLogin'
+import { validUsername } from "@/utils/validate";
+import { health } from "@/api/test";
+import axios from "axios";
+import SocialSign from "./components/SocialSignin";
+import { getAuthInfo, authRedirect } from "@/api/aliLogin";
 export default {
-  name: 'Login',
+  name: "Login",
   components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error("请输入正确的用户名"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error("密码不低于6位"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: "HZUVWxpO",
+        password: "666888"
       },
       aliLoginForm: {
-      accessToken:'',
-      appId:''
+        accessToken: "",
+        appId: ""
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername }
+        ],
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword }
+        ]
       },
       loading: false,
-      passwordType: 'password',
+      passwordType: "password",
       redirect: undefined,
       showDialog: false,
-      authCode:''
-      
-    }
+      authCode: ""
+    };
   },
   watch: {
     $route: {
       handler: function(route) {
-        this.redirect = route.query && route.query.redirect
+        this.redirect = route.query && route.query.redirect;
       },
       immediate: true
     }
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              console.log("382798237493284789243");
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(error => {
+              console.log(error);
+              this.loading = false;
+            });
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
+      });
     },
-    getAuthCode(data){
-      let _this = this
-      this.authCode = data
-      console.log('authCode为:'+data)
-      if(data != undefined && data != 'undefined' && data != null && data != ''){
-        
-      console.log('authCode为:'+data)
-         authRedirect(data,this.aliLoginForm.appId).then(res =>{
-           console.log(res)
-           if(res.code != 20000 && res.code != null){
-             this.$message.error("登陆出错,请刷新页面重新尝试");
-             return;
-           }
-           this.aliLoginForm.accessToken = res.accessToken;
-           this.$store.dispatch('user/aliLogin',this.aliLoginForm).then(()=>{
-              this.$router.push({ path: this.redirect || '/' })
-           })
-           console.log("登录成功"); 
-         }).catch(error=>{
+    getAuthCode(data) {
+      let _this = this;
+      this.authCode = data;
+      console.log("authCode为:" + data);
+      if (
+        data != undefined &&
+        data != "undefined" &&
+        data != null &&
+        data != ""
+      ) {
+        console.log("authCode为:" + data);
+        authRedirect(data, this.aliLoginForm.appId)
+          .then(res => {
+            console.log(res);
+            if (res.code != 20000 && res.code != null) {
+              this.$message.error("登陆出错,请刷新页面重新尝试");
+              return;
+            }
+            this.aliLoginForm.accessToken = res.accessToken;
+            this.$store
+              .dispatch("user/aliLogin", this.aliLoginForm)
+              .then(() => {
+                this.$router.push({ path: this.redirect || "/" });
+              });
+            console.log("登录成功");
+          })
+          .catch(error => {
             console.log(error);
-            this.$message.error("获取token错误:",error)
-         })
+            this.$message.error("获取token错误:", error);
+          });
       }
     },
-    getAppId(appId){
+    getAppId(appId) {
       this.aliLoginForm.appId = appId;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg: #283443;
+$light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -218,9 +243,9 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 .login-container {
   min-height: 100%;
@@ -279,7 +304,7 @@ $light_gray:#eee;
     user-select: none;
   }
 
-   .thirdparty-button {
+  .thirdparty-button {
     position: absolute;
     right: 0;
     bottom: 6px;
