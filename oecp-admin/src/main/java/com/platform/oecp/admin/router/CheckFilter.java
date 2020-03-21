@@ -58,7 +58,7 @@ public class CheckFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerWebExchange serverWebExchange = null;
-
+        AccountRepo.cleanRepo();
         try {
             serverWebExchange = doFilter(exchange, chain);
         } catch (BusinessException e) {
