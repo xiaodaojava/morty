@@ -108,7 +108,6 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
                 //再验证老密码是否正确
                 OecpSysUserQC qc = new OecpSysUserQC();
                 qc.setId(oecpUserInfoRequestDto.getId());
-                qc.setAccountId(oecpUserInfoRequestDto.getAccountId());
                 qc.setPage(Page.getOne());
                 List<OecpSysUserDO> oecpSysUserDOS = queryOecpSysUser(qc);
                 oecpSysUserDO = ListTools.getOne(oecpSysUserDOS);
@@ -119,6 +118,7 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
             oecpSysUserDO.setPassword(DigestUtils.md5DigestAsHex(oecpUserInfoRequestDto.getNewPassword().getBytes()));
         }
         oecpSysUserDO.setAccountId(oecpUserInfoRequestDto.getAccountId());
+        oecpSysUserDO.setId(oecpUserInfoRequestDto.getId());
         //更新用户信息-密码和账户
         int updateFlag = oecpSysUserMapper.updateOecpSysUser(oecpSysUserDO);
         if(updateFlag > 0){

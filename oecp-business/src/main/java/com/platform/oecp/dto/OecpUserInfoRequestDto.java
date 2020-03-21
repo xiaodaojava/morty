@@ -1,7 +1,5 @@
 package com.platform.oecp.dto;
 
-import org.springframework.lang.NonNull;
-
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -31,7 +29,7 @@ public class OecpUserInfoRequestDto implements Serializable {
 
     /** 是否第三方登陆 必填  ;第三方登陆修改用户信息不需要填写老密码*/
     @NotNull(message = "是否第三方登陆标志不能为空")
-    private Boolean isThirtyLogin;
+    private Boolean thirtyLogin;
 
     public Long getId() {
         return id;
@@ -74,11 +72,11 @@ public class OecpUserInfoRequestDto implements Serializable {
     }
 
     public Boolean getThirtyLogin() {
-        return isThirtyLogin;
+        return thirtyLogin;
     }
 
     public void setThirtyLogin(Boolean thirtyLogin) {
-        isThirtyLogin = thirtyLogin;
+        this.thirtyLogin = thirtyLogin;
     }
 
     @Override
@@ -89,7 +87,7 @@ public class OecpUserInfoRequestDto implements Serializable {
                 ", accountId='" + accountId + '\'' +
                 ", oldPassword='" + oldPassword + '\'' +
                 ", newPassword='" + newPassword + '\'' +
-                ", isThirtyLogin=" + isThirtyLogin +
+                ", thirtyLogin=" + thirtyLogin +
                 '}';
     }
 }
