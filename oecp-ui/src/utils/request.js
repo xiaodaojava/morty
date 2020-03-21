@@ -5,9 +5,6 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  headers: {
-    'content-type': 'application/json'
-  },
   baseURL: '/api', //process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
@@ -24,7 +21,6 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       config.headers['token'] = getToken()
     }
-    config.headers['content-type'] = 'application/json';
     //config.baseURL = process.env.VUE_APP_BASE_API;
     return config
   },
@@ -51,7 +47,7 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code != 20000 && res.code != null) {
+    if (res.code != 20000 && res.code != null && res.code != 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',
@@ -71,7 +67,8 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      console.log(res)
+      return Promise.reject(new Error(res.msg || 'Error'))
     } else {
       return res
     }

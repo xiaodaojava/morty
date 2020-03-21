@@ -2,9 +2,12 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/user/login',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    url: '/account/login',
     method: 'post',
-    data
+    params: data
   })
 }
 
@@ -36,13 +39,13 @@ export function getAuthInfo(accessToken, appId) {
 }
 
 // 修改用户密码
-export function updateUserInfo(account, appId) {
+export function updateUserInfo(data) {
   return request({
-    url: '/api/updateUserInfo',
-    method: 'get',
-    params: {
-      accessToken: accessToken,
-      appId: appId
-    }
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    url: '/updateUserInfo',
+    method: 'post',
+    params: data
   })
 }
