@@ -22,9 +22,9 @@ public class OecpErrorCaseProvider implements ProviderMethodResolver {
 //        MapperUtils.richWhereSql(sql, oecpErrorCaseQC);
 
         SQL sql = new SQL() {{
-            SELECT("a.code_Id as code_Id,a.case_Id as case_Id,b.title as title,b.content as content");
-            FROM("oecp_error_case a,oecp_case_info b");
-            WHERE("a.case_id = b.id");
+            SELECT("a.code_id ,a.case_id ,b.title,b.content ");
+            FROM("oecp_error_case a");
+            INNER_JOIN("oecp_case_info b on a.case_id = b.id");
         }};
 
         return sql.toString();
