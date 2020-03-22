@@ -1,5 +1,6 @@
 package com.platform.oecp.dao;
 
+import com.platform.oecp.models.dos.OecpErrorAndCaseInfoDO;
 import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import org.apache.ibatis.annotations.*;
@@ -15,13 +16,21 @@ import java.util.List;
 @Repository
 public interface OecpErrorCaseMapper {
 
+//    /**
+//     * 获取列表
+//     * @param oecpErrorCaseQC
+//     * @return
+//     */
+//    @SelectProvider(type = OecpErrorCaseProvider.class)
+//    List<OecpErrorCaseDO> listOecpErrorCases(OecpErrorCaseQC oecpErrorCaseQC);
+
     /**
      * 获取列表
      * @param oecpErrorCaseQC
      * @return
      */
     @SelectProvider(type = OecpErrorCaseProvider.class)
-    List<OecpErrorCaseDO> listOecpErrorCases(OecpErrorCaseQC oecpErrorCaseQC);
+    List<OecpErrorAndCaseInfoDO> listOecpErrorCases(OecpErrorCaseQC oecpErrorCaseQC);
 
     /**
      * 获取数量

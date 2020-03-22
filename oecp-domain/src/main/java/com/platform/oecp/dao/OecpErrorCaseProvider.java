@@ -15,11 +15,17 @@ public class OecpErrorCaseProvider implements ProviderMethodResolver {
     private static final String TABLE_FIELDS = MapperUtils.getTableFieldName(OecpErrorCaseDO.class);
 
     public String listOecpErrorCases(OecpErrorCaseQC oecpErrorCaseQC){
+//        SQL sql = new SQL() {{
+//            SELECT(TABLE_FIELDS);
+//            FROM("oecp_error_case");
+//        }};
+//        MapperUtils.richWhereSql(sql, oecpErrorCaseQC);
+
         SQL sql = new SQL() {{
-            SELECT(TABLE_FIELDS);
-            FROM("oecp_error_case");
+            SELECT("a.code_Id as code_Id,a.case_Id as case_Id,b.title as title,b.content as content");
+            FROM("oecp_error_case a,oecp_case_info b");
+            WHERE("a.case_id = b.id");
         }};
-        MapperUtils.richWhereSql(sql, oecpErrorCaseQC);
 
         return sql.toString();
     }
