@@ -39,14 +39,6 @@ module.exports = {
         },
         ws: false
       },
-      '/oecp': {
-        target: 'http://localhost:${port}/mock',
-        secure: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '/api': ''
-        },
-      },
       // [process.env.VUE_APP_BASE_API + '/aliLogin']: {
       //   target: process.env.BACKGROUND_APPLICATION_URL,
       //   changeOrigin: true,

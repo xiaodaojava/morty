@@ -98,7 +98,7 @@ export default {
       updateUserInfo(this.passwordForm).then(res => {
         console.log(res);
         if (res.code != 20000 && res.code != null && res.code != 200) {
-          this.$message.error("修改密码出错,请刷新页面重新尝试");
+          this.$message.error("修改密码出错,请重新尝试");
           return;
         }
         this.dialogPasswordFormVisible = false;

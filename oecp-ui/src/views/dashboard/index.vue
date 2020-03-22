@@ -3,28 +3,40 @@
     <!-- <div class="dashboard-text">name: {{ name }}</div> -->
     <div class="dashboard-text">One ErrorCode Platform</div>
     <div class="searchClass">
-    <el-input v-model="searchContent" placeholder="Enter Your ErrorCode">
-    <el-button slot="append" icon="el-icon-search"></el-button>
-    </el-input></div>
+      <el-input v-model="searchContent" placeholder="Enter Your ErrorCode">
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @keydown.enter.native="searchEnter"
+          @click="searchEnter"
+        ></el-button>
+      </el-input>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+    ...mapGetters(["name"])
   },
-    data() {
+  data() {
     return {
-      searchContent: ''
-    }
+      searchContent: ""
+    };
   },
-}
+  methods: {
+    searchEnter() {
+      //searchCode(searchContent);
+      this.$router.push(
+        `/errorInfo/example?searchContent=${this.searchContent}`
+      );
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -38,21 +50,21 @@ export default {
   }
 }
 
-.dashboard-text{
-   font:  normal 36px/30px '微软雅黑', 'Arial';
-   color: RGB(0,160,255);
-   text-align: center;
-   margin-top: 5%;
+.dashboard-text {
+  font: normal 36px/30px "微软雅黑", "Arial";
+  color: RGB(0, 160, 255);
+  text-align: center;
+  margin-top: 5%;
 }
 </style>
 
 <style>
-.searchClass{
+.searchClass {
   border: 1px solid #c5c5c5;
   border-radius: 20px;
   background: #fff;
-  margin:5% auto 0 auto;
-  width:61.8%;
+  margin: 5% auto 0 auto;
+  width: 61.8%;
 }
 .searchClass .el-input-group__prepend {
   border: none;
@@ -69,7 +81,7 @@ export default {
   border: none;
   background-color: transparent;
 }
-.searchClass .el-icon-search{
+.searchClass .el-icon-search {
   font-size: 16px;
 }
 .searchClass .centerClass {
@@ -85,14 +97,14 @@ export default {
   background-color: #c5c5c5;
   margin-left: 14px;
 }
-.searchClass:hover{
-  border: 1px solid #D5E3E8;
+.searchClass:hover {
+  border: 1px solid #d5e3e8;
   background: #fff;
 }
 .searchClass:hover .line {
-  background-color: #D5E3E8;
+  background-color: #d5e3e8;
 }
-.searchClass:hover .el-icon-search{
+.searchClass:hover .el-icon-search {
   color: #409eff;
   font-size: 16px;
 }
