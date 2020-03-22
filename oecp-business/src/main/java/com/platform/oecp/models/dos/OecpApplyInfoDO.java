@@ -1,19 +1,15 @@
 package com.platform.oecp.models.dos;
 
+import com.platform.oecp.common.DataEntity;
 import red.lixiang.tools.common.mybatis.model.SqlField;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author lixiang
  */
-public class OecpApplyInfoDO implements Serializable{
+public class OecpApplyInfoDO extends DataEntity<OecpApplyInfoDO> implements Serializable{
 
-   
-   /** 主键UUID  */
-   @SqlField
-   private Long id;
 
    /** 用户ID，外键  */
    @SqlField
@@ -23,42 +19,6 @@ public class OecpApplyInfoDO implements Serializable{
    @SqlField
    private String applyName;
 
-   /** 备注信息  */
-   @SqlField
-   private String remarks;
-
-   /** 逻辑删除标记（0：显示；1：隐藏）  */
-   @SqlField
-   private Integer delFlag;
-
-   /** 创建时间  */
-   @SqlField
-   private Date createDate;
-
-   /** 创建人  */
-   @SqlField
-   private String createBy;
-
-   /** 更新时间  */
-   @SqlField
-   private Date updateDate;
-
-   /** 更新人  */
-   @SqlField
-   private String updateBy;
-
-   
-
-
-   
-   public Long getId() {
-        return this.id;
-   }
-
-   public OecpApplyInfoDO setId(Long id) {
-        this.id = id;
-        return this;
-   }
    public Long getUserId() {
         return this.userId;
    }
@@ -73,54 +33,6 @@ public class OecpApplyInfoDO implements Serializable{
 
    public OecpApplyInfoDO setApplyName(String applyName) {
         this.applyName = applyName;
-        return this;
-   }
-   public String getRemarks() {
-        return this.remarks;
-   }
-
-   public OecpApplyInfoDO setRemarks(String remarks) {
-        this.remarks = remarks;
-        return this;
-   }
-   public Integer getDelFlag() {
-        return this.delFlag;
-   }
-
-   public OecpApplyInfoDO setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
-        return this;
-   }
-   public Date getCreateDate() {
-        return this.createDate;
-   }
-
-   public OecpApplyInfoDO setCreateDate(Date createDate) {
-        this.createDate = createDate;
-        return this;
-   }
-   public String getCreateBy() {
-        return this.createBy;
-   }
-
-   public OecpApplyInfoDO setCreateBy(String createBy) {
-        this.createBy = createBy;
-        return this;
-   }
-   public Date getUpdateDate() {
-        return this.updateDate;
-   }
-
-   public OecpApplyInfoDO setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-        return this;
-   }
-   public String getUpdateBy() {
-        return this.updateBy;
-   }
-
-   public OecpApplyInfoDO setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
         return this;
    }
    

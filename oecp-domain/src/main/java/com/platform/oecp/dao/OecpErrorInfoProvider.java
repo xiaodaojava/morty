@@ -18,6 +18,7 @@ public class OecpErrorInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_error_info");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpErrorInfoQC);
 
@@ -28,6 +29,7 @@ public class OecpErrorInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_error_info");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpErrorInfoQC);
 
@@ -56,7 +58,7 @@ public class OecpErrorInfoProvider implements ProviderMethodResolver {
     public String removeOecpErrorInfoById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_error_info");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

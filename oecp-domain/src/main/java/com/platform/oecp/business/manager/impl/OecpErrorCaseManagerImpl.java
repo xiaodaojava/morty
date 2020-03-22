@@ -1,5 +1,6 @@
 package com.platform.oecp.business.manager.impl;
 
+import com.platform.oecp.models.dos.OecpErrorAndCaseInfoDO;
 import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import red.lixiang.tools.jdk.ListTools;
@@ -20,23 +21,30 @@ public class OecpErrorCaseManagerImpl implements OecpErrorCaseManager{
     @Autowired
     private OecpErrorCaseMapper oecpErrorCaseMapper;
     
-    @Override
-    public OecpErrorCaseDO getOecpErrorCaseById(Long id) {
-        OecpErrorCaseQC qc = new OecpErrorCaseQC();
-        qc.setId(id);
-        qc.setPage(Page.getOne());
-        List<OecpErrorCaseDO> oecpErrorCaseDOS = queryOecpErrorCase(qc);
-        return ListTools.getOne(oecpErrorCaseDOS);
-    }
+//    @Override
+//    public OecpErrorCaseDO getOecpErrorCaseById(Long id) {
+//        OecpErrorCaseQC qc = new OecpErrorCaseQC();
+//        qc.setId(id);
+//        qc.setPage(Page.getOne());
+//        List<OecpErrorCaseDO> oecpErrorCaseDOS = queryOecpErrorCase(qc);
+//        return ListTools.getOne(oecpErrorCaseDOS);
+//    }
     
 
-    @Override
-    public List<OecpErrorCaseDO> queryOecpErrorCase(OecpErrorCaseQC qc){
+//    @Override
+//    public List<OecpErrorCaseDO> queryOecpErrorCase(OecpErrorCaseQC qc){
+//
+//        List<OecpErrorCaseDO> oecpErrorCases = oecpErrorCaseMapper.listOecpErrorCases(qc);
+//        return oecpErrorCases;
+//    }
 
-        List<OecpErrorCaseDO> oecpErrorCases = oecpErrorCaseMapper.listOecpErrorCases(qc);
+    @Override
+    public List<OecpErrorAndCaseInfoDO> queryOecpErrorCase(OecpErrorCaseQC qc){
+
+        List<OecpErrorAndCaseInfoDO> oecpErrorCases = oecpErrorCaseMapper.listOecpErrorCases(qc);
         return oecpErrorCases;
     }
-    
+
 
     @Override
     public Long countOecpErrorCase(OecpErrorCaseQC qc){
@@ -49,9 +57,10 @@ public class OecpErrorCaseManagerImpl implements OecpErrorCaseManager{
     public OecpErrorCaseDO saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
 
         if(oecpErrorCase.getId()!=null){
+            oecpErrorCase.preUpdate();
              oecpErrorCaseMapper.updateOecpErrorCase(oecpErrorCase);
         }else {
-            oecpErrorCase.setCreateDate(new Date());
+            oecpErrorCase.preInsert();
              oecpErrorCaseMapper.insertOecpErrorCase(oecpErrorCase);
         }
         return oecpErrorCase;

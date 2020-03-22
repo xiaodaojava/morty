@@ -13,7 +13,7 @@ import red.lixiang.tools.base.exception.BusinessException;
 public class CommonController {
     @RequestMapping("api/common/error")
     public void error(@RequestParam(name = "msg") String msg,@RequestParam(name = "code") String code) {
-        throw  new BusinessException(msg,Integer.parseInt(code));
+        throw  new BusinessException(msg,(code));
     }
 
 }

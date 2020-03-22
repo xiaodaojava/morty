@@ -18,6 +18,7 @@ public class OecpTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_tag");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpTagQC);
 
@@ -28,7 +29,8 @@ public class OecpTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_tag");
-            WHERE("tag like '%" + tag + "'");
+            WHERE("del_flag = 0");
+            WHERE("match(tag) against ('" + tag + "' in natural language mode)");
             LIMIT(20);
         }};
         return sql.toString();
@@ -38,6 +40,7 @@ public class OecpTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_tag");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpTagQC);
 
@@ -66,7 +69,7 @@ public class OecpTagProvider implements ProviderMethodResolver {
     public String removeOecpTagById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_tag");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

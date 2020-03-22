@@ -49,9 +49,10 @@ public class OecpApplyInfoManagerImpl implements OecpApplyInfoManager{
     public OecpApplyInfoDO saveOecpApplyInfo(OecpApplyInfoDO oecpApplyInfo){
 
         if(oecpApplyInfo.getId()!=null){
+             oecpApplyInfo.preUpdate();
              oecpApplyInfoMapper.updateOecpApplyInfo(oecpApplyInfo);
         }else {
-            oecpApplyInfo.setCreateDate(new Date());
+            oecpApplyInfo.preInsert();
              oecpApplyInfoMapper.insertOecpApplyInfo(oecpApplyInfo);
         }
         return oecpApplyInfo;

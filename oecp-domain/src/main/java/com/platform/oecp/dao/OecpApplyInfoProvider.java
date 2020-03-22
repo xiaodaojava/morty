@@ -18,6 +18,7 @@ public class OecpApplyInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_apply_info");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpApplyInfoQC);
 
@@ -28,6 +29,7 @@ public class OecpApplyInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_apply_info");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpApplyInfoQC);
 
@@ -56,7 +58,7 @@ public class OecpApplyInfoProvider implements ProviderMethodResolver {
     public String removeOecpApplyInfoById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_apply_info");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

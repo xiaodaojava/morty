@@ -13,7 +13,7 @@ import org.springframework.util.DigestUtils;
 import red.lixiang.tools.base.exception.BusinessException;
 import red.lixiang.tools.common.mybatis.model.Page;
 import red.lixiang.tools.jdk.ListTools;
-import red.lixiang.tools.spring.redis.RedisTools;
+import red.lixiang.tools.spring.redis.RedisSpringTools;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +57,7 @@ public class LoginManager {
     private int projectCode;
 
     @Autowired
-    private RedisTools redisUtils;
+    private RedisSpringTools redisUtils;
 
     /**
      * @author: LILIANG
@@ -75,11 +75,11 @@ public class LoginManager {
         List<OecpSysUserDO> oecpSysUsers = oecpSysUserManager.queryOecpSysUser(qc);
         OecpSysUserDO oecpSysUserDO = ListTools.getOne(oecpSysUsers);
         if(oecpSysUserDO == null){
-            throw new BusinessException("please register",Integer.valueOf(projectCode+""+PLEASE_REGISTER_ERROR));
+            throw new BusinessException("please register",(projectCode+""+PLEASE_REGISTER_ERROR));
         }
         //验证密码是否正确
         if(!DigestUtils.md5DigestAsHex(password.getBytes()).equals(oecpSysUserDO.getPassword())){
-            throw new BusinessException("password is wrong",Integer.valueOf(projectCode+""+PASSWORD_IS_WRONG));
+            throw new BusinessException("password is wrong",(projectCode+""+PASSWORD_IS_WRONG));
         }
         Map<String,Object> result = tokenAndUserResponse(username,password,oecpSysUserDO);
         return result;

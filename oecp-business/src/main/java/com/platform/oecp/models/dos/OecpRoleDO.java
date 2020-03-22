@@ -1,19 +1,14 @@
 package com.platform.oecp.models.dos;
 
+import com.platform.oecp.common.DataEntity;
 import red.lixiang.tools.common.mybatis.model.SqlField;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author lixiang
  */
-public class OecpRoleDO implements Serializable{
-
-   
-   /** 主键UUID  */
-   @SqlField
-   private Long id;
+public class OecpRoleDO extends DataEntity<OecpRoleDO> implements Serializable{
 
    /** 归属机构ID  */
    @SqlField
@@ -35,42 +30,6 @@ public class OecpRoleDO implements Serializable{
    @SqlField
    private Integer useable;
 
-   /** 备注信息  */
-   @SqlField
-   private String remarks;
-
-   /** 逻辑删除标记（0：显示；1：隐藏）  */
-   @SqlField
-   private Integer delFlag;
-
-   /** 创建时间  */
-   @SqlField
-   private Date createDate;
-
-   /** 创建人  */
-   @SqlField
-   private String createBy;
-
-   /** 更新时间  */
-   @SqlField
-   private Date updateDate;
-
-   /** 更新人  */
-   @SqlField
-   private String updateBy;
-
-   
-
-
-   
-   public Long getId() {
-        return this.id;
-   }
-
-   public OecpRoleDO setId(Long id) {
-        this.id = id;
-        return this;
-   }
    public String getOfficeId() {
         return this.officeId;
    }
@@ -111,55 +70,6 @@ public class OecpRoleDO implements Serializable{
         this.useable = useable;
         return this;
    }
-   public String getRemarks() {
-        return this.remarks;
-   }
-
-   public OecpRoleDO setRemarks(String remarks) {
-        this.remarks = remarks;
-        return this;
-   }
-   public Integer getDelFlag() {
-        return this.delFlag;
-   }
-
-   public OecpRoleDO setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
-        return this;
-   }
-   public Date getCreateDate() {
-        return this.createDate;
-   }
-
-   public OecpRoleDO setCreateDate(Date createDate) {
-        this.createDate = createDate;
-        return this;
-   }
-   public String getCreateBy() {
-        return this.createBy;
-   }
-
-   public OecpRoleDO setCreateBy(String createBy) {
-        this.createBy = createBy;
-        return this;
-   }
-   public Date getUpdateDate() {
-        return this.updateDate;
-   }
-
-   public OecpRoleDO setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-        return this;
-   }
-   public String getUpdateBy() {
-        return this.updateBy;
-   }
-
-   public OecpRoleDO setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-        return this;
-   }
-   
 
    public static OecpRoleDO create(){
        return new OecpRoleDO();

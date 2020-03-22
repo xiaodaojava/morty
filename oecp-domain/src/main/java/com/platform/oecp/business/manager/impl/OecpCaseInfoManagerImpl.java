@@ -49,9 +49,10 @@ public class OecpCaseInfoManagerImpl implements OecpCaseInfoManager{
     public OecpCaseInfoDO saveOecpCaseInfo(OecpCaseInfoDO oecpCaseInfo){
 
         if(oecpCaseInfo.getId()!=null){
+            oecpCaseInfo.preUpdate();
              oecpCaseInfoMapper.updateOecpCaseInfo(oecpCaseInfo);
         }else {
-            oecpCaseInfo.setCreateDate(new Date());
+            oecpCaseInfo.preInsert();
              oecpCaseInfoMapper.insertOecpCaseInfo(oecpCaseInfo);
         }
         return oecpCaseInfo;

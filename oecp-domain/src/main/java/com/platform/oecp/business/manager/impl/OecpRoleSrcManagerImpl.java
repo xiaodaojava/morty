@@ -49,9 +49,10 @@ public class OecpRoleSrcManagerImpl implements OecpRoleSrcManager{
     public OecpRoleSrcDO saveOecpRoleSrc(OecpRoleSrcDO oecpRoleSrc){
 
         if(oecpRoleSrc.getId()!=null){
+            oecpRoleSrc.preUpdate();
              oecpRoleSrcMapper.updateOecpRoleSrc(oecpRoleSrc);
         }else {
-            oecpRoleSrc.setCreateDate(new Date());
+            oecpRoleSrc.preInsert();
              oecpRoleSrcMapper.insertOecpRoleSrc(oecpRoleSrc);
         }
         return oecpRoleSrc;

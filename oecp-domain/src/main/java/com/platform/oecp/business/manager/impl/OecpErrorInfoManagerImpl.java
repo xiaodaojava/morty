@@ -51,7 +51,7 @@ public class OecpErrorInfoManagerImpl implements OecpErrorInfoManager{
         if(oecpErrorInfo.getId()!=null){
              oecpErrorInfoMapper.updateOecpErrorInfo(oecpErrorInfo);
         }else {
-            oecpErrorInfo.setCreateDate(new Date());
+             oecpErrorInfo.setCreateDate(new Date());
              oecpErrorInfoMapper.insertOecpErrorInfo(oecpErrorInfo);
         }
         return oecpErrorInfo;

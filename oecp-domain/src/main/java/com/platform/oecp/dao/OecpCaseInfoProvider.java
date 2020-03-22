@@ -18,6 +18,7 @@ public class OecpCaseInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_case_info");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpCaseInfoQC);
 
@@ -28,6 +29,7 @@ public class OecpCaseInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_case_info");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpCaseInfoQC);
 
@@ -56,7 +58,7 @@ public class OecpCaseInfoProvider implements ProviderMethodResolver {
     public String removeOecpCaseInfoById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_case_info");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

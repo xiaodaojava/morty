@@ -18,6 +18,7 @@ public class OecpOrgProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_org");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpOrgQC);
 
@@ -28,6 +29,7 @@ public class OecpOrgProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_org");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpOrgQC);
 
@@ -56,7 +58,7 @@ public class OecpOrgProvider implements ProviderMethodResolver {
     public String removeOecpOrgById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_org");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

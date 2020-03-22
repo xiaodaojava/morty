@@ -2,7 +2,7 @@
 oecp
 
 ## 拷贝脚本
-cp -r dist/** ../oecp-admin/src/main/resources/public
+cp -r oecp-ui/dist/** oecp-admin/src/main/resources/public
 
 ## oecp-admin
 web后台,写controller的地方
