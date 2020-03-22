@@ -28,7 +28,7 @@ public class OecpTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_tag");
-            WHERE("tag like '%" + tag + "'");
+            WHERE("match(tag) against ('" + tag + "' in natural language mode)");
             LIMIT(20);
         }};
         return sql.toString();
