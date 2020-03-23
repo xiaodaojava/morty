@@ -32,6 +32,14 @@ public interface OecpErrorInfoMapper {
     long countOecpErrorInfos(OecpErrorInfoQC oecpErrorInfoQC);
 
     /**
+     * 根据 code 查询 ErrorInfoDO 信息.
+     * @param code 错误码
+     * @return 错误信息对象
+     */
+    @SelectProvider(type = OecpErrorInfoProvider.class)
+    OecpErrorInfoDO getByCode(String code);
+
+    /**
      * 插入
      * @param oecpErrorInfo
      * @return

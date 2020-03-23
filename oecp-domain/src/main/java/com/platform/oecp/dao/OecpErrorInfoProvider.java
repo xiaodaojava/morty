@@ -34,6 +34,16 @@ public class OecpErrorInfoProvider implements ProviderMethodResolver {
         return sql.toString();
     }
 
+    public String getByCode(String code) {
+        SQL sql = new SQL() {{
+            SELECT(TABLE_FIELDS);
+            FROM("oecp_error_info");
+            WHERE("code=" + code);
+        }};
+
+        return sql.toString();
+    }
+
     public String insertOecpErrorInfo(OecpErrorInfoDO oecpErrorInfo){
         oecpErrorInfo.setId(SnowflakeGenerator.generateKey());
         SQL sql = new SQL() {{
