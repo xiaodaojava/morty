@@ -18,6 +18,7 @@ public class OecpRoleProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_role");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpRoleQC);
 
@@ -28,6 +29,7 @@ public class OecpRoleProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_role");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpRoleQC);
 
@@ -56,7 +58,7 @@ public class OecpRoleProvider implements ProviderMethodResolver {
     public String removeOecpRoleById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_role");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

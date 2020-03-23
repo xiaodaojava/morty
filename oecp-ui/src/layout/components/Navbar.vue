@@ -40,7 +40,7 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
-import { searchCode } from "@/api/errCode";
+//import { searchCode } from "@/api/errCode";
 export default {
   data() {
     return {
@@ -65,7 +65,9 @@ export default {
     },
     searchEnter() {
       //searchCode(searchContent);
-      //this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(
+        `/errorInfo/example?searchContent=${this.searchContent}`
+      );
     }
   }
 };

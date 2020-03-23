@@ -11,6 +11,14 @@ allprojects {
 		maven { url 'https://maven.aliyun.com/repository/public/' }
 		maven { url 'https://maven.aliyun.com/repository/spring/'}
 		mavenCentral()
+		maven {
+			name 'ALI_MAVEN'
+			credentials {
+				username "zga8jg"
+				password "hgfU8v8TYO"
+			}
+			url 'https://repo.rdc.aliyun.com/repository/78952-snapshot-kdIdFK/'
+		}
 	}
 }
 

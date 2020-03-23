@@ -1,6 +1,7 @@
 package com.platform.oecp.admin.controller;
 
 import com.platform.oecp.business.manager.OecpErrorCaseManager;
+import com.platform.oecp.models.dos.OecpErrorAndCaseInfoDO;
 import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,40 +23,60 @@ public class OecpErrorCaseController  {
     @Autowired
     private OecpErrorCaseManager oecpErrorCaseManager;
 
+//    @GetMapping("/oecpErrorCase/query")
+//    @ResponseBody
+//    public BaseResponse<PageData<OecpErrorCaseDO>> queryOecpErrorCase(OecpErrorCaseQC qc, Page page ){
+//
+//
+//        Long totalCount = oecpErrorCaseManager.countOecpErrorCase(qc);
+//        qc.setPage(page);
+//        List<OecpErrorCaseDO> oecpErrorCases = oecpErrorCaseManager.queryOecpErrorCase(qc);
+//
+//        return  BaseResponse.assemblePageResponse(oecpErrorCases,totalCount,page.getPageIndex(),page.getPageSize());
+//    }
+
     @GetMapping("/oecpErrorCase/query")
     @ResponseBody
-    public BaseResponse<PageData<OecpErrorCaseDO>> queryOecpErrorCase(OecpErrorCaseQC qc, Page page ){
+    public BaseResponse<PageData<OecpErrorAndCaseInfoDO>> queryOecpErrorCase(OecpErrorCaseQC qc, Page page ){
 
 
         Long totalCount = oecpErrorCaseManager.countOecpErrorCase(qc);
         qc.setPage(page);
-        List<OecpErrorCaseDO> oecpErrorCases = oecpErrorCaseManager.queryOecpErrorCase(qc);
+        List<OecpErrorAndCaseInfoDO> oecpErrorCases = oecpErrorCaseManager.queryOecpErrorCase(qc);
 
         return  BaseResponse.assemblePageResponse(oecpErrorCases,totalCount,page.getPageIndex(),page.getPageSize());
     }
 
+//    @PostMapping("/oecpErrorCase/save")
+//    @ResponseBody
+//    public BaseResponse<String> saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
+//        BaseResponse<String> baseResponse = new BaseResponse<>();
+//        oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCase);
+//        baseResponse.setData("OK");
+//        return  baseResponse;
+//    }
     @PostMapping("/oecpErrorCase/save")
     @ResponseBody
-    public BaseResponse<String> saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
+    public BaseResponse<String> saveOecpErrorCase(OecpErrorAndCaseInfoDO oecpErrorAndCaseInfo){
         BaseResponse<String> baseResponse = new BaseResponse<>();
-        oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCase);
+        oecpErrorCaseManager.saveOecpErrorCase(oecpErrorAndCaseInfo);
         baseResponse.setData("OK");
         return  baseResponse;
     }
 
 
     
-    @GetMapping("/oecpErrorCase/get")
-    @ResponseBody
-    public BaseResponse<OecpErrorCaseDO> getOecpErrorCase(OecpErrorCaseQC qc){
-        qc.setPage(Page.getOne());
-        List<OecpErrorCaseDO> oecpErrorCases = oecpErrorCaseManager.queryOecpErrorCase(qc);
-        if(oecpErrorCases!=null && oecpErrorCases.size()>0){
-            return BaseResponse.success(oecpErrorCases.get(0));
-        }else{
-            return BaseResponse.fail("no data info");
-        }
-    }
+//    @GetMapping("/oecpErrorCase/get")
+//    @ResponseBody
+//    public BaseResponse<OecpErrorCaseDO> getOecpErrorCase(OecpErrorCaseQC qc){
+//        qc.setPage(Page.getOne());
+//        List<OecpErrorCaseDO> oecpErrorCases = oecpErrorCaseManager.queryOecpErrorCase(qc);
+//        if(oecpErrorCases!=null && oecpErrorCases.size()>0){
+//            return BaseResponse.success(oecpErrorCases.get(0));
+//        }else{
+//            return BaseResponse.fail("no data info");
+//        }
+//    }
 
     @GetMapping("/oecpErrorCase/remove")
     @ResponseBody

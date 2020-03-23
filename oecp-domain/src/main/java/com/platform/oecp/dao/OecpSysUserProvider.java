@@ -18,6 +18,7 @@ public class OecpSysUserProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_sys_user");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpSysUserQC);
 
@@ -28,6 +29,7 @@ public class OecpSysUserProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_sys_user");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpSysUserQC);
 
@@ -56,7 +58,7 @@ public class OecpSysUserProvider implements ProviderMethodResolver {
     public String removeOecpSysUserById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_sys_user");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();

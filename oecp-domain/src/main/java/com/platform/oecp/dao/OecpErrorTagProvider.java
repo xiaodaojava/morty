@@ -18,6 +18,7 @@ public class OecpErrorTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_error_tag");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpErrorTagQC);
 
@@ -28,6 +29,7 @@ public class OecpErrorTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_error_tag");
+            WHERE("del_flag = 0");
         }};
         MapperUtils.richWhereSql(sql, oecpErrorTagQC);
 
@@ -56,7 +58,7 @@ public class OecpErrorTagProvider implements ProviderMethodResolver {
     public String removeOecpErrorTagById(long id){
             SQL sql = new SQL() {{
                 UPDATE("oecp_error_tag");
-                SET("delete_flag = 1");
+                SET("del_flag = 1");
             }};
             sql.WHERE("id = #{id}");
             return sql.toString();
