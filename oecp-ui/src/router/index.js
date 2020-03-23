@@ -109,6 +109,18 @@ export const constantRoutes = [
       name: '错误码diy',
       component: () => import('@/views/useC/index'),
       meta: { title: '错误码diy', icon: 'eye' }
+
+    }]
+  },
+  {
+    path: '/codeDetect',
+    component: Layout,
+    children: [
+    {
+      path: '/codeDetect',
+      name: '错误代码检测',
+      component: () => import('@/views/detect/index'),
+      meta: { title: '错误码代码检测', icon: 'dashboard' }
     }]
   },
   {

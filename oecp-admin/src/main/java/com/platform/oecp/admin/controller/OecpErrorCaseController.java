@@ -47,11 +47,19 @@ public class OecpErrorCaseController  {
         return  BaseResponse.assemblePageResponse(oecpErrorCases,totalCount,page.getPageIndex(),page.getPageSize());
     }
 
+//    @PostMapping("/oecpErrorCase/save")
+//    @ResponseBody
+//    public BaseResponse<String> saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
+//        BaseResponse<String> baseResponse = new BaseResponse<>();
+//        oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCase);
+//        baseResponse.setData("OK");
+//        return  baseResponse;
+//    }
     @PostMapping("/oecpErrorCase/save")
     @ResponseBody
-    public BaseResponse<String> saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase){
+    public BaseResponse<String> saveOecpErrorCase(OecpErrorAndCaseInfoDO oecpErrorAndCaseInfo){
         BaseResponse<String> baseResponse = new BaseResponse<>();
-        oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCase);
+        oecpErrorCaseManager.saveOecpErrorCase(oecpErrorAndCaseInfo);
         baseResponse.setData("OK");
         return  baseResponse;
     }

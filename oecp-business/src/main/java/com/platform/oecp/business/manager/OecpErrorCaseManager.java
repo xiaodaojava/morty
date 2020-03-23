@@ -19,7 +19,8 @@ public interface OecpErrorCaseManager {
 
     public Long countOecpErrorCase(OecpErrorCaseQC oecpErrorCase);
 
-    public OecpErrorCaseDO saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase);
+//    public OecpErrorCaseDO saveOecpErrorCase(OecpErrorCaseDO oecpErrorCase);
+    public OecpErrorAndCaseInfoDO saveOecpErrorCase(OecpErrorAndCaseInfoDO oecpErrorAndCaseInfo);
 
     public int removeOecpErrorCaseById(Long id);
 
