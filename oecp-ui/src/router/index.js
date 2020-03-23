@@ -99,6 +99,17 @@ export const constantRoutes = [
     }, ]
   },
   {
+    path: '/codeDetect',
+    component: Layout,
+    children: [
+    {
+      path: '/codeDetect',
+      name: '错误代码检测',
+      component: () => import('@/views/detect/index'),
+      meta: { title: '错误码代码检测', icon: 'dashboard' }
+    }]
+  },
+  {
     path: '/user',
     component: Layout,
     name: '个人信息',
