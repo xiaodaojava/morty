@@ -10,7 +10,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="userInfo.avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -38,13 +38,15 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getUserInfo } from "@/utils/auth";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 //import { searchCode } from "@/api/errCode";
 export default {
   data() {
     return {
-      searchContent: ""
+      searchContent: "",
+      userInfo: {}
     };
   },
   components: {
@@ -52,7 +54,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar"])
+    ...mapGetters(["sidebar"])
   },
   methods: {
     toggleSideBar() {
@@ -69,6 +71,9 @@ export default {
         `/errorInfo/example?searchContent=${this.searchContent}`
       );
     }
+  },
+  mounted() {
+    this.userInfo = JSON.parse(getUserInfo());
   }
 };
 </script>

@@ -36,12 +36,12 @@
       <el-form :model="passwordForm">
         <el-form-item v-if="!passwordForm.thirtyLogin" label="旧密码" :label-width="formLabelWidth">
           <div class="fix-password-class">
-            <el-input v-model="passwordForm.oldPassword" autocomplete="off"></el-input>
+            <el-input v-model="passwordForm.oldPassword" autocomplete="off" show-password></el-input>
           </div>
         </el-form-item>
         <el-form-item label="新密码" :label-width="formLabelWidth">
           <div class="fix-password-class">
-            <el-input v-model="passwordForm.newPassword" autocomplete="off"></el-input>
+            <el-input v-model="passwordForm.newPassword" autocomplete="off" show-password></el-input>
           </div>
         </el-form-item>
       </el-form>
@@ -97,12 +97,10 @@ export default {
       }
       updateUserInfo(this.passwordForm).then(res => {
         console.log(res);
-        if (res.code != 20000 && res.code != null && res.code != 200) {
-          this.$message.error("修改密码出错,请重新尝试");
-          return;
+        if (res.result) {
+          this.dialogPasswordFormVisible = false;
+          this.$message.success("修改成功");
         }
-        this.dialogPasswordFormVisible = false;
-        this.$message.success("修改成功");
       });
     }
   },

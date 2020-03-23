@@ -39,5 +39,5 @@ export function setUserInfo(userInfo) {
 }
 
 export function removeUserInfo() {
-  return Cookies.remove(userInfo)
+  return Cookies.remove(userInfoKey)
 }
