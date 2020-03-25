@@ -99,6 +99,20 @@ export const constantRoutes = [
     }, ]
   },
   {
+    path: '/useC',
+    component: Layout,
+    redirect: '/userC/index',
+    hidden: true,
+    children: [
+    {
+      path: 'index',
+      name: '错误码diy',
+      component: () => import('@/views/useC/index'),
+      meta: { title: '错误码diy', icon: 'eye' }
+
+    }]
+  },
+  {
     path: '/codeDetect',
     component: Layout,
     children: [

@@ -26,15 +26,17 @@ public class AdminApplicationTests {
 
 	@Test
 	public void testList(){
-		List<OecpErrorAndCaseInfoDO> caseInfoDOS = mapper.listOecpErrorCases(new OecpErrorCaseQC());
-		System.out.println(caseInfoDOS);
+		OecpErrorCaseDO caseDO = new OecpErrorCaseDO();
+		caseDO.setCaseId(1L).setCodeId(1L);
+		int i = mapper.insertOecpErrorCase(caseDO);
+		System.out.println(i);
 	}
 
 	@Test
 	public void contextLoads() {
 		MybatisGenerateUtils utils = new MybatisGenerateUtils(dataSource);
 		//这种生成方式,会直接生成到对应文件夹里面
-		utils.defaultGenerate("morty", "oecp_sys_user","com.platform.oecp");
+		utils.defaultGenerate("morty", "oecp_search_use","com.platform.oecp");
 
 	}
 

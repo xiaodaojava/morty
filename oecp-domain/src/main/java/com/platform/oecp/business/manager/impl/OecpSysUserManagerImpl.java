@@ -14,11 +14,10 @@ import red.lixiang.tools.base.exception.BusinessException;
 import red.lixiang.tools.common.mybatis.model.Page;
 import red.lixiang.tools.jdk.ListTools;
 
-import java.util.Date;
 import java.util.List;
 
-import static com.platform.oecp.models.OecpCommonConstants.OLD_PASSWORD_ERROR;
-import static com.platform.oecp.models.OecpCommonConstants.SET_PASSWORD_ERROR;
+import static com.platform.oecp.common.OecpCommonConstants.OLD_PASSWORD_ERROR;
+import static com.platform.oecp.common.OecpCommonConstants.SET_PASSWORD_ERROR;
 
 @Component
 public class OecpSysUserManagerImpl implements OecpSysUserManager{

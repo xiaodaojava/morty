@@ -64,4 +64,13 @@ public interface OecpErrorCaseMapper {
     */
     @UpdateProvider(type = OecpErrorCaseProvider.class)
     int removeOecpErrorCaseById(long id);
+
+    /**
+     * 根据错误ID和案列ID将错误案列关联表删除
+     * @param codeId
+     * @param caseId
+     * @return
+     */
+    @UpdateProvider(type = OecpErrorCaseProvider.class)
+    int removeOecpErrorCaseByCodeIdAndCaseId(long codeId,long caseId);
 }

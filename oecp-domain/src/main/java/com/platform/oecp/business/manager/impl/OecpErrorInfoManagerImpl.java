@@ -1,17 +1,14 @@
 package com.platform.oecp.business.manager.impl;
 
-import com.platform.oecp.models.dos.OecpErrorInfoDO;
-import com.platform.oecp.models.qc.OecpErrorInfoQC;
-import red.lixiang.tools.jdk.ListTools;
 import com.platform.oecp.business.manager.OecpErrorInfoManager;
 import com.platform.oecp.dao.OecpErrorInfoMapper;
-import red.lixiang.tools.common.mybatis.model.Page;
-import red.lixiang.tools.common.mybatis.model.Sort;
-import org.springframework.beans.BeanUtils;
+import com.platform.oecp.models.dos.OecpErrorInfoDO;
+import com.platform.oecp.models.qc.OecpErrorInfoQC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import red.lixiang.tools.common.mybatis.model.Page;
+import red.lixiang.tools.jdk.ListTools;
 
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -49,9 +46,10 @@ public class OecpErrorInfoManagerImpl implements OecpErrorInfoManager{
     public OecpErrorInfoDO saveOecpErrorInfo(OecpErrorInfoDO oecpErrorInfo){
 
         if(oecpErrorInfo.getId()!=null){
+            oecpErrorInfo.preUpdate();
              oecpErrorInfoMapper.updateOecpErrorInfo(oecpErrorInfo);
         }else {
-             oecpErrorInfo.setCreateDate(new Date());
+             oecpErrorInfo.preInsert();
              oecpErrorInfoMapper.insertOecpErrorInfo(oecpErrorInfo);
         }
         return oecpErrorInfo;
