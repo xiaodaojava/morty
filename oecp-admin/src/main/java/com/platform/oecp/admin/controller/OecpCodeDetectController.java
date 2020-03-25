@@ -1,15 +1,15 @@
 package com.platform.oecp.admin.controller;
 
 import com.platform.oecp.business.manager.CodeDetectManager;
-import com.platform.oecp.models.dos.OecpCaseInfoDO;
+import com.platform.oecp.dto.CodeDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import red.lixiang.tools.base.BaseResponse;
-import red.lixiang.tools.base.PageData;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -25,13 +25,13 @@ public class OecpCodeDetectController {
 
     /**
      * 错误码检测接口
-     * @param code 用户提交的代码
+     * @param codeDto 代码传输对象
      * @return 校验结果
      */
     @PostMapping
-    public BaseResponse<String> detectCode(@RequestBody String code) {
+    public BaseResponse<String> detectCode(@RequestBody CodeDto codeDto) {
         BaseResponse<String> baseResponse = new BaseResponse<>();
-        codeDetectManager.detectCode(code);
+        codeDetectManager.detectCode(codeDto.getCode());
         baseResponse.setData("OK");
         return baseResponse;
     }
