@@ -26,8 +26,10 @@ public class AdminApplicationTests {
 
 	@Test
 	public void testList(){
-		List<OecpErrorAndCaseInfoDO> caseInfoDOS = mapper.listOecpErrorCases(new OecpErrorCaseQC());
-		System.out.println(caseInfoDOS);
+		OecpErrorCaseDO caseDO = new OecpErrorCaseDO();
+		caseDO.setCaseId(1L).setCodeId(1L);
+		int i = mapper.insertOecpErrorCase(caseDO);
+		System.out.println(i);
 	}
 
 	@Test
