@@ -53,7 +53,7 @@ public class OecpErrorInfoController  {
      */
     @PostMapping("/saveOecpErrorInfo")
     @ResponseBody
-    public BaseResponse<String> saveOecpErrorInfo(@NotNull(message = "请检查不为空信息是否填写") @Valid OecpErrorInfoRequest oecpErrorInfoRequest){
+    public BaseResponse<String> saveOecpErrorInfo(@NotNull(message = "请检查不为空信息是否填写") @Valid @RequestBody OecpErrorInfoRequest oecpErrorInfoRequest){
         BaseResponse<String> baseResponse = new BaseResponse<>();
         commonManager.saveErrorInfo(oecpErrorInfoRequest);
         baseResponse.setData("OK");

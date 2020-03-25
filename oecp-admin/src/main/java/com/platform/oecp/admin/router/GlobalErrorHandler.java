@@ -1,5 +1,8 @@
 package com.platform.oecp.admin.router;
 
+import com.platform.oecp.admin.controller.AliAuthController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
@@ -24,6 +27,8 @@ import java.util.Map;
 @Component
 @Order(-2)
 public class GlobalErrorHandler extends AbstractErrorWebExceptionHandler {
+
+    private  final Logger logger = LoggerFactory.getLogger(GlobalErrorHandler.class);
 
 
     public GlobalErrorHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties, ApplicationContext applicationContext, ServerCodecConfigurer configurer) {
@@ -55,7 +60,10 @@ public class GlobalErrorHandler extends AbstractErrorWebExceptionHandler {
     private Mono<ServerResponse> renderErrorResponse(
             ServerRequest request) {
 
-        Map<String, Object> errorPropertiesMap = getErrorAttributes(request, false);
+        Map<String, Object> errorPropertiesMap = getErrorAttributes(request, true);
+        if(errorPropertiesMap.get("trace")!=null){
+            logger.error("{}",errorPropertiesMap.get("trace").toString());
+        }
         BaseResponse baseResponse = BaseResponse.fail(errorPropertiesMap.get("status").toString(),
                 (String) errorPropertiesMap.get("message"));
         return ServerResponse.status(HttpStatus.OK)
