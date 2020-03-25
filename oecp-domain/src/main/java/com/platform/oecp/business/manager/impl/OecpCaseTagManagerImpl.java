@@ -63,5 +63,11 @@ public class OecpCaseTagManagerImpl implements OecpCaseTagManager{
 
     }
 
+    @Override
+    public int removeOecpCaseTagByCaseId(Long caseId) {
+
+        return oecpCaseTagMapper.removeOecpCaseTagByCaseId(caseId);
+    }
+
 
 }

@@ -68,4 +68,14 @@ public class OecpErrorCaseProvider implements ProviderMethodResolver {
             return sql.toString();
     }
 
+    public String removeOecpErrorCaseByCodeIdAndCaseId(long codeId,long caseId){
+        SQL sql = new SQL() {{
+            UPDATE("oecp_error_case");
+            SET("del_flag = 1");
+        }};
+        sql.WHERE("code_id = #{codeId}");
+        sql.WHERE("case_id = #{caseId}");
+        return sql.toString();
+    }
+
 }

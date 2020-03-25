@@ -60,4 +60,13 @@ public class OecpCaseTagProvider implements ProviderMethodResolver {
             return sql.toString();
     }
 
+    public String removeOecpCaseTagByCaseId(long caseId){
+        SQL sql = new SQL() {{
+            UPDATE("oecp_case_tag");
+            SET("delete_flag = 1");
+        }};
+        sql.WHERE("case_id = #{caseId}");
+        return sql.toString();
+    }
+
 }

@@ -2,7 +2,7 @@ package com.platform.oecp.business.manager;
 
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.platform.oecp.factory.OecpSysUserDoFactory;
-import com.platform.oecp.models.OecpCommonConstants;
+import com.platform.oecp.common.OecpCommonConstants;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

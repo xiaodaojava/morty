@@ -23,6 +23,6 @@ public interface OecpCaseTagManager {
 
     public int removeOecpCaseTagById(Long id);
 
-
+    int removeOecpCaseTagByCaseId(Long caseId);
 
 }

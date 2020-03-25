@@ -56,4 +56,12 @@ public interface OecpCaseTagMapper {
     */
     @UpdateProvider(type = OecpCaseTagProvider.class)
     int removeOecpCaseTagById(long id);
+
+    /**
+     * 案列下的tag批量删除
+     * @param caseId
+     * @return
+     */
+    @UpdateProvider(type = OecpCaseTagProvider.class)
+    int removeOecpCaseTagByCaseId(long caseId);
 }

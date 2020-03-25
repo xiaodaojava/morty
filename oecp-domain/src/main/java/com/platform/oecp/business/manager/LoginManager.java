@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.platform.oecp.models.OecpCommonConstants.PASSWORD_IS_WRONG;
-import static com.platform.oecp.models.OecpCommonConstants.PLEASE_REGISTER_ERROR;
+import static com.platform.oecp.common.OecpCommonConstants.PASSWORD_IS_WRONG;
+import static com.platform.oecp.common.OecpCommonConstants.PLEASE_REGISTER_ERROR;
 
 /**
  * @version 1.0

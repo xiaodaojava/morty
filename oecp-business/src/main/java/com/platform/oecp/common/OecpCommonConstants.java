@@ -1,4 +1,4 @@
-package com.platform.oecp.models;
+package com.platform.oecp.common;
 
 /**
  * @version 1.0
@@ -46,5 +46,16 @@ public class OecpCommonConstants {
      * 老密码错误-异常码
      */
     public static final int OLD_PASSWORD_ERROR = 409;
-
+    /**
+     * 错误码存在重复的定义
+     */
+    public static final int ERROR_CODE_REPEAT = 410;
+    /**
+     * 删除错误码失败
+     */
+    public static final int DELETE_ERROR_INFO_FAIL = 411;
+    /**
+     * 删除案例失败
+     */
+    public static final int DELETE_CASE_INFO_FAIL = 412;
 }
