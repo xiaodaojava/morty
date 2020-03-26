@@ -1,6 +1,8 @@
 package com.platform.oecp.business.manager;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
+import com.platform.oecp.common.AccountRepo;
 import com.platform.oecp.factory.OecpSysUserDoFactory;
 import com.platform.oecp.common.OecpCommonConstants;
 import com.platform.oecp.models.dos.OecpSysUserDO;
@@ -8,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import red.lixiang.tools.spring.redis.RedisSpringTools;
 
 import java.util.Date;
 import java.util.Map;
@@ -35,6 +38,9 @@ public class UserInfoManager {
 
     @Autowired
     private OecpSysUserDoFactory oecpSysUserDoFactory;
+
+    @Autowired
+    private RedisSpringTools redisUtils;
 
     /**
      * @author: LILIANG
@@ -66,16 +72,15 @@ public class UserInfoManager {
             oecpSysUser.setThirdPartyId(alipayUserInfoShareResponse.getUserId());
             oecpSysUser.setUserStatus(alipayUserInfoShareResponse.getUserStatus());
             oecpSysUser.setUserType(alipayUserInfoShareResponse.getUserType());
-            oecpSysUserManager.saveOecpSysUser(oecpSysUser);
         }
         //不存在就创建用户，并为用户在平台上自动初始化创建账号和密码，后期用户可以自动修改
         if(oecpSysUser == null){
             OecpSysUserDO newOecpSysUserDO = oecpSysUserDoFactory.createNewInstance(alipayUserInfoShareResponse);
-            newOecpSysUserDO = oecpSysUserManager.saveOecpSysUser(newOecpSysUserDO);
-            logger.info("新用户信息已被平台创建，信息内容为:{}", newOecpSysUserDO);
             oecpSysUser = newOecpSysUserDO;
+            logger.info("新用户信息已被平台创建，信息内容为:{}", newOecpSysUserDO);
         }
         Map<String,Object> result = loginManager.tokenAndUserResponse(oecpSysUser.getAccountId(),oecpSysUser.getPassword(),oecpSysUser);
+        oecpSysUserManager.saveOecpSysUser(oecpSysUser);
         return result;
     }
 }

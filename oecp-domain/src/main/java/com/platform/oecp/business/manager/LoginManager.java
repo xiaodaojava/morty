@@ -1,6 +1,7 @@
 package com.platform.oecp.business.manager;
 
 import com.alibaba.fastjson.JSON;
+import com.platform.oecp.common.AccountRepo;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.qc.OecpSysUserQC;
 import com.platform.oecp.utils.JavaWebToken;
@@ -106,6 +107,8 @@ public class LoginManager {
         redisUtils.set("TOKEN_TELL_KEY_" + token,accountJSON,Long.valueOf(1800));
         result.put(USER_KEY,oecpSysUserDO);
         result.put(TOKEN_KEY,token);
+        AccountRepo.setToken(token);
+        AccountRepo.setAccountInMemory(oecpSysUserDO);
         return result;
     }
 }

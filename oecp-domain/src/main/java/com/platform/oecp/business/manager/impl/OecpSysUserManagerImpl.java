@@ -107,18 +107,17 @@ public class OecpSysUserManagerImpl implements OecpSysUserManager{
                 }
                 //再验证老密码是否正确
                 OecpSysUserQC qc = new OecpSysUserQC();
-                qc.setId(oecpUserInfoRequestDto.getId());
+                qc.setAccountId(oecpUserInfoRequestDto.getAccountId());
                 qc.setPage(Page.getOne());
                 List<OecpSysUserDO> oecpSysUserDOS = queryOecpSysUser(qc);
                 oecpSysUserDO = ListTools.getOne(oecpSysUserDOS);
-                if (!oldPassMd5.equals(DigestUtils.md5DigestAsHex(oecpSysUserDO.getPassword().getBytes()))) {
+                if (!oldPassMd5.equals(oecpSysUserDO.getPassword())) {
                     throw new BusinessException("填写老密码错误！", (projectCode +""+ OLD_PASSWORD_ERROR));
                 }
             }
             oecpSysUserDO.setPassword(DigestUtils.md5DigestAsHex(oecpUserInfoRequestDto.getNewPassword().getBytes()));
         }
         oecpSysUserDO.setAccountId(oecpUserInfoRequestDto.getAccountId());
-        oecpSysUserDO.setId(oecpUserInfoRequestDto.getId());
         //更新用户信息-密码和账户
         int updateFlag = oecpSysUserMapper.updateOecpSysUser(oecpSysUserDO);
         if(updateFlag > 0){
