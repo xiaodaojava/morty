@@ -21,7 +21,7 @@
     "errorCase": {
       "properties": {
         "id": {
-          "type": "long"
+          "type": "keyword"
         },
         "title": {
           "type": "text",
@@ -43,7 +43,7 @@
     "caseTag": {
       "properties": {
         "id": {
-          "type": "long"
+          "type": "keyword"
         },
         "tag": {
           "type": "keyword"
@@ -53,7 +53,7 @@
     "errorTag": {
       "properties": {
         "id": {
-          "type": "long"
+          "type": "keyword"
         },
         "tag": {
           "type": "keyword"
