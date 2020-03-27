@@ -69,130 +69,130 @@
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
-import { health } from "@/api/test";
-import axios from "axios";
-import SocialSign from "./components/SocialSignin";
-import { getAuthInfo, authRedirect } from "@/api/aliLogin";
+import { validUsername } from '@/utils/validate'
+import { health } from '@/api/test'
+import axios from 'axios'
+import SocialSign from './components/SocialSignin'
+import { authRedirect } from '@/api/aliLogin'
 export default {
-  name: "Login",
+  name: 'Login',
   components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error("请输入正确的用户名"));
+        callback(new Error('请输入正确的用户名'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("密码不低于6位"));
+        callback(new Error('密码不低于6位'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       loginForm: {
-        username: "HZUVWxpO",
-        password: "666888"
+        username: 'HZUVWxpO',
+        password: '666888'
       },
       aliLoginForm: {
-        accessToken: "",
-        appId: ""
+        accessToken: '',
+        appId: ''
       },
       loginRules: {
         username: [
-          { required: true, trigger: "blur", validator: validateUsername }
+          { required: true, trigger: 'blur', validator: validateUsername }
         ],
         password: [
-          { required: true, trigger: "blur", validator: validatePassword }
+          { required: true, trigger: 'blur', validator: validatePassword }
         ]
       },
       loading: false,
-      passwordType: "password",
+      passwordType: 'password',
       redirect: undefined,
       showDialog: false,
-      authCode: ""
-    };
+      authCode: ''
+    }
   },
   watch: {
     $route: {
       handler: function(route) {
-        this.redirect = route.query && route.query.redirect;
+        this.redirect = route.query && route.query.redirect
       },
       immediate: true
     }
   },
   methods: {
     showPwd() {
-      if (this.passwordType === "password") {
-        this.passwordType = "";
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
       } else {
-        this.passwordType = "password";
+        this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
-      });
+        this.$refs.password.focus()
+      })
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true;
+          this.loading = true
           this.$store
-            .dispatch("user/login", this.loginForm)
+            .dispatch('user/login', this.loginForm)
             .then(() => {
-              console.log("382798237493284789243");
-              this.$router.push({ path: this.redirect || "/" });
-              this.loading = false;
+              this.$message.success('登录成功')
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
             })
             .catch(error => {
-              console.log(error);
-              this.loading = false;
-            });
+              console.log(error)
+              this.loading = false
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     getAuthCode(data) {
-      let _this = this;
-      this.authCode = data;
-      console.log("authCode为:" + data);
+      let _this = this
+      this.authCode = data
+      console.log('authCode为:' + data)
       if (
         data != undefined &&
-        data != "undefined" &&
+        data != 'undefined' &&
         data != null &&
-        data != ""
+        data != ''
       ) {
-        console.log("authCode为:" + data);
+        console.log('authCode为:' + data)
         authRedirect(data, this.aliLoginForm.appId)
           .then(res => {
-            console.log(res);
+            console.log(res)
             if (res.code != 20000 && res.code != null) {
-              this.$message.error("登陆出错,请刷新页面重新尝试");
-              return;
+              this.$message.error('登陆出错,请刷新页面重新尝试')
+              return
             }
-            this.aliLoginForm.accessToken = res.accessToken;
+            this.aliLoginForm.accessToken = res.accessToken
             this.$store
-              .dispatch("user/aliLogin", this.aliLoginForm)
+              .dispatch('user/aliLogin', this.aliLoginForm)
               .then(() => {
-                this.$router.push({ path: this.redirect || "/" });
-              });
-            console.log("登录成功");
+                this.$router.push({ path: this.redirect || '/' })
+              })
+            this.$message.success('登录成功')
           })
           .catch(error => {
-            console.log(error);
-            this.$message.error("获取token错误:", error);
-          });
+            console.log(error)
+            this.$message.error('获取token错误:', error)
+          })
       }
     },
     getAppId(appId) {
-      this.aliLoginForm.appId = appId;
+      this.aliLoginForm.appId = appId
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
