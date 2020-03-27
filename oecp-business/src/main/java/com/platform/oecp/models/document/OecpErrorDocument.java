@@ -8,19 +8,12 @@ import java.util.List;
  */
 public class OecpErrorDocument {
 
-    private String id;
     private String errorCode;
     private String errorMsg;
     private String errorDesc;
-    private List<String> errorTag;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private List<ErrorTag> errorTag;
+    private List<ErrorCase> errorCase;
+    private List<CaseTag> caseTag;
 
     public String getErrorCode() {
         return errorCode;
@@ -46,22 +39,27 @@ public class OecpErrorDocument {
         this.errorDesc = errorDesc;
     }
 
-    public List<String> getErrorTag() {
+    public List<ErrorTag> getErrorTag() {
         return errorTag;
     }
 
-    public void setErrorTag(List<String> errorTag) {
+    public void setErrorTag(List<ErrorTag> errorTag) {
         this.errorTag = errorTag;
     }
 
-    @Override
-    public String toString() {
-        return "OecpErrorDocument{" +
-                "id='" + id + '\'' +
-                ", errorCode='" + errorCode + '\'' +
-                ", errorMsg='" + errorMsg + '\'' +
-                ", errorDesc='" + errorDesc + '\'' +
-                ", errorTag=" + errorTag +
-                '}';
+    public List<ErrorCase> getErrorCase() {
+        return errorCase;
+    }
+
+    public void setErrorCase(List<ErrorCase> errorCase) {
+        this.errorCase = errorCase;
+    }
+
+    public List<CaseTag> getCaseTag() {
+        return caseTag;
+    }
+
+    public void setCaseTag(List<CaseTag> caseTag) {
+        this.caseTag = caseTag;
     }
 }

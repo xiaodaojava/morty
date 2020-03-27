@@ -73,8 +73,8 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     }
 
     @Override
-    public OecpErrorDocument findById(String id) throws IOException {
-        GetRequest getRequest = new GetRequest(ERROR_CODE_INDEX, id);
+    public OecpErrorDocument findByErrorCode(String errorCode) throws IOException {
+        GetRequest getRequest = new GetRequest(ERROR_CODE_INDEX, errorCode);
         GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
         Map<String, Object> resultMap = getResponse.getSource();
         return convertMapToProfileDocument(resultMap);
@@ -83,7 +83,7 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     @Override
     public String editErrorCode(OecpErrorDocument document) throws IOException {
         IndexRequest indexRequest = new IndexRequest(ERROR_CODE_INDEX);
-        indexRequest.id(document.getId());
+        indexRequest.id(document.getErrorCode());
         // 如果属性和 mapping 映射文件不一致，会覆盖
         indexRequest.source(convertProfileDocumentToMap(document));
         IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
@@ -98,11 +98,17 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
         searchRequest.indices(ERROR_CODE_INDEX);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
-                .should(QueryBuilders.matchQuery("id", info))
                 .should(QueryBuilders.matchQuery("errorCode", info))
                 .should(QueryBuilders.matchQuery("errorMsg", info))
                 .should(QueryBuilders.matchQuery("errorDesc", info))
-                .should(QueryBuilders.matchQuery("errorTag", info));
+                .should(QueryBuilders.matchQuery("errorTag.id", info))
+                .should(QueryBuilders.matchQuery("errorTag.tag", info))
+                .should(QueryBuilders.matchQuery("errorCase.id", info))
+                .should(QueryBuilders.matchQuery("errorCase.title", info))
+                .should(QueryBuilders.matchQuery("errorCase.titleForSearch", info))
+                .should(QueryBuilders.matchQuery("errorCase.contentForSearch", info))
+                .should(QueryBuilders.matchQuery("caseTag.id", info))
+                .should(QueryBuilders.matchQuery("caseTag.tag", info));
         searchSourceBuilder.query(boolQuery);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse =
@@ -128,8 +134,8 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     }
 
     @Override
-    public String deleteErrorCode(String id) throws IOException {
-        DeleteRequest deleteRequest = new DeleteRequest(ERROR_CODE_INDEX, id);
+    public String deleteErrorCode(String errorCode) throws IOException {
+        DeleteRequest deleteRequest = new DeleteRequest(ERROR_CODE_INDEX, errorCode);
         DeleteResponse response = client.delete(deleteRequest, RequestOptions.DEFAULT);
         System.out.println("删除结果：" + response.getResult());
         return response.getResult().name();

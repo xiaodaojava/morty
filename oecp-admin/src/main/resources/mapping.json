@@ -1,28 +1,64 @@
 {
   "properties": {
-    "id":{
-      "type":"keyword"
-    },
-    "errorCode":{
+    "errorCode": {
       "type": "keyword"
     },
-    "errorMsg":{
-      "type":"text",
+    "errorMsg": {
+      "type": "text",
       "analyzer": "ik_max_word",
       "search_analyzer": "ik_max_word",
       "fields": {
-        "msgSuggest":{
-          "type":"completion"
+        "msgSuggest": {
+          "type": "completion"
         }
       }
     },
-    "errorDesc":{
-      "type":"text",
+    "errorDesc": {
+      "type": "text",
       "analyzer": "ik_max_word",
       "search_analyzer": "ik_max_word"
     },
-    "errorTag":{
-      "type":"keyword"
+    "errorCase": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        },
+        "titleForSearch": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        },
+        "contentForSearch": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        }
+      }
+    },
+    "caseTag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "tag": {
+          "type": "keyword"
+        }
+      }
+    },
+    "errorTag": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "tag": {
+          "type": "keyword"
+        }
+      }
     }
   }
 }

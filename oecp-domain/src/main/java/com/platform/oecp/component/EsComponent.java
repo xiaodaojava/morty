@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @author: dingaimin
  * @date: 2020/3/20 21:43
  */
-//@Configuration
+@Configuration
 public class EsComponent {
 
     @Value("${elasticsearch.host}")
