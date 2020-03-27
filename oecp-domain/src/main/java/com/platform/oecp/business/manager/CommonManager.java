@@ -87,6 +87,7 @@ public class CommonManager {
             oecpErrorTagDO.setTagId(oecpTagDO.getId());
             oecpErrorTagManager.saveOecpErrorTag(oecpErrorTagDO);
         }
+        //将信息更新到search表
         return oecpErrorInfoDO;
     }
 
@@ -124,6 +125,8 @@ public class CommonManager {
             oecpErrorAndCaseInfoDO.setCaseId(oecpCaseInfoDO.getId());
             oecpErrorCaseManager.saveOecpErrorCase(oecpErrorAndCaseInfoDO);
         }
+        //将信息更新到search表
+
         return oecpCaseInfoDO;
     }
 
