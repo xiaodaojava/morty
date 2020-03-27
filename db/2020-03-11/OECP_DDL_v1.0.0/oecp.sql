@@ -117,7 +117,8 @@ CREATE TABLE `oecp_error_info`  (
   `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注信息',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除（0显示；1隐藏）',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `code`(`code`) USING BTREE,
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '错误码平台错误码表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -138,6 +139,25 @@ CREATE TABLE `oecp_error_tag`  (
   INDEX `code_id`(`code_id`) USING BTREE,
   INDEX `tag_id`(`tag_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '错误码平台错误码标签表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for oecp_case_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `oecp_case_tag`;
+CREATE TABLE `oecp_case_tag`  (
+  `id` bigint(32) NOT NULL COMMENT '主键UUID',
+  `case_id` bigint(20) NULL DEFAULT NULL COMMENT '案例主键ID',
+  `tag_id` bigint(20) NULL DEFAULT NULL COMMENT '标签主键ID',
+  `create_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新人',
+  `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注信息',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除（0显示；1隐藏）',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `case_id`(`case_id`) USING BTREE,
+  INDEX `tag_id`(`tag_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '错误码平台案例标签表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for oecp_org

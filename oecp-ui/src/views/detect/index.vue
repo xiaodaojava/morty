@@ -3,7 +3,7 @@
     <div class="row_border">
       <el-row :gutter="20">
         <el-col :span="20"><h2>错误码代码检测</h2></el-col>
-        <el-col :span="4"><el-button type="success">提交检测</el-button></el-col>
+        <el-col :span="4"><el-button type="success" :loading="listLoading" @click="detectCode">提交检测</el-button></el-col>
       </el-row>
     </div>
     <div>
@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { detect } from '@/api/codeDetect'
+import axios from "axios";
 
 export default {
   data() {
@@ -32,6 +33,16 @@ export default {
   },
   methods: {
     fetchData() {
+    },
+    detectCode() {
+      detect({'code': this.code}).then(res=> {
+        this.$message({
+          message: '恭喜你，检测不存在未定义错误码',
+          type: 'success'
+        });
+      }).catch(error => {
+        this.$message.error('错了哦：' + error);
+      })
     }
   }
 }

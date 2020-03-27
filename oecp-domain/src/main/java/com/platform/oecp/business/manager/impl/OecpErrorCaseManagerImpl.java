@@ -1,22 +1,17 @@
 package com.platform.oecp.business.manager.impl;
 
+import com.platform.oecp.business.manager.OecpErrorCaseManager;
+import com.platform.oecp.dao.OecpCaseInfoMapper;
+import com.platform.oecp.dao.OecpErrorCaseMapper;
 import com.platform.oecp.models.dos.OecpCaseInfoDO;
 import com.platform.oecp.models.dos.OecpErrorAndCaseInfoDO;
 import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
-import red.lixiang.tools.jdk.SnowflakeGenerator;
-
-import com.platform.oecp.business.manager.OecpErrorCaseManager;
-import com.platform.oecp.dao.OecpCaseInfoMapper;
-import com.platform.oecp.dao.OecpErrorCaseMapper;
-import red.lixiang.tools.common.mybatis.model.Page;
-import red.lixiang.tools.common.mybatis.model.Sort;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import red.lixiang.tools.jdk.SnowflakeGenerator;
 
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -103,6 +98,11 @@ public class OecpErrorCaseManagerImpl implements OecpErrorCaseManager{
 
         return oecpErrorCaseMapper.removeOecpErrorCaseById(id);
 
+    }
+
+    @Override
+    public int removeOecpErrorCaseByCodeIdAndCaseId(Long codeId, Long caseId) {
+        return oecpErrorCaseMapper.removeOecpErrorCaseByCodeIdAndCaseId(codeId,caseId);
     }
 
 

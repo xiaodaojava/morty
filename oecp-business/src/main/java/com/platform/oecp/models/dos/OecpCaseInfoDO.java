@@ -4,7 +4,6 @@ import com.platform.oecp.common.DataEntity;
 import red.lixiang.tools.common.mybatis.model.SqlField;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author lixiang
@@ -27,7 +26,7 @@ public class OecpCaseInfoDO extends DataEntity<OecpCaseInfoDO> implements Serial
    @SqlField
    private String content;
 
-   public String getTitleForSearch() {
+    public String getTitleForSearch() {
         return this.titleForSearch;
    }
 

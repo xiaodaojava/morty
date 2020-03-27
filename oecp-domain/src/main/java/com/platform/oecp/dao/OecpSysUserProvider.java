@@ -51,7 +51,7 @@ public class OecpSysUserProvider implements ProviderMethodResolver {
 
         }};
         MapperUtils.richUpdate(sql, oecpSysUser);
-        sql.WHERE("id = #{id}");
+        sql.WHERE("account_id = #{accountId}");
         return sql.toString();
     }
 

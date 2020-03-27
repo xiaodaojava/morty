@@ -12,18 +12,9 @@ public class OecpErrorInfoQC extends BaseQC {
    /** UUID主键  */
    private Long id;
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
+   /** 错误码 */
+   private String code;
 
-    
-    
 
     public Long getId() {
         return this.id;
@@ -33,17 +24,15 @@ public class OecpErrorInfoQC extends BaseQC {
         this.id = id;
         return this;
     }
-     
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public static OecpErrorInfoQC create(){
         return new OecpErrorInfoQC();

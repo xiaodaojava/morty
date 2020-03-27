@@ -24,6 +24,8 @@ public interface OecpErrorCaseManager {
 
     public int removeOecpErrorCaseById(Long id);
 
+    int removeOecpErrorCaseByCodeIdAndCaseId(Long codeId,Long caseId);
+
 
 
 }
