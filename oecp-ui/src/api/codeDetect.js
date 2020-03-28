@@ -7,7 +7,7 @@ export function detect(data) {
     },
     url: '/oecpCodeDetect',
     method: 'post',
-    data: JSON.stringify({"codeDto":data})
+    data: data
   })
 }
 
