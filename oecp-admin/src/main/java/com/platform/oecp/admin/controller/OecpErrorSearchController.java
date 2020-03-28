@@ -31,9 +31,9 @@ public class OecpErrorSearchController {
         return new ResponseEntity(service.editErrorCode(document), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public OecpErrorDocument findById(@PathVariable String id) throws Exception {
-        return service.findById(id);
+    @GetMapping("/{errorCode}")
+    public OecpErrorDocument findById(@PathVariable String errorCode) throws Exception {
+        return service.findByErrorCode(errorCode);
     }
 
     @GetMapping(value = "/suggest")
@@ -46,8 +46,8 @@ public class OecpErrorSearchController {
         return service.searchErrorCode(info);
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteErrorCode(@PathVariable String id) throws Exception {
-        return service.deleteErrorCode(id);
+    @DeleteMapping("/{errorCode}")
+    public String deleteErrorCode(@PathVariable String errorCode) throws Exception {
+        return service.deleteErrorCode(errorCode);
     }
 }

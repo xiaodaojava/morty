@@ -15,7 +15,7 @@ public interface OecpErrorInfoEsManager {
 
     public String createErrorCodeIndex() throws IOException;
 
-    public OecpErrorDocument findById(String id) throws IOException;
+    public OecpErrorDocument findByErrorCode(String errorCode) throws IOException;
 
     public String editErrorCode(OecpErrorDocument document) throws IOException;
 

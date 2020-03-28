@@ -1,9 +1,9 @@
 package com.platform.oecp.service.test.mybatisTests;
 
 import com.platform.oecp.service.ServiceApplicationTests;
-import com.platform.tools.mybatis.generate.MybatisGenerateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import red.lixiang.tools.common.mybatis.generate.MybatisGenerateUtils;
 
 import javax.sql.DataSource;
 
