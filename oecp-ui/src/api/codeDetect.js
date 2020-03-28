@@ -2,10 +2,12 @@ import request from '@/utils/request'
 
 export function detect(data) {
   return request({
+    headers: {
+      'Content-Type': 'application/json'
+    },
     url: '/oecpCodeDetect',
     method: 'post',
-    data: data
-    //data
+    data: JSON.stringify({"codeDto":data})
   })
 }
 
