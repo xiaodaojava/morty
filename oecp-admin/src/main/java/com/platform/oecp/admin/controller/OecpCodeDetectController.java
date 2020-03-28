@@ -2,10 +2,7 @@ package com.platform.oecp.admin.controller;
 
 import com.platform.oecp.business.manager.CodeDetectManager;
 import com.platform.oecp.dto.CodeDto;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import red.lixiang.tools.base.BaseResponse;
 
 import javax.annotation.Resource;
@@ -35,5 +32,14 @@ public class OecpCodeDetectController {
         baseResponse.setData("OK");
         return baseResponse;
     }
+
+    @GetMapping("/health")
+    public BaseResponse<String> health() {
+        BaseResponse<String> baseResponse = new BaseResponse<>();
+        baseResponse.setData("OK");
+        return baseResponse;
+    }
+
+
 
 }

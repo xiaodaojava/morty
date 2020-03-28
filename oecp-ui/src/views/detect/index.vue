@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { detect } from '@/api/codeDetect'
+import { detect,health } from '@/api/codeDetect'
 import axios from "axios";
 
 export default {
@@ -33,6 +33,7 @@ export default {
   },
   methods: {
     fetchData() {
+      health();
     },
     detectCode() {
       detect({'code': this.code}).then(res=> {
