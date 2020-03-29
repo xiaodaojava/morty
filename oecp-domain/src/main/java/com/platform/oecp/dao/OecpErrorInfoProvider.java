@@ -40,7 +40,7 @@ public class OecpErrorInfoProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT(TABLE_FIELDS);
             FROM("oecp_error_info");
-            WHERE("code='" + code + "'");
+            WHERE("code = #{id}");
         }};
         return sql.toString();
     }
