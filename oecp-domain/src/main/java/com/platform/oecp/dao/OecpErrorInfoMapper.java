@@ -2,6 +2,7 @@ package com.platform.oecp.dao;
 
 import com.platform.oecp.models.dos.OecpErrorInfoDO;
 import com.platform.oecp.models.qc.OecpErrorInfoQC;
+import com.platform.oecp.dto.ErrorInfoAndCaseDto;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 

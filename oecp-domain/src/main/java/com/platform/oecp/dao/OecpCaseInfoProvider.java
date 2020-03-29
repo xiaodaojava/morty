@@ -37,7 +37,7 @@ public class OecpCaseInfoProvider implements ProviderMethodResolver {
     }
 
     public String insertOecpCaseInfo(OecpCaseInfoDO oecpCaseInfo){
-//        oecpCaseInfo.setId(SnowflakeGenerator.generateKey());
+        oecpCaseInfo.setId(SnowflakeGenerator.generateKey());
         SQL sql = new SQL() {{
             INSERT_INTO("oecp_case_info");
         }};

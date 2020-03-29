@@ -17,11 +17,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-	compile group: 'com.janeluo', name: 'ikanalyzer', version: '2012_u6'
-	compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.7.2'
-	compile group: 'org.apache.lucene', name: 'lucene-core', version: '8.4.0'
-	compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.7.2'
-	compile group: 'com.hankcs', name: 'hanlp', version: 'portable-1.7.7'
 	compile group: 'com.alipay.sdk', name: 'alipay-sdk-java', version: '4.6.0.ALL'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'

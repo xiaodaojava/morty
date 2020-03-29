@@ -15,6 +15,9 @@ public class OecpErrorInfoQC extends BaseQC {
    /** 错误码 */
    private String code;
 
+    /** 错误码创建人 */
+   private String createBy;
+
 
     public Long getId() {
         return this.id;
@@ -32,6 +35,14 @@ public class OecpErrorInfoQC extends BaseQC {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     public static OecpErrorInfoQC create(){

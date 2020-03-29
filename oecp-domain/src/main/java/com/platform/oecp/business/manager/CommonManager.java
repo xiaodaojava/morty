@@ -1,5 +1,8 @@
 package com.platform.oecp.business.manager;
 
+import com.platform.oecp.dao.OecpErrorInfoAndCaseMapper;
+import com.platform.oecp.dto.CaseInfoDto;
+import com.platform.oecp.dto.ErrorInfoAndCaseDto;
 import com.platform.oecp.factory.OecpCaseInfoFactory;
 import com.platform.oecp.factory.OecpErrorInfoFactory;
 import com.platform.oecp.models.dos.*;
@@ -10,12 +13,14 @@ import com.platform.oecp.models.request.OecpCaseInfoRequest;
 import com.platform.oecp.models.request.OecpDeleteCaseInfoRequest;
 import com.platform.oecp.models.request.OecpErrorInfoRequest;
 import com.platform.oecp.models.request.OecpTagRequest;
+import com.platform.oecp.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import red.lixiang.tools.common.mybatis.model.Page;
 import red.lixiang.tools.jdk.ListTools;
+import red.lixiang.tools.spring.redis.RedisSpringTools;
 
 import java.util.List;
 
@@ -53,14 +58,49 @@ public class CommonManager {
     @Autowired
     private OecpCaseTagManager oecpCaseTagManager;
 
+    @Autowired
+    private OecpErrorInfoAndCaseMapper oecpErrorInfoAndCaseMapper;
+
+    @Autowired
+    private RedisSpringTools redisUtils;
+
     public CommonManager() {
     }
 
-    public List<OecpErrorInfoDO> getErrorInfos(){
-        //错误信息带标签
-//        oecpErrorInfoManager.queryOecpErrorInfo();
-        //案例信息带标签
-        return null;
+    public List<ErrorInfoAndCaseDto> getErrorInfos(){
+        //如果同一个人先从缓存拿
+//        redisUtils.get("ERROR_INFO_"+userId);
+//        if(){
+//            String accountJSON = (String)redisUtils.get("TOKEN_TELL_KEY_" + token);
+//            if(StringTools.isBlank(accountJSON)){
+//                OecpSysUserDO vo = JSON.parseObject(accountJSON,OecpSysUserDO.class);
+//            }
+//        }
+        OecpSysUserDO user = UserUtil.currentUser();
+//        if(user != null) {
+//            //错误信息带标签
+//            OecpErrorInfoQC oecpErrorInfoQC = new OecpErrorInfoQC();
+//            oecpErrorInfoQC.setCreateBy(String.valueOf(user.getId()));
+//            List<OecpErrorInfoDO> oecpErrorInfoDOS = oecpErrorInfoManager.queryOecpErrorInfo(oecpErrorInfoQC);
+//            //案例信息带标签
+//            for(OecpErrorInfoDO oecpErrorInfoDO:oecpErrorInfoDOS){
+//                //错误下的案列
+//                OecpErrorCaseQC oecpErrorCaseQC = new OecpErrorCaseQC();
+//                oecpErrorCaseQC.setCodeId(oecpErrorInfoDO.getId());
+//                List<OecpErrorCaseDO> oecpErrorAndCaseInfoDOS = oecpErrorCaseManager.queryOecpErrorCase(oecpErrorCaseQC);
+//                for(OecpErrorCaseDO oecpErrorCaseDO:oecpErrorAndCaseInfoDOS){
+//                    OecpCaseInfoQC oecpCaseInfoQC = new OecpCaseInfoQC();
+//                    oecpCaseInfoQC.setId(oecpErrorCaseDO.getCaseId());
+//                    List<OecpCaseInfoDO> oecpCaseInfoDOS = oecpCaseInfoManager.queryOecpCaseInfo(oecpCaseInfoQC);
+//                }
+//            }
+//        }
+        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = oecpErrorInfoAndCaseMapper.errorInfoList(String.valueOf(user.getId()));
+        for(ErrorInfoAndCaseDto errorInfoAndCaseDto:errorInfoAndCaseDtos){
+            List<CaseInfoDto> caseInfoDtos = oecpErrorInfoAndCaseMapper.caseInfoList(String.valueOf(user.getId()),errorInfoAndCaseDto.getCodeId());
+            errorInfoAndCaseDto.setCaseInfos(caseInfoDtos);
+        }
+        return errorInfoAndCaseDtos;
     }
 
     /**
@@ -75,17 +115,40 @@ public class CommonManager {
         //保存错误码信息
         OecpErrorInfoDO oecpErrorInfoDO = oecpErrorInfoFactory.createNewInstance(oecpErrorInfoRequest);
         oecpErrorInfoDO = oecpErrorInfoManager.saveOecpErrorInfo(oecpErrorInfoDO);
-        //保存tag
-        for(OecpTagRequest tag : oecpErrorInfoRequest.getTags()){
-            OecpTagDO oecpTagDO = new OecpTagDO();
-            oecpTagDO.setId(tag.getTagId());
-            oecpTagDO.setTag(tag.getTag());
-            oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
-            //保存错误码tag信息oecp_error_tag
-            OecpErrorTagDO oecpErrorTagDO = new OecpErrorTagDO();
-            oecpErrorTagDO.setCodeId(oecpErrorInfoDO.getId());
-            oecpErrorTagDO.setTagId(oecpTagDO.getId());
-            oecpErrorTagManager.saveOecpErrorTag(oecpErrorTagDO);
+        if(oecpErrorInfoDO != null) {
+            //保存tag
+            for (OecpTagRequest tag : oecpErrorInfoRequest.getTags()) {
+                OecpTagDO oecpTagDO = new OecpTagDO();
+                oecpTagDO.setId(tag.getTagId());
+                oecpTagDO.setTag(tag.getTag());
+                oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
+                //保存错误码tag信息oecp_error_tag
+                OecpErrorTagDO oecpErrorTagDO = new OecpErrorTagDO();
+                oecpErrorTagDO.setCodeId(oecpErrorInfoDO.getId());
+                oecpErrorTagDO.setTagId(oecpTagDO.getId());
+                oecpErrorTagManager.saveOecpErrorTag(oecpErrorTagDO);
+            }
+            //保存案例信息
+            for (OecpCaseInfoRequest oecpCaseInfoRequest : oecpErrorInfoRequest.getOecpCaseInfoRequests()) {
+                OecpCaseInfoDO oecpCaseInfoDO = oecpCaseInfoFactory.createNewInstance(oecpCaseInfoRequest);
+                oecpCaseInfoDO = oecpCaseInfoManager.saveOecpCaseInfo(oecpCaseInfoDO);
+                for (OecpTagRequest caseTag : oecpCaseInfoRequest.getTags()) {
+                    OecpTagDO oecpTagDO = new OecpTagDO();
+                    oecpTagDO.setId(caseTag.getTagId());
+                    oecpTagDO.setTag(caseTag.getTag());
+                    oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
+                    //保存案例tag信息oecp_case_tag
+                    OecpCaseTagDO oecpCaseTagDO = new OecpCaseTagDO();
+                    oecpCaseTagDO.setCaseId(oecpCaseInfoDO.getId());
+                    oecpCaseTagDO.setTagId(oecpTagDO.getId());
+                    oecpCaseTagManager.saveOecpCaseTag(oecpCaseTagDO);
+                }
+                //保存错误码和案例关联关系
+                OecpErrorCaseDO oecpErrorCaseDO = new OecpErrorCaseDO();
+                oecpErrorCaseDO.setCodeId(oecpErrorInfoDO.getId());
+                oecpErrorCaseDO.setCaseId(oecpCaseInfoDO.getId());
+                oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCaseDO);
+            }
         }
         //将信息更新到search表
         return oecpErrorInfoDO;
@@ -120,13 +183,12 @@ public class CommonManager {
         }
         if(oecpCaseInfoDO != null && StringUtils.isEmpty(oecpCaseInfoRequest.getCaseId())) {
             //保存错误案例关联信息
-            OecpErrorAndCaseInfoDO oecpErrorAndCaseInfoDO = new OecpErrorAndCaseInfoDO();
-            oecpErrorAndCaseInfoDO.setCodeId(oecpCaseInfoRequest.getCodeId());
-            oecpErrorAndCaseInfoDO.setCaseId(oecpCaseInfoDO.getId());
-            oecpErrorCaseManager.saveOecpErrorCase(oecpErrorAndCaseInfoDO);
+            OecpErrorCaseDO oecpErrorCaseDO = new OecpErrorCaseDO();
+            oecpErrorCaseDO.setCodeId(oecpCaseInfoRequest.getCodeId());
+            oecpErrorCaseDO.setCaseId(oecpCaseInfoDO.getId());
+            oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCaseDO);
         }
         //将信息更新到search表
-
         return oecpCaseInfoDO;
     }
 
@@ -150,11 +212,11 @@ public class CommonManager {
             //错误案例关联进行删除
             OecpErrorCaseQC oecpErrorCaseQC = new OecpErrorCaseQC();
             oecpErrorCaseQC.setCodeId(codeId);
-            List<OecpErrorAndCaseInfoDO> oecpErrorAndCaseInfoDOS = oecpErrorCaseManager.queryOecpErrorCase(oecpErrorCaseQC);
-            for(OecpErrorAndCaseInfoDO oecpErrorAndCaseInfoDO : oecpErrorAndCaseInfoDOS){
-                oecpErrorCaseManager.removeOecpErrorCaseById(oecpErrorAndCaseInfoDO.getId());
+            List<OecpErrorCaseDO> oecpErrorAndCaseInfoDOS = oecpErrorCaseManager.queryOecpErrorCase(oecpErrorCaseQC);
+            for(OecpErrorCaseDO oecpErrorCaseDO : oecpErrorAndCaseInfoDOS){
+                oecpErrorCaseManager.removeOecpErrorCaseById(oecpErrorCaseDO.getId());
                 //案例下面的tag进行删除
-                oecpCaseTagManager.removeOecpCaseTagByCaseId(oecpErrorAndCaseInfoDO.getCaseId());
+                oecpCaseTagManager.removeOecpCaseTagByCaseId(oecpErrorCaseDO.getCaseId());
             }
             return errorInfoDeleteFlag;
         }

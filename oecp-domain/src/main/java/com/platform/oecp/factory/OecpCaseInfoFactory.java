@@ -1,8 +1,13 @@
 package com.platform.oecp.factory;
 
+import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.seg.common.Term;
 import com.platform.oecp.models.dos.OecpCaseInfoDO;
 import com.platform.oecp.models.request.OecpCaseInfoRequest;
 import org.springframework.stereotype.Component;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -25,8 +30,14 @@ public class OecpCaseInfoFactory {
         OecpCaseInfoDO oecpCaseInfoDO = new OecpCaseInfoDO();
         oecpCaseInfoDO.setTitle(oecpCaseInfoRequest.getTitle());
         oecpCaseInfoDO.setContent(oecpCaseInfoRequest.getContent());
-        oecpCaseInfoDO.setTitleForSearch(oecpCaseInfoRequest.getTitleForSearch());
-        oecpCaseInfoDO.setContentForSearch(oecpCaseInfoRequest.getContentForSearch());
+        List<Term> terms = HanLP.segment(oecpCaseInfoRequest.getTitle());
+        Iterator iterator = terms.iterator();
+        String title = null;
+        while(iterator.hasNext()){
+            title = title + iterator.next()+"|";
+        }
+        oecpCaseInfoDO.setTitleForSearch(title);
+        oecpCaseInfoDO.setContentForSearch(HanLP.extractSummary(oecpCaseInfoRequest.getTitle(), 1).get(0));
         oecpCaseInfoDO.setId(oecpCaseInfoRequest.getCaseId());
         return oecpCaseInfoDO;
     }

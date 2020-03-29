@@ -3,6 +3,7 @@ package com.platform.oecp.admin.controller;
 import com.platform.oecp.business.manager.CommonManager;
 import com.platform.oecp.business.manager.OecpErrorInfoManager;
 import com.platform.oecp.common.OecpCommonConstants;
+import com.platform.oecp.dto.ErrorInfoAndCaseDto;
 import com.platform.oecp.models.dos.OecpErrorInfoDO;
 import com.platform.oecp.models.qc.OecpErrorInfoQC;
 import com.platform.oecp.models.request.OecpErrorInfoRequest;
@@ -101,6 +102,17 @@ public class OecpErrorInfoController  {
         List<OecpErrorInfoDO> oecpErrorInfos = oecpErrorInfoManager.queryOecpErrorInfo(qc);
         if(oecpErrorInfos!=null && oecpErrorInfos.size()>0){
             return BaseResponse.success(oecpErrorInfos.get(0));
+        }else{
+            return BaseResponse.fail("no data info");
+        }
+    }
+
+    @GetMapping("/getErrorInfoAndCase")
+    @ResponseBody
+    public BaseResponse<List<ErrorInfoAndCaseDto>> getErrorInfoAndCase(){
+        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos();
+        if(errorInfoAndCaseDtos!=null && errorInfoAndCaseDtos.size()>0){
+            return BaseResponse.success(errorInfoAndCaseDtos);
         }else{
             return BaseResponse.fail("no data info");
         }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platform.oecp.dao.OecpErrorInfoAndCaseMapper">
+
+	<resultMap type="com.platform.oecp.dto.CaseInfoDto" id="caseInfoMap">
+			<id column="id" property="caseId" jdbcType="BIGINT" />
+			<result column="title_for_search" property="titleForSearch" jdbcType="VARCHAR" />
+			<result column="title" property="title" jdbcType="VARCHAR" />
+			<result column="content_for_search" property="contentForSearch" jdbcType="VARCHAR" />
+			<result column="content" property="content" jdbcType="VARCHAR" />
+			<!--  开始配置关联属性 -->
+			<collection property="caseTags" javaType="java.util.List" ofType="com.platform.oecp.dto.OecpTagDto">
+				<id column="id" property="id" jdbcType="BIGINT" />
+				<result column="tag" property="tag" jdbcType="VARCHAR" />
+			</collection>
+	</resultMap>
+
+	<resultMap type="com.platform.oecp.dto.ErrorInfoAndCaseDto" id="errorInfoMap">
+		<id column="id" property="codeId" jdbcType="BIGINT" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="error_info" property="errorInfo" jdbcType="VARCHAR" />
+		<result column="remarks" property="errorMsg" jdbcType="VARCHAR" />
+		<!--  开始配置关联属性 -->
+		<collection property="errorTags" javaType="java.util.List" ofType="com.platform.oecp.dto.OecpTagDto">
+			<id column="id" property="id" jdbcType="BIGINT" />
+			<result column="tag" property="tag" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<!--查询出错误信息和对应的标签-->
+	<select id="errorInfoList" resultMap="errorInfoMap" parameterType="java.lang.String">
+		select
+		a.id,a.code,a.error_info,a.remarks,
+		c.id,c.tag
+		from oecp_error_info a
+		left join oecp_error_tag b on b.code_id=a.id
+		left join oecp_tag c on c.id = b.tag_id
+		where 1=1
+		AND a.create_by = #{userId}
+	</select>
+
+	<!--查询出案例信息和对应的标签-->
+	<select id="caseInfoList" resultMap="caseInfoMap">
+		select
+		b.id,b.title,b.title_for_search,b.content,b.content_for_search,
+		d.id,d.tag
+		from oecp_error_case a
+		left join oecp_case_info b on b.id=a.case_id
+		left join oecp_case_tag c on c.case_id=a.case_id
+		left join oecp_tag d on d.id = c.tag_id
+		where 1=1
+		AND a.create_by = #{userId}
+		<if test="codeId != null and codeId != ''">
+			AND a.code_id = #{codeId}
+		</if>
+	</select>
+
+</mapper>
