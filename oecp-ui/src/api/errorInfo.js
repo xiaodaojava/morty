@@ -27,6 +27,13 @@ export function saveOecpErrorInfo(data) {
   })
 }
 
+export function getErrorInfoAndCase() {
+  return request({
+    url: '/getErrorInfoAndCase',
+    method: 'get'
+  })
+}
+
 export function get(params) {
   return request({
     url: '/oecpErrorInfo/get',

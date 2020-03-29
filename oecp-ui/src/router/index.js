@@ -122,6 +122,11 @@ export const constantRoutes = [
         path: "/errorStatistic/user-role",
         component: () => import("@/views/errorStatistic/user-role"),
         meta: { title: "错误码平台用户角色", icon: "dashboard" }
+      },
+      {
+        path: "/errorStatistic/my-error-info-list",
+        component: () => import("@/views/errorStatistic/my-error-info-list"),
+        meta: { title: "我的错误码", icon: "link" }
       }
     ]
   },
