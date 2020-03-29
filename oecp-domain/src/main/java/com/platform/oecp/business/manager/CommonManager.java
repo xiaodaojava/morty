@@ -3,17 +3,20 @@ package com.platform.oecp.business.manager;
 import com.platform.oecp.dao.OecpErrorInfoAndCaseMapper;
 import com.platform.oecp.dto.CaseInfoDto;
 import com.platform.oecp.dto.ErrorInfoAndCaseDto;
-import com.platform.oecp.factory.OecpCaseInfoFactory;
-import com.platform.oecp.factory.OecpErrorInfoFactory;
+import com.platform.oecp.factory.*;
+import com.platform.oecp.models.document.CaseTag;
+import com.platform.oecp.models.document.ErrorTag;
 import com.platform.oecp.models.dos.*;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import com.platform.oecp.models.qc.OecpErrorInfoQC;
 import com.platform.oecp.models.qc.OecpErrorTagQC;
+import com.platform.oecp.models.qc.OecpSearchMainQC;
 import com.platform.oecp.models.request.OecpCaseInfoRequest;
 import com.platform.oecp.models.request.OecpDeleteCaseInfoRequest;
 import com.platform.oecp.models.request.OecpErrorInfoRequest;
 import com.platform.oecp.models.request.OecpTagRequest;
 import com.platform.oecp.utils.UserUtil;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,20 +65,34 @@ public class CommonManager {
     private OecpErrorInfoAndCaseMapper oecpErrorInfoAndCaseMapper;
 
     @Autowired
+    private OecpSearchMainManager oecpSearchMainManager;
+
+    @Autowired
+    private OecpSearchSubManager oecpSearchSubManager;
+
+    @Autowired
+    private OecpSearchMainFactory oecpSearchMainFactory;
+
+    @Autowired
+    private OecpSearchSubFactory oecpSearchSubFactory;
+
+    @Autowired
+    private SearchManager searchManager;
+
+    @Autowired
     private RedisSpringTools redisUtils;
 
     public CommonManager() {
     }
 
+    /**
+     * @author: LILIANG
+     * @date: 2020/3/29 21:47
+     *
+     * @return: java.util.List<com.platform.oecp.dto.ErrorInfoAndCaseDto>
+     * @description: 查出当前用户得错误码信息
+     */
     public List<ErrorInfoAndCaseDto> getErrorInfos(){
-        //如果同一个人先从缓存拿
-//        redisUtils.get("ERROR_INFO_"+userId);
-//        if(){
-//            String accountJSON = (String)redisUtils.get("TOKEN_TELL_KEY_" + token);
-//            if(StringTools.isBlank(accountJSON)){
-//                OecpSysUserDO vo = JSON.parseObject(accountJSON,OecpSysUserDO.class);
-//            }
-//        }
         OecpSysUserDO user = UserUtil.currentUser();
         List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = oecpErrorInfoAndCaseMapper.errorInfoList(String.valueOf(user.getId()));
         for(ErrorInfoAndCaseDto errorInfoAndCaseDto:errorInfoAndCaseDtos){
@@ -97,11 +114,15 @@ public class CommonManager {
         //保存错误码信息
         OecpErrorInfoDO oecpErrorInfoDO = oecpErrorInfoFactory.createNewInstance(oecpErrorInfoRequest);
         oecpErrorInfoDO = oecpErrorInfoManager.saveOecpErrorInfo(oecpErrorInfoDO);
+        oecpErrorInfoRequest.setCodeId(oecpErrorInfoDO.getId());
+        //将信息保存到search表和es
+        OecpSearchMainDO oecpSearchMainDO = oecpSearchMainFactory.createNewInstance(oecpErrorInfoDO);
+        oecpSearchMainDO = oecpSearchMainManager.saveOecpSearchMain(oecpSearchMainDO);
         if(oecpErrorInfoDO != null) {
             //保存tag
-            for (OecpTagRequest tag : oecpErrorInfoRequest.getTags()) {
+            for (ErrorTag tag : oecpErrorInfoRequest.getTags()) {
                 OecpTagDO oecpTagDO = new OecpTagDO();
-                oecpTagDO.setId(tag.getTagId());
+                oecpTagDO.setId(tag.getId()==null? null :Long.valueOf(tag.getId()));
                 oecpTagDO.setTag(tag.getTag());
                 oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
                 //保存错误码tag信息oecp_error_tag
@@ -114,9 +135,12 @@ public class CommonManager {
             for (OecpCaseInfoRequest oecpCaseInfoRequest : oecpErrorInfoRequest.getOecpCaseInfoRequests()) {
                 OecpCaseInfoDO oecpCaseInfoDO = oecpCaseInfoFactory.createNewInstance(oecpCaseInfoRequest);
                 oecpCaseInfoDO = oecpCaseInfoManager.saveOecpCaseInfo(oecpCaseInfoDO);
-                for (OecpTagRequest caseTag : oecpCaseInfoRequest.getTags()) {
+                oecpCaseInfoRequest.setCaseId(oecpCaseInfoDO.getId());
+                oecpCaseInfoRequest.setTitleForSearch(oecpCaseInfoDO.getTitleForSearch());
+                oecpCaseInfoRequest.setContentForSearch(oecpCaseInfoDO.getContentForSearch());
+                for (CaseTag caseTag : oecpCaseInfoRequest.getTags()) {
                     OecpTagDO oecpTagDO = new OecpTagDO();
-                    oecpTagDO.setId(caseTag.getTagId());
+                    oecpTagDO.setId(caseTag.getId()==null? null :Long.valueOf(caseTag.getId()));
                     oecpTagDO.setTag(caseTag.getTag());
                     oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
                     //保存案例tag信息oecp_case_tag
@@ -130,9 +154,13 @@ public class CommonManager {
                 oecpErrorCaseDO.setCodeId(oecpErrorInfoDO.getId());
                 oecpErrorCaseDO.setCaseId(oecpCaseInfoDO.getId());
                 oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCaseDO);
+                //保存案例到search表中
+                OecpSearchSubDO oecpSearchSubDO =oecpSearchSubFactory.createNewInstance(oecpCaseInfoDO,oecpSearchMainDO);
+                oecpSearchSubManager.saveOecpSearchSub(oecpSearchSubDO);
             }
         }
-        //将信息更新到search表
+        //异步更新es
+        searchManager.saveEsContent(oecpErrorInfoRequest,null,null,null);
         return oecpErrorInfoDO;
     }
 
@@ -148,11 +176,14 @@ public class CommonManager {
         //对title和content进行处理
         OecpCaseInfoDO oecpCaseInfoDO = oecpCaseInfoFactory.createNewInstance(oecpCaseInfoRequest);
         //保存案例信息
-        oecpCaseInfoDO =oecpCaseInfoManager.saveOecpCaseInfo(oecpCaseInfoDO);
+        oecpCaseInfoDO = oecpCaseInfoManager.saveOecpCaseInfo(oecpCaseInfoDO);
+        oecpCaseInfoRequest.setCaseId(oecpCaseInfoDO.getId());
+        oecpCaseInfoRequest.setTitleForSearch(oecpCaseInfoDO.getTitleForSearch());
+        oecpCaseInfoRequest.setContentForSearch(oecpCaseInfoDO.getContentForSearch());
         //保存和修改案例tag
-        for(OecpTagRequest tag : oecpCaseInfoRequest.getTags()){
+        for(CaseTag tag : oecpCaseInfoRequest.getTags()){
             OecpTagDO oecpTagDO = new OecpTagDO();
-            oecpTagDO.setId(tag.getTagId());
+            oecpTagDO.setId(tag.getId()==null? null :Long.valueOf(tag.getId()));
             oecpTagDO.setTag(tag.getTag());
             oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
             if(StringUtils.isEmpty(oecpCaseInfoRequest.getCaseId())) {
@@ -170,7 +201,14 @@ public class CommonManager {
             oecpErrorCaseDO.setCaseId(oecpCaseInfoDO.getId());
             oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCaseDO);
         }
-        //将信息更新到search表
+        //将信息更新到search表和es
+        OecpSearchMainDO oecpSearchMainDO = oecpSearchMainManager.getOecpSearchMainByCodeId(oecpCaseInfoRequest.getCodeId());
+        if(oecpSearchMainDO != null) {
+            OecpSearchSubDO oecpSearchSubDO = oecpSearchSubFactory.createNewInstance(oecpCaseInfoDO, oecpSearchMainDO);
+            oecpSearchSubManager.saveOecpSearchSub(oecpSearchSubDO);
+        }
+        //异步更新es
+        searchManager.saveEsContent(null,oecpCaseInfoRequest,null,null);
         return oecpCaseInfoDO;
     }
 
@@ -200,6 +238,12 @@ public class CommonManager {
                 //案例下面的tag进行删除
                 oecpCaseTagManager.removeOecpCaseTagByCaseId(oecpErrorCaseDO.getCaseId());
             }
+            //删除es中的错误码信息和search表中的
+            OecpSearchMainDO oecpSearchMainDO = oecpSearchMainManager.getOecpSearchMainByCodeId(codeId);
+            oecpSearchMainManager.removeOecpSearchMainById(oecpSearchMainDO.getId());
+            oecpSearchSubManager.removeOecpSearchSubByMainId(oecpSearchMainDO.getId());
+            //异步更新es
+            searchManager.saveEsContent(null,null,oecpSearchMainDO.getErrorCode(),null);
             return errorInfoDeleteFlag;
         }
         return 0;
@@ -222,6 +266,10 @@ public class CommonManager {
                 //案例下面的tag进行删除
                 oecpCaseTagManager.removeOecpCaseTagByCaseId(caseId);
             }
+            //同步更新到es中和search表中
+            oecpSearchSubManager.removeOecpSearchSubByCaseId(caseId);
+            //异步更新es
+            searchManager.saveEsContent(null,null,null,oecpDeleteCaseInfoRequest);
             if(caseInfoDeleteFlag <= 0){
                 return 0;
             }

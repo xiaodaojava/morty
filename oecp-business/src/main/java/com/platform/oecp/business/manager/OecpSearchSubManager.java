@@ -23,6 +23,8 @@ public interface OecpSearchSubManager {
 
     public int removeOecpSearchSubById(Long id);
 
+    int removeOecpSearchSubByMainId(Long mainId);
 
+    int removeOecpSearchSubByCaseId(Long caseId);
 
 }

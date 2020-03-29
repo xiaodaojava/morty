@@ -1,8 +1,6 @@
 package com.platform.oecp.models.qc;
 
 import red.lixiang.tools.common.mybatis.model.BaseQC;
-import red.lixiang.tools.common.mybatis.model.QC;
-import java.util.Date;
 
 /**
  * @author lixiang
@@ -17,6 +15,9 @@ public class OecpSearchMainQC extends BaseQC {
    
    /** 错误码  */
    private String errorCode;
+
+   /** 错误码主键 ID */
+   private Long errorTag;
    
    
    
@@ -51,18 +52,14 @@ public class OecpSearchMainQC extends BaseQC {
         this.errorCode = errorCode;
         return this;
     }
-     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
+    public Long getErrorTag() {
+        return errorTag;
+    }
+
+    public void setErrorTag(Long errorTag) {
+        this.errorTag = errorTag;
+    }
 
     public static OecpSearchMainQC create(){
         return new OecpSearchMainQC();

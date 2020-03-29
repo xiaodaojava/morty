@@ -13,16 +13,14 @@ public interface OecpSearchMainManager {
 
     public OecpSearchMainDO getOecpSearchMainById (Long id);
 
+    OecpSearchMainDO getOecpSearchMainByCodeId (Long codeId);
 
     public List<OecpSearchMainDO> queryOecpSearchMain(OecpSearchMainQC qc);
-
 
     public Long countOecpSearchMain(OecpSearchMainQC oecpSearchMain);
 
     public OecpSearchMainDO saveOecpSearchMain(OecpSearchMainDO oecpSearchMain);
 
     public int removeOecpSearchMainById(Long id);
-
-
 
 }

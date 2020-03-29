@@ -25,7 +25,16 @@ public class OecpSearchMainManagerImpl implements OecpSearchMainManager{
         List<OecpSearchMainDO> oecpSearchMainDOS = queryOecpSearchMain(qc);
         return ListTools.getOne(oecpSearchMainDOS);
     }
-    
+
+    @Override
+    public OecpSearchMainDO getOecpSearchMainByCodeId(Long codeId) {
+        OecpSearchMainQC qc = new OecpSearchMainQC();
+        qc.setErrorTag(codeId);
+        qc.setPage(Page.getOne());
+        List<OecpSearchMainDO> oecpSearchMainDOS = queryOecpSearchMain(qc);
+        return ListTools.getOne(oecpSearchMainDOS);
+    }
+
 
     @Override
     public List<OecpSearchMainDO> queryOecpSearchMain(OecpSearchMainQC qc){
@@ -33,7 +42,7 @@ public class OecpSearchMainManagerImpl implements OecpSearchMainManager{
         List<OecpSearchMainDO> oecpSearchMains = oecpSearchMainMapper.listOecpSearchMains(qc);
         return oecpSearchMains;
     }
-    
+
 
     @Override
     public Long countOecpSearchMain(OecpSearchMainQC qc){

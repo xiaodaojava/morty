@@ -56,4 +56,20 @@ public interface OecpSearchSubMapper {
     */
     @UpdateProvider(type = OecpSearchSubProvider.class)
     int removeOecpSearchSubById(long id);
+
+    /**
+     * 删除以mainId为条件
+     * @param mainId
+     * @return
+     */
+    @UpdateProvider(type = OecpSearchSubProvider.class)
+    int removeOecpSearchMainByMainId(long mainId);
+
+    /**
+     * 删除以caseId为条件
+     * @param caseId
+     * @return
+     */
+    @UpdateProvider(type = OecpSearchSubProvider.class)
+    int removeOecpSearchSubByCaseId(long caseId);
 }

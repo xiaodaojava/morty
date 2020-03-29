@@ -1,5 +1,9 @@
 package com.platform.oecp.models.request;
 
+import com.platform.oecp.models.document.CaseTag;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,6 +17,8 @@ import java.util.List;
 public class OecpCaseInfoRequest implements Serializable {
 
     /** 错误码主键ID */
+    @NotNull(message = "错误码ID参数不为空")
+    @Valid
     private Long codeId;
 
     /** 案列主键ID */
@@ -31,7 +37,7 @@ public class OecpCaseInfoRequest implements Serializable {
     private String content;
 
     /** 案列标签 */
-    private List<OecpTagRequest> tags;
+    private List<CaseTag> tags;
 
     public Long getCaseId() {
         return caseId;
@@ -81,11 +87,11 @@ public class OecpCaseInfoRequest implements Serializable {
         this.codeId = codeId;
     }
 
-    public List<OecpTagRequest> getTags() {
+    public List<CaseTag> getTags() {
         return tags;
     }
 
-    public void setTags(List<OecpTagRequest> tags) {
+    public void setTags(List<CaseTag> tags) {
         this.tags = tags;
     }
 

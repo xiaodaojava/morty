@@ -60,4 +60,22 @@ public class OecpSearchSubProvider implements ProviderMethodResolver {
             return sql.toString();
     }
 
+    public String removeOecpSearchMainByMainId(long mainId){
+        SQL sql = new SQL() {{
+            UPDATE("oecp_search_sub");
+            SET("delete_flag = 1");
+        }};
+        sql.WHERE("search_main_id = #{mainId}");
+        return sql.toString();
+    }
+
+    public String removeOecpSearchSubByCaseId(long caseId){
+        SQL sql = new SQL() {{
+            UPDATE("oecp_search_sub");
+            SET("delete_flag = 1");
+        }};
+        sql.WHERE("case_tag = #{mainId}");
+        return sql.toString();
+    }
+
 }

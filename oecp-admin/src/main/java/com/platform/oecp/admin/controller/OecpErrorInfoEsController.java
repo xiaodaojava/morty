@@ -36,7 +36,7 @@ public class OecpErrorInfoEsController {
      * @return: com.platform.oecp.models.document.OecpErrorDocument
      * @description: 通过错误码查找错误相关信息（包括案例和标签）
      */
-    @GetMapping("findByErrorCode")
+    @GetMapping("/findByErrorCode")
     public OecpErrorDocument findByErrorCode(@RequestParam("errorCode")String errorCode){
         OecpErrorDocument oecpErrorDocument = null;
         try {

@@ -1,5 +1,7 @@
 package com.platform.oecp.models.request;
 
+import com.platform.oecp.models.document.ErrorTag;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -30,7 +32,7 @@ public class OecpErrorInfoRequest implements Serializable {
     /** 错误码标签内容(相当于ES中的TERM)  */
     @NotNull(message = "错误码tag不能为空,至少一个")
     @Valid
-    private List<OecpTagRequest> tags;
+    private List<ErrorTag> tags;
 
     /** 案列列表 */
     private List<OecpCaseInfoRequest> oecpCaseInfoRequests;
@@ -54,11 +56,11 @@ public class OecpErrorInfoRequest implements Serializable {
         this.errorInfo = errorInfo;
     }
 
-    public List<OecpTagRequest> getTags() {
+    public List<ErrorTag> getTags() {
         return tags;
     }
 
-    public void setTags(List<OecpTagRequest> tags) {
+    public void setTags(List<ErrorTag> tags) {
         this.tags = tags;
     }
 

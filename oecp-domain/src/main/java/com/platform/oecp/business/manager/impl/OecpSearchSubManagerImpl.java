@@ -63,5 +63,14 @@ public class OecpSearchSubManagerImpl implements OecpSearchSubManager{
 
     }
 
+    @Override
+    public int removeOecpSearchSubByMainId(Long mainId) {
+        return oecpSearchSubMapper.removeOecpSearchMainByMainId(mainId);
+    }
+
+    @Override
+    public int removeOecpSearchSubByCaseId(Long caseId) {
+        return oecpSearchSubMapper.removeOecpSearchSubByCaseId(caseId);
+    }
 
 }
