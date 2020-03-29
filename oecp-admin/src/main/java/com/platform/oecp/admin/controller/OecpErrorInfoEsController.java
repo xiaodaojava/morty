@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * @description:
  */
 @RestController
-@RequestMapping("/es")
+@RequestMapping("es")
 public class OecpErrorInfoEsController {
 
     /**
@@ -37,7 +36,7 @@ public class OecpErrorInfoEsController {
      * @return: com.platform.oecp.models.document.OecpErrorDocument
      * @description: 通过错误码查找错误相关信息（包括案例和标签）
      */
-    @GetMapping("/findByErrorCode")
+    @GetMapping("findByErrorCode")
     public OecpErrorDocument findByErrorCode(@RequestParam("errorCode")String errorCode){
         OecpErrorDocument oecpErrorDocument = null;
         try {
@@ -73,7 +72,7 @@ public class OecpErrorInfoEsController {
      * @return: java.util.List<com.platform.oecp.models.document.OecpErrorDocument>
      * @description: 通过错误信息建议错误码
      */
-    @GetMapping("/suggestErrorCode")
+    @GetMapping("suggestErrorCode")
     public List<OecpErrorDocument> suggestErrorCode(@RequestParam("info") String info){
         List<OecpErrorDocument> oecpErrorDocuments = null;
         try {
@@ -91,7 +90,7 @@ public class OecpErrorInfoEsController {
      * @return: java.lang.String
      * @description: 删除es中错误码信息
      */
-    @PostMapping("/deleteErrorCode")
+    @PostMapping("deleteErrorCode")
     public String deleteErrorCode(@RequestParam("errorCode")String errorCode){
         String resultMsg = null;
         try {
