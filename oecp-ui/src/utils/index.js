@@ -118,3 +118,15 @@ export function downloadFile(obj, name, suffix) {
   link.click()
   document.body.removeChild(link)
 }
+
+
+//判断是否包含在数组
+export function contains(arr, prop,obj) {
+  var i = arr.length;
+  while (i--) {
+      if (arr[i][prop] == obj) {
+          return true;
+      }
+  }
+  return false;
+}

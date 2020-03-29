@@ -69,172 +69,172 @@
 </template>
 
 <script>
-import { query, save, remove } from "@/api/errorTag";
-import { parseTime } from "@/utils/index";
+import { query, save, remove } from '@/api/errorTag'
+import { parseTime } from '@/utils/index'
 export default {
   data() {
     const validateRule = (rule, value, callback) => {
-      console.log(value);
+      console.log(value)
       if (value.length < 1) {
-        console.log(value);
-        callback(new Error("请填写信息"));
+        console.log(value)
+        callback(new Error('请填写信息'))
       } else {
-        console.log(value);
-        callback();
+        console.log(value)
+        callback()
       }
-    };
+    }
     return {
       pickerOptions: {
         shortcuts: [
           {
-            text: "最近一周",
+            text: '最近一周',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
             }
           },
           {
-            text: "最近一个月",
+            text: '最近一个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
           },
           {
-            text: "最近三个月",
+            text: '最近三个月',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
             }
           }
         ]
       },
       tableLoading: true,
       searchForm: {
-        tag: "",
-        createDate: "",
+        tag: '',
+        createDate: '',
         pageIndex: 1,
         pageSize: 10,
         total: 0
       },
       tableData: [],
       addTagForm: {
-        id: "",
-        tag: "",
+        id: '',
+        tag: '',
         dialogFormVisible: false,
-        formLabelWidth: "120px",
-        formName: ""
+        formLabelWidth: '120px',
+        formName: ''
       },
       validRules: {
-        tag: [{ required: true, trigger: "blur", validator: validateRule }]
+        tag: [{ required: true, trigger: 'blur', validator: validateRule }]
       }
-    };
+    }
   },
   methods: {
     resetDateFilter() {
-      this.$refs.filterTable.clearFilter("date");
+      this.$refs.filterTable.clearFilter('date')
     },
     clearFilter() {
-      this.searchForm.tag = "";
+      this.searchForm.tag = ''
     },
     formatter(row, column) {
-      return parseTime(row.createDate);
+      return parseTime(row.createDate)
     },
     filterTag(value, row) {
-      return row.error_tag === value;
+      return row.error_tag === value
     },
     filterHandler(value, row, column) {
-      const property = column["property"];
-      return row[property] === value;
+      const property = column['property']
+      return row[property] === value
     },
     handleEdit(index, row) {
-      console.log(index, row);
-      this.addTagForm.tag = row.tag;
-      this.addTagForm.id = row.id;
-      this.addTagForm.formName = "编辑标签";
-      this.addTagForm.dialogFormVisible = true;
+      console.log(index, row)
+      this.addTagForm.tag = row.tag
+      this.addTagForm.id = row.id
+      this.addTagForm.formName = '编辑标签'
+      this.addTagForm.dialogFormVisible = true
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      console.log(index, row)
       remove(row.id).then(res => {
         if (res.result) {
-          this.$message.success("删除成功!");
-          this.search();
+          this.$message.success('删除成功!')
+          this.search()
         } else {
-          this.$message.success("删除失败!");
+          this.$message.success('删除失败!')
         }
-      });
+      })
     },
     onSearchSubmit() {
-      console.log("submit!");
-      this.search();
+      console.log('submit!')
+      this.search()
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.searchForm.pageSize = val;
-      this.search();
+      console.log(`每页 ${val} 条`)
+      this.searchForm.pageSize = val
+      this.search()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.searchForm.pageIndex = val;
-      this.search();
+      console.log(`当前页: ${val}`)
+      this.searchForm.pageIndex = val
+      this.search()
     },
     search() {
-      console.log(this.tableLoading);
-      this.tableLoading = true;
+      console.log(this.tableLoading)
+      this.tableLoading = true
 
-      console.log(this.tableLoading);
+      console.log(this.tableLoading)
       query(this.searchForm).then(res => {
-        console.log(res);
+        console.log(res)
         if (res.result) {
-          this.tableData = res.data.dataList;
-          this.searchForm.pageIndex = res.data.pageIndex;
-          this.searchForm.pageSize = res.data.pageSize;
-          this.searchForm.total = res.data.totalCount;
+          this.tableData = res.data.dataList
+          this.searchForm.pageIndex = res.data.pageIndex
+          this.searchForm.pageSize = res.data.pageSize
+          this.searchForm.total = res.data.totalCount
         }
-      });
-      this.tableLoading = false;
-      console.log(this.tableLoading);
+      })
+      this.tableLoading = false
+      console.log(this.tableLoading)
     },
     addErrorTag() {
-      this.addTagForm.dialogFormVisible = true;
-      this.addTagForm.formName = "增加标签";
+      this.addTagForm.dialogFormVisible = true
+      this.addTagForm.formName = '增加标签'
     },
     saveTag() {
       this.$refs.addTagForm.validate(valid => {
         if (!valid) {
-          console.log("error submit!!");
-          return;
+          console.log('error submit!!')
+          return
         }
-      });
+      })
       save(this.addTagForm).then(res => {
         if (res.result) {
-          this.$message.success("保存成功");
-          this.search();
+          this.$message.success('保存成功')
+          this.search()
         } else {
-          this.$message.error("保存失败");
+          this.$message.error('保存失败')
         }
-      });
-      this.clearSaveTag();
+      })
+      this.clearSaveTag()
     },
     clearSaveTag() {
       this.addTagForm = {
-        tag: "",
+        tag: '',
         dialogFormVisible: false,
-        formLabelWidth: "120px"
-      };
+        formLabelWidth: '120px'
+      }
     }
   },
   mounted() {
-    this.search();
+    this.search()
   }
-};
+}
 </script>
 
 

@@ -19,6 +19,14 @@ export function save(params) {
   })
 }
 
+export function saveOecpErrorInfo(data) {
+  return request({
+    url: '/saveOecpErrorInfo',
+    method: 'post',
+    data
+  })
+}
+
 export function get(params) {
   return request({
     url: '/oecpErrorInfo/get',
