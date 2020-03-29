@@ -1,5 +1,7 @@
 package com.platform.oecp.models.document;
 
+import java.util.List;
+
 /**
  * @author: dingaimin
  * @date: 2020/3/27 16:01
@@ -10,6 +12,7 @@ public class ErrorCase {
     private String title;
     private String titleForSearch;
     private String contentForSearch;
+    private List<CaseTag> caseTag;
 
     public String getId() {
         return id;
@@ -41,5 +44,13 @@ public class ErrorCase {
 
     public void setContentForSearch(String contentForSearch) {
         this.contentForSearch = contentForSearch;
+    }
+
+    public List<CaseTag> getCaseTag() {
+        return caseTag;
+    }
+
+    public void setCaseTag(List<CaseTag> caseTag) {
+        this.caseTag = caseTag;
     }
 }
