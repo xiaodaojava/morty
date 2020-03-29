@@ -77,24 +77,6 @@ public class CommonManager {
 //            }
 //        }
         OecpSysUserDO user = UserUtil.currentUser();
-//        if(user != null) {
-//            //错误信息带标签
-//            OecpErrorInfoQC oecpErrorInfoQC = new OecpErrorInfoQC();
-//            oecpErrorInfoQC.setCreateBy(String.valueOf(user.getId()));
-//            List<OecpErrorInfoDO> oecpErrorInfoDOS = oecpErrorInfoManager.queryOecpErrorInfo(oecpErrorInfoQC);
-//            //案例信息带标签
-//            for(OecpErrorInfoDO oecpErrorInfoDO:oecpErrorInfoDOS){
-//                //错误下的案列
-//                OecpErrorCaseQC oecpErrorCaseQC = new OecpErrorCaseQC();
-//                oecpErrorCaseQC.setCodeId(oecpErrorInfoDO.getId());
-//                List<OecpErrorCaseDO> oecpErrorAndCaseInfoDOS = oecpErrorCaseManager.queryOecpErrorCase(oecpErrorCaseQC);
-//                for(OecpErrorCaseDO oecpErrorCaseDO:oecpErrorAndCaseInfoDOS){
-//                    OecpCaseInfoQC oecpCaseInfoQC = new OecpCaseInfoQC();
-//                    oecpCaseInfoQC.setId(oecpErrorCaseDO.getCaseId());
-//                    List<OecpCaseInfoDO> oecpCaseInfoDOS = oecpCaseInfoManager.queryOecpCaseInfo(oecpCaseInfoQC);
-//                }
-//            }
-//        }
         List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = oecpErrorInfoAndCaseMapper.errorInfoList(String.valueOf(user.getId()));
         for(ErrorInfoAndCaseDto errorInfoAndCaseDto:errorInfoAndCaseDtos){
             List<CaseInfoDto> caseInfoDtos = oecpErrorInfoAndCaseMapper.caseInfoList(String.valueOf(user.getId()),errorInfoAndCaseDto.getCodeId());
