@@ -65,7 +65,12 @@ public class CodeDetectManager {
         Map<String, Object> variables = new HashMap<>();
 
         // Parse some code
-        CompilationUnit cu = StaticJavaParser.parse(code);
+        CompilationUnit cu;
+        try{
+            cu = StaticJavaParser.parse(code);
+        } catch (Exception e) {
+            throw new BusinessException("请填入正确有效的代码");
+        }
 
         // 读取所有变量
         cu.findAll(FieldDeclaration.class).forEach(fieldDeclaration -> {

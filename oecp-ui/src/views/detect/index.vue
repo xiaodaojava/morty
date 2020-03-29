@@ -33,16 +33,20 @@ export default {
   },
   methods: {
     fetchData() {
-      health();
     },
     detectCode() {
       detect({'code': this.code}).then(res=> {
-        this.$message({
-          message: '恭喜你，检测不存在未定义错误码',
-          type: 'success'
-        });
+        if(res.result) {
+          this.$message({
+            message: '恭喜你，检测不存在未定义错误码',
+            type: 'success'
+          });
+        } else {
+          this.$message.error(res.msg); 
+        }
+        
       }).catch(error => {
-        this.$message.error('错了哦：' + error);
+        this.$message.error(error.msg);
       })
     }
   }
