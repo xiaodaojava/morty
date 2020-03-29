@@ -107,8 +107,8 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
                 .should(QueryBuilders.matchQuery("errorCase.title", info))
                 .should(QueryBuilders.matchQuery("errorCase.titleForSearch", info))
                 .should(QueryBuilders.matchQuery("errorCase.contentForSearch", info))
-                .should(QueryBuilders.matchQuery("caseTag.id", info))
-                .should(QueryBuilders.matchQuery("caseTag.tag", info));
+                .should(QueryBuilders.matchQuery("errorCase.caseTag.id", info))
+                .should(QueryBuilders.matchQuery("errorCase.caseTag.tag", info));
         searchSourceBuilder.query(boolQuery);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse =

@@ -13,7 +13,6 @@ public class OecpErrorDocument {
     private String errorDesc;
     private List<ErrorTag> errorTag;
     private List<ErrorCase> errorCase;
-    private List<CaseTag> caseTag;
 
     public String getErrorCode() {
         return errorCode;
@@ -53,13 +52,5 @@ public class OecpErrorDocument {
 
     public void setErrorCase(List<ErrorCase> errorCase) {
         this.errorCase = errorCase;
-    }
-
-    public List<CaseTag> getCaseTag() {
-        return caseTag;
-    }
-
-    public void setCaseTag(List<CaseTag> caseTag) {
-        this.caseTag = caseTag;
     }
 }

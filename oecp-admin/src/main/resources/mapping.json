@@ -37,16 +37,16 @@
           "type": "text",
           "analyzer": "ik_max_word",
           "search_analyzer": "ik_max_word"
-        }
-      }
-    },
-    "caseTag": {
-      "properties": {
-        "id": {
-          "type": "keyword"
         },
-        "tag": {
-          "type": "keyword"
+        "caseTag": {
+          "properties": {
+            "id": {
+              "type": "keyword"
+            },
+            "tag": {
+              "type": "keyword"
+            }
+          }
         }
       }
     },
