@@ -25,4 +25,5 @@ dependencies {
 	compile group: 'com.fasterxml.jackson.core', name : 'jackson-databind', version :'2.10.3'
 	compile group: 'com.github.javaparser', name: 'javaparser-core', version: '3.15.15'
 	compile group: 'com.github.javaparser', name: 'javaparser-symbol-solver-core', version: '3.15.15'
+	compile group: 'com.hankcs', name: 'hanlp', version: 'portable-1.7.7'
 }
