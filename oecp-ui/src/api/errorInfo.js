@@ -27,10 +27,11 @@ export function saveOecpErrorInfo(data) {
   })
 }
 
-export function getErrorInfoAndCase() {
+export function getErrorInfoAndCase(params) {
   return request({
     url: '/getErrorInfoAndCase',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 

@@ -70,6 +70,7 @@ export default {
       this.search();
     },
     search(){
+      this.tableLoading = true;
       searchErrorCode(this.searchContent).then(res =>{
         if(!res){
           this.tableData = []
@@ -80,6 +81,7 @@ export default {
           console.log(this.tableData[0])
         }
       })
+      this.tableLoading = false;
     },
     showDetail(){
     },
