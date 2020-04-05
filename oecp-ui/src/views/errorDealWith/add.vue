@@ -123,7 +123,7 @@ export default {
       saveOecpErrorInfo(data).then(res => {
         if (res.result && !res.code) {
           this.$message.success('错误码新建成功!')
-          this.$router.push('/errorDealWith/list')
+          this.$router.push('/fastcreateerrorcode/success')
         } else {
           this.$message.error('保存失败')
         }

@@ -22,10 +22,10 @@ export default {
   },
   methods:{
     goToMyErrorCode(){
-      this.$router.push('/errorStatistic/my-error-info-list')
+      this.$router.push('/errorDealWith/list')
     },
     goToAllErrorCode(){
-      this.$router.push('/errorInfo/example')
+      this.$router.push('/searchboardResult/normalResult')
     }
   },
   mounted(){

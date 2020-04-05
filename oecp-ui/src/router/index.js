@@ -115,11 +115,12 @@ export const constantRoutes = [
         component: () => import("@/views/errorDealWith/list"),
         meta: { title: "我的错误码列表", icon: "dashboard" },
       },
-      // {
-      //   path: "/errorDealWith/list",
-      //   component: () => import("@/views/errorDealWith/list"),
-      //   meta: { title: "我的标签", icon: "dashboard" }
-      // },
+      {
+        path: "/errorDealWith/add",
+        component: () => import("@/views/errorDealWith/add"),
+        meta: { title: "我的错误码添加", icon: "dashboard" },
+        hidden:true
+      },
       {
         path: "/errorDealWith/detail",
         component: () => import("@/views/errorDealWith/detail"),
