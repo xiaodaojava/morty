@@ -1,7 +1,7 @@
 <template>
   <oecp-page title="我的错误码" class="editCodePage">
     <el-button style="float:right;" type="primary" @click="createCode">新建错误码</el-button>
-    <el-table :data="tableData" style="width: 100%" border fit highlight-current-row>
+    <el-table :data="tableData" style="width: 100%" border fit highlight-current-row :loading="tableLoading">
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-table :data="scope.row.caseInfos" style="width:100%" border fit highlight-current-row>
@@ -50,7 +50,10 @@ export default {
   data() {
     return {
       searchContent: '',
-      tableData:[]
+      tableData:[],
+      tableLoading:false,
+      pageIndex:1,
+      pageSize:10
     }
   },
   methods: {
@@ -66,14 +69,16 @@ export default {
         })
       },
       search(){
-        getErrorInfoAndCase().then(res => {
+        this.tableLoading = true;
+        getErrorInfoAndCase({pageIndex:this.pageIndex,pageSize:this.pageSize}).then(res => {
             if (res.result && !res.code) {
               console.log(res.data)
-              this.tableData = res.data
+              this.tableData = res.data.dataList
             } else {
               this.$message.error('保存失败')
             }
           })
+          this.tableLoading = false;
       },
       createCode(){
         this.$router.push('/errorDealWith/add')
