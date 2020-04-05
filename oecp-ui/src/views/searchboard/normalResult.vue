@@ -86,10 +86,17 @@ export default {
     showDetail(){
     },
     showErrorCaseDetail(id){
-      //this.$router.push({path:'/searchboard/caseDetail'})
+      console.log('查看案例详情-----> id为',id)
+      this.$router.push({path:'/searchboardResult/caseDetail',query:{id}})
     }
   },
+  activated(){
+    console.log('activited')
+    this.searchContent = this.$route.query.searchContent;
+    this.search()
+  },
   mounted(){
+    console.log('mounted')
     this.searchContent = this.$route.query.searchContent;
     this.search()
   }

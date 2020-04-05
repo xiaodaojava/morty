@@ -36,11 +36,20 @@
       </el-table-column>
          <el-table-column prop="content" label="操作" width="150">
              <template slot-scope="scope">
-               <el-button type="text">查看详情</el-button>
+               <el-button type="text" @click="seeCodeDetail(scope.row)">查看详情</el-button>
                <el-button type="text" @click="deleteCode(scope.row)">删除</el-button>
              </template>
              </el-table-column>
     </el-table>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="resultTotal"
+      @current-change="handleCurrentChange"
+      :current-page.sync="pageIndex"
+      :page-size="pageSize"
+      >
+    </el-pagination>
   </oecp-page>
 </template>
 
@@ -53,7 +62,8 @@ export default {
       tableData:[],
       tableLoading:false,
       pageIndex:1,
-      pageSize:10
+      pageSize:10,
+      resultTotal:0
     }
   },
   methods: {
@@ -74,6 +84,7 @@ export default {
             if (res.result && !res.code) {
               console.log(res.data)
               this.tableData = res.data.dataList
+              this.resultTotal = res.data.totalCount
             } else {
               this.$message.error('保存失败')
             }
@@ -82,6 +93,12 @@ export default {
       },
       createCode(){
         this.$router.push('/errorDealWith/add')
+      },
+      seeCodeDetail(row){
+        this.$router.push({path:'/errorDealWith/detail',query:{id:row.codeId}})
+      },
+      handleCurrentChange(){
+        this.search()
       }
   },
   mounted() {

@@ -23,7 +23,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <div class="searchInput">
+    <div class="searchInput" v-if="this.$route.path != '/searchboardResult/normalResult' && this.$route.path != '/searchboard'">
       <el-input v-model="searchContent" placeholder="Enter Your ErrorCode">
         <el-button
           slot="append"

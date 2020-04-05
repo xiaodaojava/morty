@@ -8,14 +8,11 @@ export function query(params) {
   })
 }
 
-export function save(params) {
+export function save(data) {
   return request({
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
     url: '/oecpTag/save',
     method: 'post',
-    params
+    data
   })
 }
 
