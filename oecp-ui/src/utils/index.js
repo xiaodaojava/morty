@@ -130,3 +130,31 @@ export function contains(arr, prop,obj) {
   }
   return false;
 }
+
+//转换UTC
+export function formatUTCTime(time, format) {
+  var date = new Date(Date.parse(time));
+  var formatter = function (i) { return (i < 10 ? '0' : '') + i };
+  return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+    switch (a) {
+      case 'yyyy':
+        return formatter(date.getFullYear());
+        break;
+      case 'MM':
+        return formatter(date.getMonth() + 1);
+        break;
+      case 'mm':
+        return formatter(date.getMinutes());
+        break;
+      case 'dd':
+        return formatter(date.getDate());
+        break;
+      case 'HH':
+        return formatter(date.getHours());
+        break;
+      case 'ss':
+        return formatter(date.getSeconds());
+        break;
+    }
+  })
+}

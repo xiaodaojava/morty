@@ -21,17 +21,73 @@ export const constantRoutes = [
     path: "/404",
     component: () => import("@/views/404"),
     hidden: true
+  },  
+  {
+    path: "/fast-create",
+    component: Layout,
+    redirect: "/fastcreateerrorcode/index",
+    children: [
+      {
+        path: "/fastcreateerrorcode/index",
+        component: () => import("@/views/fastcreateerrorcode/index"),
+        meta: { title: "快速申请错误码", icon: "dashboard" }
+      },
+      {
+        path: "/fastcreateerrorcode/success",
+        component: () => import("@/views/fastcreateerrorcode/success"),
+        meta: { title: "申请错误码成功页面", icon: "dashboard" },
+        hidden: true
+      },
+      {
+        path: "/fastcreateerrorcode/failed",
+        component: () => import("@/views/fastcreateerrorcode/failed"),
+        meta: { title: "申请错误码失败页面", icon: "dashboard" },
+        hidden: true
+      }
+    ]
   },
   {
     path: "/",
     component: Layout,
-    redirect: "/dashboard",
+    redirect: "/searchboard",
+    meta: { title: "平台错误码", icon: "example" },
     children: [
       {
-        path: "dashboard",
-        component: () => import("@/views/dashboard/index"),
-        meta: { title: "One ErrorCode Platform", icon: "dashboard" }
+        path: "/searchboard",
+        component: () => import("@/views/searchboard/index"),
+        meta: { title: "错误码搜索", icon: "dashboard" }
+      },
+      {
+        path: "/searchboardResult",
+        component: () => import("@/views/searchboard/normalResult"),
+        meta: { title: "错误码搜索结果", icon: "dashboard" },
+        children:[
+        
+          {
+            path: "/searchboardResult/normalResult",
+            component: () => import("@/views/searchboard/normalResult"),
+            meta: { title: "按原来顺序查看", icon: "dashboard" }
+          },
+          
+         
+          // {
+          //   path: "/fastcreateerrorcode/success",
+          //   component: () => import("@/views/fastcreateerrorcode/success"),
+          //   meta: { title: "按标签查看", icon: "dashboard" }
+          // },
+          // {
+          //   path: "/fastcreateerrorcode/success",
+          //   component: () => import("@/views/fastcreateerrorcode/success"),
+          //   meta: { title: "按案例分类查看", icon: "dashboard" }
+          // }
+        ]
+      },{
+        path: "/searchboardResult/caseDetail",
+        component: () => import("@/views/searchboard/errCasedetail"),
+        meta: { title: "案例详情", icon: "dashboard" },
+        hidden:true
       }
+      
     ]
   },
   {
@@ -52,22 +108,29 @@ export const constantRoutes = [
     path: "/errorDealWith",
     component: Layout,
     redirect: "/errorDealWith/add",
-    meta: { title: "走进错误码", icon: "example" },
+    meta: { title: "我的错误码", icon: "example" },
     children: [
-      {
-        path: "/errorDealWith/add",
-        component: () => import("@/views/errorDealWith/add"),
-        meta: { title: "错误码新建", icon: "dashboard" }
-      },
       {
         path: "/errorDealWith/list",
         component: () => import("@/views/errorDealWith/list"),
-        meta: { title: "错误码列表", icon: "dashboard" }
+        meta: { title: "我的错误码", icon: "dashboard" },
+        children:[
+          {
+            path: "/errorDealWith/list",
+            component: () => import("@/views/errorDealWith/list"),
+            meta: { title: "我的错误码列表", icon: "dashboard" }
+          }
+        ]
       },
+      // {
+      //   path: "/errorDealWith/list",
+      //   component: () => import("@/views/errorDealWith/list"),
+      //   meta: { title: "我的标签", icon: "dashboard" }
+      // },
       {
         path: "/errorDealWith/detail",
         component: () => import("@/views/errorDealWith/detail"),
-        meta: { title: "错误码详情", icon: "dashboard" }
+        meta: { title: "我的案例", icon: "dashboard" }
       }
     ]
   },
@@ -131,20 +194,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: "/useC",
-    component: Layout,
-    redirect: "/userC/index",
-    hidden: true,
-    children: [
-      {
-        path: "index",
-        name: "错误码diy",
-        component: () => import("@/views/useC/index"),
-        meta: { title: "错误码diy", icon: "eye" }
-      }
-    ]
-  },
-  {
     path: "/codeDetect",
     component: Layout,
     children: [
@@ -169,7 +218,21 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: "/useC",
+    component: Layout,
+    redirect: "/userC/index",
+    hidden: true,
+    children: [
+      {
+        path: "index",
+        name: "错误码diy",
+        component: () => import("@/views/useC/index"),
+        meta: { title: "错误码diy", icon: "eye" }
+      }
+    ]
+  },
+ 
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }
 ];

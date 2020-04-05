@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import Logo from '@/assets/images/Error-Cloud.png'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,8 +25,8 @@ export default {
   },
   data() {
     return {
-      title: 'Oecp',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: 'One ErrorCode Platform',
+      logo: Logo
     }
   }
 }
@@ -58,7 +59,7 @@ export default {
       width: 32px;
       height: 32px;
       vertical-align: middle;
-      margin-right: 12px;
+      margin-right: 5.5px;
     }
 
     & .sidebar-title {
