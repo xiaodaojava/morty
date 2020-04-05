@@ -3,10 +3,10 @@ const path = require("path");
 const defaultSettings = require("./src/settings.js");
 
 function resolve(dir) {
-  return path.join(__dirname, dir);
+  return path.join(__dirname, dir); //__dirname 是node.js中的一个全局变量,它指向当前执行脚本所在目录
 }
 
-const name = defaultSettings.title || "oecp-ui"; // 网址标题
+const name = defaultSettings.title; // 网址标题
 
 const port = 443; // 端口配置
 

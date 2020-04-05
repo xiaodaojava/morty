@@ -32,7 +32,7 @@ export default {
     searchEnter() {
       //searchCode(searchContent);
       this.$router.push(
-        `/errorInfo/example?searchContent=${this.searchContent}`
+        `/searchboardResult/normalResult?searchContent=${this.searchContent}`
       );
     }
   }

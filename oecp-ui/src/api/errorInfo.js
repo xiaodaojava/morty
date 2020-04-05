@@ -11,11 +11,11 @@ export function query(params) {
 export function save(params) {
   return request({
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     },
     url: '/oecpErrorInfo/save',
     method: 'post',
-    params
+    data:params
   })
 }
 
@@ -48,6 +48,19 @@ export function remove(id) {
     method: 'get',
     params: {
       id: id
+    }
+  })
+}
+
+export function findByErrorCode(code) {
+  if(!code){
+    code ='';
+  }
+  return request({
+    url: '/es/findByErrorCode',
+    method: 'get',
+    params: {
+      errorCode: code
     }
   })
 }
