@@ -93,14 +93,20 @@ public class CommonManager {
      * @return: java.util.List<com.platform.oecp.dto.ErrorInfoAndCaseDto>
      * @description: 查出当前用户得错误码信息
      */
-    public List<ErrorInfoAndCaseDto> getErrorInfos(){
+    public List<ErrorInfoAndCaseDto> getErrorInfos(Page page){
         OecpSysUserDO user = UserUtil.currentUser();
-        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = oecpErrorInfoAndCaseMapper.errorInfoList(String.valueOf(user.getId()));
+        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = oecpErrorInfoAndCaseMapper.errorInfoList(String.valueOf(user.getId()),page);
         for(ErrorInfoAndCaseDto errorInfoAndCaseDto:errorInfoAndCaseDtos){
             List<CaseInfoDto> caseInfoDtos = oecpErrorInfoAndCaseMapper.caseInfoList(String.valueOf(user.getId()),errorInfoAndCaseDto.getCodeId());
             errorInfoAndCaseDto.setCaseInfos(caseInfoDtos);
         }
         return errorInfoAndCaseDtos;
+    }
+
+    public Long countErrorInfos(){
+        OecpSysUserDO user = UserUtil.currentUser();
+        Long totalCount = oecpErrorInfoAndCaseMapper.countErrorInfo(String.valueOf(user.getId()));
+        return totalCount;
     }
 
     /**
