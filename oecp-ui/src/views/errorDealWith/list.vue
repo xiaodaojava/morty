@@ -37,7 +37,7 @@
          <el-table-column prop="content" label="操作" width="150">
              <template slot-scope="scope">
                <el-button type="text">查看详情</el-button>
-               <el-button type="text" @click="deleteCode(scope.row.id)">删除</el-button>
+               <el-button type="text" @click="deleteCode(scope.row)">删除</el-button>
              </template>
              </el-table-column>
     </el-table>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getErrorInfoAndCase } from '@/api/errorInfo'
+import { getErrorInfoAndCase,remove } from '@/api/errorInfo'
 export default {
   data() {
     return {
@@ -54,8 +54,16 @@ export default {
     }
   },
   methods: {
-      deleteCode(){
-        console.log('2183798217398213')
+      deleteCode(row){
+        console.log(row)
+        remove(row.codeId).then(res => {
+           if (res.result && !res.code) {
+              this.search()
+              this.$message.success('删除成功')
+            } else {
+              this.$message.error('删除失败')
+            }
+        })
       },
       search(){
         getErrorInfoAndCase().then(res => {
