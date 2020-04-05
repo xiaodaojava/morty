@@ -4,6 +4,7 @@ import com.platform.oecp.common.DataEntity;
 import red.lixiang.tools.common.mybatis.model.SqlField;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author lixiang
@@ -25,6 +26,29 @@ public class OecpCaseInfoDO extends DataEntity<OecpCaseInfoDO> implements Serial
    /** 案列内容  */
    @SqlField
    private String content;
+
+
+   private String creatorName;
+
+   private String creatorAvator;
+
+   private List<OecpCaseTagDO> caseTagList;
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getCreatorAvator() {
+        return creatorAvator;
+    }
+
+    public void setCreatorAvator(String creatorAvator) {
+        this.creatorAvator = creatorAvator;
+    }
 
     public String getTitleForSearch() {
         return this.titleForSearch;

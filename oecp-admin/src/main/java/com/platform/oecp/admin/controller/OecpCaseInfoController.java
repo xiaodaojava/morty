@@ -86,9 +86,9 @@ public class OecpCaseInfoController  {
     @ResponseBody
     public BaseResponse<OecpCaseInfoDO> getOecpCaseInfo(OecpCaseInfoQC qc){
         qc.setPage(Page.getOne());
-        List<OecpCaseInfoDO> oecpCaseInfos = oecpCaseInfoManager.queryOecpCaseInfo(qc);
-        if(oecpCaseInfos!=null && oecpCaseInfos.size()>0){
-            return BaseResponse.success(oecpCaseInfos.get(0));
+        OecpCaseInfoDO oecpCaseInfo = oecpCaseInfoManager.getOecpCaseInfoById(qc.getId());
+        if(oecpCaseInfo!=null){
+            return BaseResponse.success(oecpCaseInfo);
         }else{
             return BaseResponse.fail("no data info");
         }
