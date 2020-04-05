@@ -5,9 +5,9 @@
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-table :data="scope.row.caseInfos" style="width:100%" border fit highlight-current-row>
-            <el-table-column type="index" label="案例编号" width="80"></el-table-column>
-            <el-table-column prop="title" label="标题" width="50"></el-table-column>
-            <el-table-column prop="content" label="案例详情" width="50"></el-table-column>
+            <el-table-column type="index" label="案例编号" width="100"></el-table-column>
+            <el-table-column prop="title" label="标题"></el-table-column>
+            <el-table-column prop="content" label="案例详情" ></el-table-column>
             <el-table-column prop="errorTags" label="相关标签">
             <template slot-scope="scope">
               <el-tag
@@ -36,8 +36,8 @@
       </el-table-column>
          <el-table-column prop="content" label="操作" width="150">
              <template slot-scope="scope">
-               <el-input type="text">查看详情</el-input>
-               <el-input type="text" @click="deleteCode(scope.row.id)">删除</el-input>
+               <el-button type="text">查看详情</el-button>
+               <el-button type="text" @click="deleteCode(scope.row.id)">删除</el-button>
              </template>
              </el-table-column>
     </el-table>
