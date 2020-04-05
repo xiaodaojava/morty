@@ -41,7 +41,7 @@ public class OecpErrorInfoEsController {
         OecpErrorDocument oecpErrorDocument = null;
         try {
              oecpErrorDocument = oecpErrorInfoEsManager.findByErrorCode(errorCode);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("es中信息查询异常，异常内容为：{}",e.getMessage());
         }
         return oecpErrorDocument;
@@ -59,7 +59,7 @@ public class OecpErrorInfoEsController {
         List<OecpErrorDocument> oecpErrorDocuments = null;
         try {
             oecpErrorDocuments = oecpErrorInfoEsManager.searchErrorCode(info);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("通过信息查找相关错误码异常，异常内容为：{}",e.getMessage());
         }
         return oecpErrorDocuments;
@@ -77,7 +77,7 @@ public class OecpErrorInfoEsController {
         List<OecpErrorDocument> oecpErrorDocuments = null;
         try {
             oecpErrorDocuments = oecpErrorInfoEsManager.suggestErrorCode(info);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.info("通过错误信息建议错误码异常，异常内容为：{}",e.getMessage());
         }
         return oecpErrorDocuments;

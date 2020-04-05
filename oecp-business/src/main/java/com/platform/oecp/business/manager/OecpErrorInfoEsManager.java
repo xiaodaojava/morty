@@ -15,13 +15,13 @@ public interface OecpErrorInfoEsManager {
 
     public String createErrorCodeIndex() throws IOException;
 
-    public OecpErrorDocument findByErrorCode(String errorCode) throws IOException;
+    public OecpErrorDocument findByErrorCode(String errorCode) throws Exception;
 
     public String editErrorCode(OecpErrorDocument document) throws IOException;
 
-    public List<OecpErrorDocument> searchErrorCode(String info) throws IOException;
+    public List<OecpErrorDocument> searchErrorCode(String info) throws Exception;
 
-    public List<OecpErrorDocument> suggestErrorCode(String info) throws IOException;
+    public List<OecpErrorDocument> suggestErrorCode(String info) throws Exception;
 
     public String deleteErrorCode(String id) throws IOException;
 }

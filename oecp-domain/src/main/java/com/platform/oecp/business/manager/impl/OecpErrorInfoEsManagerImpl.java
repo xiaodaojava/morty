@@ -73,7 +73,10 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     }
 
     @Override
-    public OecpErrorDocument findByErrorCode(String errorCode) throws IOException {
+    public OecpErrorDocument findByErrorCode(String errorCode) throws Exception {
+        if (null == errorCode || "".equals(errorCode)) {
+            throw new Exception("非法字符");
+        }
         GetRequest getRequest = new GetRequest(ERROR_CODE_INDEX, errorCode);
         GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
         Map<String, Object> resultMap = getResponse.getSource();
@@ -93,7 +96,10 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     }
 
     @Override
-    public List<OecpErrorDocument> searchErrorCode(String info) throws IOException {
+    public List<OecpErrorDocument> searchErrorCode(String info) throws Exception {
+        if (null == info || "".equals(info)) {
+            throw new Exception("非法字符");
+        }
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(ERROR_CODE_INDEX);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -117,7 +123,10 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     }
 
     @Override
-    public List<OecpErrorDocument> suggestErrorCode(String info) throws IOException {
+    public List<OecpErrorDocument> suggestErrorCode(String info) throws Exception {
+        if (null == info || "".equals(info)) {
+            throw new Exception("非法字符");
+        }
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(ERROR_CODE_INDEX);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
