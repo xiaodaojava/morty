@@ -90,20 +90,20 @@ export const constantRoutes = [
       
     ]
   },
-  {
-    path: "/errorInfo",
-    component: Layout,
-    redirect: "/errorInfo/table",
-    meta: { title: "错误码平台用户应用", icon: "example" },
-    hidden: true,
-    children: [
-      {
-        path: "/errorInfo/example",
-        component: () => import("@/views/errorDealWith/list"),
-        meta: { title: "错误码搜索", icon: "dashboard" }
-      }
-    ]
-  },
+  // {
+  //   path: "/errorInfo",
+  //   component: Layout,
+  //   redirect: "/errorInfo/table",
+  //   meta: { title: "错误码平台用户应用", icon: "example" },
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: "/errorInfo/example",
+  //       component: () => import("@/views/errorDealWith/list"),
+  //       meta: { title: "错误码搜索", icon: "dashboard" }
+  //     }
+  //   ]
+  // },
   {
     path: "/errorDealWith",
     component: Layout,
@@ -113,14 +113,7 @@ export const constantRoutes = [
       {
         path: "/errorDealWith/list",
         component: () => import("@/views/errorDealWith/list"),
-        meta: { title: "我的错误码", icon: "dashboard" },
-        children:[
-          {
-            path: "/errorDealWith/list",
-            component: () => import("@/views/errorDealWith/list"),
-            meta: { title: "我的错误码列表", icon: "dashboard" }
-          }
-        ]
+        meta: { title: "我的错误码列表", icon: "dashboard" },
       },
       // {
       //   path: "/errorDealWith/list",
@@ -185,12 +178,12 @@ export const constantRoutes = [
         path: "/errorStatistic/user-role",
         component: () => import("@/views/errorStatistic/user-role"),
         meta: { title: "错误码平台用户角色", icon: "dashboard" }
-      },
-      {
-        path: "/errorStatistic/my-error-info-list",
-        component: () => import("@/views/errorStatistic/my-error-info-list"),
-        meta: { title: "我的错误码", icon: "link" }
       }
+      // {
+      //   path: "/errorStatistic/my-error-info-list",
+      //   component: () => import("@/views/errorStatistic/my-error-info-list"),
+      //   meta: { title: "我的错误码", icon: "link" }
+      // }
     ]
   },
   {
