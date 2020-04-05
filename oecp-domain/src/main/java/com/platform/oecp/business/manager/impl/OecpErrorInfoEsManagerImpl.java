@@ -4,6 +4,7 @@ import com.alipay.api.internal.util.file.IOUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.platform.oecp.business.manager.OecpErrorInfoEsManager;
 import com.platform.oecp.models.document.OecpErrorDocument;
+import com.platform.oecp.utils.JsonUtils;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -27,9 +28,12 @@ import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
 import org.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import red.lixiang.tools.base.exception.BusinessException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +48,9 @@ import java.util.Map;
  */
 @Component
 public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
+
     private static final String ERROR_CODE_INDEX = "error_codes";
 
     private RestHighLevelClient client;
@@ -73,12 +80,18 @@ public class OecpErrorInfoEsManagerImpl implements OecpErrorInfoEsManager {
     }
 
     @Override
-    public OecpErrorDocument findByErrorCode(String errorCode) throws Exception {
+    public OecpErrorDocument findByErrorCode(String errorCode)  {
         if (null == errorCode || "".equals(errorCode)) {
-            throw new Exception("非法字符");
+            throw new BusinessException("非法字符");
         }
         GetRequest getRequest = new GetRequest(ERROR_CODE_INDEX, errorCode);
-        GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
+        GetResponse getResponse = null;
+        try {
+            getResponse = client.get(getRequest, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            logger.error("调取ES出错",e);
+            throw new BusinessException("调取ES出错",e);
+        }
         Map<String, Object> resultMap = getResponse.getSource();
         return convertMapToProfileDocument(resultMap);
     }

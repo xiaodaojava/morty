@@ -28,7 +28,7 @@
 	</resultMap>
 
 	<!--查询出错误信息和对应的标签-->
-	<select id="errorInfoList" resultMap="errorInfoMap" parameterType="java.lang.String">
+	<select id="errorInfoList" resultMap="errorInfoMap">
 		select
 		a.id,a.code,a.error_info,a.remarks,
 		c.id,c.tag
@@ -37,6 +37,10 @@
 		left join oecp_tag c on c.id = b.tag_id
 		where 1=1
 		AND a.create_by = #{userId}
+		AND a.del_flag = 0
+		<if test="page!=null">
+			limit #{page.pageSize} offset #{page.startIndex}
+		</if>
 	</select>
 
 	<!--查询出案例信息和对应的标签-->

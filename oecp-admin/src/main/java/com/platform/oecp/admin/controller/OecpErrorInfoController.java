@@ -110,10 +110,12 @@ public class OecpErrorInfoController  {
 
     @GetMapping("/getErrorInfoAndCase")
     @ResponseBody
-    public BaseResponse<List<ErrorInfoAndCaseDto>> getErrorInfoAndCase(){
-        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos();
+    public BaseResponse<PageData<ErrorInfoAndCaseDto>> getErrorInfoAndCase(Page page){
+        //先获取总数量
+        Long totalCount = commonManager.countErrorInfos();
+        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos(page);
         if(errorInfoAndCaseDtos!=null && errorInfoAndCaseDtos.size()>0){
-            return BaseResponse.success(errorInfoAndCaseDtos);
+            return BaseResponse.assemblePageResponse(errorInfoAndCaseDtos,totalCount,page.getPageIndex(),page.getPageSize());
         }else{
             return BaseResponse.fail("no data info");
         }
@@ -122,7 +124,7 @@ public class OecpErrorInfoController  {
     @GetMapping("/getPlatformErrorInfoAndCase")
     @ResponseBody
     public BaseResponse<List<ErrorInfoAndCaseDto>> getPlatformErrorInfoAndCase(){
-        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos();
+        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos(null);
         if(errorInfoAndCaseDtos!=null && errorInfoAndCaseDtos.size()>0){
             return BaseResponse.success(errorInfoAndCaseDtos);
         }else{

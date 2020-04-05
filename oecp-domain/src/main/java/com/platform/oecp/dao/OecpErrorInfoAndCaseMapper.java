@@ -4,7 +4,9 @@ import com.platform.oecp.dto.CaseInfoDto;
 import com.platform.oecp.dto.ErrorInfoAndCaseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import red.lixiang.tools.common.mybatis.model.Page;
 
 import java.util.List;
 
@@ -17,7 +19,16 @@ public interface OecpErrorInfoAndCaseMapper {
      * @param userId
      * @return
      */
-    List<ErrorInfoAndCaseDto> errorInfoList(@Param("userId") String userId);
+    List<ErrorInfoAndCaseDto> errorInfoList(@Param("userId") String userId,@Param("page") Page page);
+
+    @Select("select count(1)" +
+            " from oecp_error_info a" +
+            " left join oecp_error_tag b on b.code_id=a.id " +
+            " left join oecp_tag c on c.id = b.tag_id " +
+            " where 1=1 " +
+            " AND a.del_flag = 0 "+
+            " AND a.create_by = #{userId}")
+    Long  countErrorInfo(@Param("userId") String userId);
 
     /**
      * 获取此人下的这个错误的相关案例信息
