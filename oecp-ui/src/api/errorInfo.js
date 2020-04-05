@@ -64,3 +64,16 @@ export function findByErrorCode(code) {
     }
   })
 }
+
+export function searchErrorCode(info) {
+  if(!info){
+    info ='';
+  }
+  return request({
+    url: '/es/searchErrorCode',
+    method: 'get',
+    params: {
+      info: info
+    }
+  })
+}

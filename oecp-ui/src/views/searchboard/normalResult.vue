@@ -8,8 +8,8 @@
           <el-button type="primary" @click="onSearchSubmit">查询</el-button>
         </el-form-item>
     </el-form>
-     <div v-if="searchContent" class="search-result-class">
-    你要搜索的内容：“{{ searchContent }}”,结果如下
+     <div v-if="searchResult" class="search-result-class">
+     {{searchResult}}
   </div>
     <el-table :data="tableData" style="width:100%" align="center" :loading="tableLoading"  border >
        <el-table-column type="expand">
@@ -53,51 +53,16 @@
   </oecp-page>
 </template>
 <script>
-import { findByErrorCode } from '@/api/errorInfo'
+import { searchErrorCode } from '@/api/errorInfo'
 export default {
   data(){
     return{
-      tableData:[
-        {
-          errorCode:'768',
-          errorMsg:'8979879',
-          errorDesc:'87987987098',
-          errorTag:[
-            {
-              id:'',
-              tag:'768'
-            },
-            {
-              id:'',
-              tag:'78687'
-            },
-            {
-              id:'',
-              tag:'238334'
-            }
-          ],
-          errorCase:[
-            {
-              id:'1112223333',
-              title:'123',
-              caseTag:[
-                {
-                  id:'1',
-                  tag:'2'
-                },
-                {
-                  id:'2',
-                  tag:'11'
-                }
-              ]
-            }
-          ]
-        }
-      ], 
+    tableData:[], 
     searchContent:'',
+    tableLoading:false,
+    searchResult:'',
     page:1,
     size:10,
-    tableLoading:false
     }
   },
   methods:{
@@ -105,12 +70,14 @@ export default {
       this.search();
     },
     search(){
-      findByErrorCode(this.searchContent).then(res =>{
+      searchErrorCode(this.searchContent).then(res =>{
         if(!res){
-            this.tableData = []
-        }else if(res.result){
-          console.log(res)
+          this.tableData = []
+        }else{
           this.tableData = res;
+          this.searchResult = '你要搜索的内容：'+this.searchContent+',结果如下:'
+          console.log(this.tableData)
+          console.log(this.tableData[0])
         }
       })
     },

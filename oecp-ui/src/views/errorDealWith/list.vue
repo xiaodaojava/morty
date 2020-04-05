@@ -1,6 +1,6 @@
 <template>
   <oecp-page title="我的错误码" class="editCodePage">
-    <search-message :searchContent="searchContent" />
+    <el-button style="float:right;" type="primary" @click="createCode">新建错误码</el-button>
     <el-table :data="tableData" style="width: 100%" border fit highlight-current-row>
       <el-table-column type="expand">
         <template slot-scope="scope">
@@ -58,14 +58,17 @@ export default {
         console.log('2183798217398213')
       },
       search(){
-    getErrorInfoAndCase().then(res => {
-        if (res.result && !res.code) {
-          console.log(res.data)
-          this.tableData = res.data
-        } else {
-          this.$message.error('保存失败')
-        }
-      })
+        getErrorInfoAndCase().then(res => {
+            if (res.result && !res.code) {
+              console.log(res.data)
+              this.tableData = res.data
+            } else {
+              this.$message.error('保存失败')
+            }
+          })
+      },
+      createCode(){
+        this.$router.push('/errorDealWith/add')
       }
   },
   mounted() {
