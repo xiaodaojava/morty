@@ -126,67 +126,19 @@ export const constantRoutes = [
         path: "/errorDealWith/detail",
         name: 'errorDealWithDetail',
         component: () => import("@/views/errorDealWith/detail"),
-        meta: { title: "我的案例", icon: "dashboard" }
-      }
-    ]
-  },
-  {
-    path: "/errorStatistic",
-    component: Layout,
-    redirect: "/errorStatistic/error-apply-info",
-    meta: { title: "我的错误码管理", icon: "example" },
-    children: [
-      {
-        path: "/errorStatistic/error-case-info",
-        component: () => import("@/views/errorStatistic/error-case-info"),
-        meta: { title: "错误码平台案例", icon: "dashboard" }
-      },
-      {
-        path: "/errorStatistic/error-case",
-        component: () => import("@/views/errorStatistic/error-case"),
-        meta: { title: "错误码平台错误码案例", icon: "dashboard" }
-      },
-      {
-        path: "/errorStatistic/error-config",
-        component: () => import("@/views/errorStatistic/error-config"),
-        meta: { title: "错误码平台配置", icon: "dashboard" },
-        hidden: true
-      },
-      {
-        path: "/errorStatistic/error-info",
-        component: () => import("@/views/errorStatistic/error-info"),
-        meta: { title: "错误码平台错误码", icon: "dashboard" }
-      },
-      {
-        path: "/errorStatistic/error-org",
-        component: () => import("@/views/errorStatistic/error-org"),
-        meta: { title: "错误码平台组织机构", icon: "dashboard" }
-      },
-      {
-        path: "/errorStatistic/error-role-src",
-        component: () => import("@/views/errorStatistic/error-role-src"),
-        meta: { title: "错误码平台角色资源", icon: "dashboard" }
-      },
-      {
-        path: "/errorStatistic/error-role",
-        component: () => import("@/views/errorStatistic/error-role"),
-        meta: { title: "错误码平台角色", icon: "dashboard" }
+        meta: { title: "我的错误码详情", icon: "dashboard" },
+        hidden:true
       },
       {
         path: "/errorStatistic/error-tag",
         component: () => import("@/views/errorStatistic/error-tag"),
-        meta: { title: "错误码标签", icon: "dashboard" }
+        meta: { title: "我的错误码标签", icon: "dashboard" }
       },
       {
-        path: "/errorStatistic/user-role",
-        component: () => import("@/views/errorStatistic/user-role"),
-        meta: { title: "错误码平台用户角色", icon: "dashboard" }
-      }
-      // {
-      //   path: "/errorStatistic/my-error-info-list",
-      //   component: () => import("@/views/errorStatistic/my-error-info-list"),
-      //   meta: { title: "我的错误码", icon: "link" }
-      // }
+        path: "/errorStatistic/error-case-info",
+        component: () => import("@/views/errorStatistic/error-case-info"),
+        meta: { title: "我的案例", icon: "dashboard" }
+      },
     ]
   },
   {
