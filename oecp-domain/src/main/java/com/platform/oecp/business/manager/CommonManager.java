@@ -25,6 +25,7 @@ import red.lixiang.tools.common.mybatis.model.Page;
 import red.lixiang.tools.jdk.ListTools;
 import red.lixiang.tools.spring.redis.RedisSpringTools;
 
+import javax.naming.CommunicationException;
 import java.util.List;
 
 /**
@@ -110,7 +111,7 @@ public class CommonManager {
      * @description: 创建新的错误码信息
      */
     @Transactional
-    public OecpErrorInfoDO saveErrorInfo(OecpErrorInfoRequest oecpErrorInfoRequest){
+    public OecpErrorInfoDO saveErrorInfo(OecpErrorInfoRequest oecpErrorInfoRequest) throws CommunicationException {
         //保存错误码信息
         OecpErrorInfoDO oecpErrorInfoDO = oecpErrorInfoFactory.createNewInstance(oecpErrorInfoRequest);
         oecpErrorInfoDO = oecpErrorInfoManager.saveOecpErrorInfo(oecpErrorInfoDO);

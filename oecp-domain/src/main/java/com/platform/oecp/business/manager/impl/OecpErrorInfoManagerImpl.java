@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import red.lixiang.tools.common.mybatis.model.Page;
 import red.lixiang.tools.jdk.ListTools;
 
+import javax.naming.CommunicationException;
 import java.util.List;
 
 @Component
@@ -43,12 +44,16 @@ public class OecpErrorInfoManagerImpl implements OecpErrorInfoManager{
     }
 
     @Override
-    public OecpErrorInfoDO saveOecpErrorInfo(OecpErrorInfoDO oecpErrorInfo){
+    public OecpErrorInfoDO saveOecpErrorInfo(OecpErrorInfoDO oecpErrorInfo) throws CommunicationException {
 
         if(oecpErrorInfo.getId()!=null){
             oecpErrorInfo.preUpdate();
              oecpErrorInfoMapper.updateOecpErrorInfo(oecpErrorInfo);
         }else {
+            OecpErrorInfoDO infoDO = oecpErrorInfoMapper.getByCode(oecpErrorInfo.getCode());
+            if(infoDO != null){
+                throw new CommunicationException("该code已存在");
+            }
              oecpErrorInfo.preInsert();
              oecpErrorInfoMapper.insertOecpErrorInfo(oecpErrorInfo);
         }

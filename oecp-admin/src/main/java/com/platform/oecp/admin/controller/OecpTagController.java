@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import red.lixiang.tools.base.BaseResponse;
 import red.lixiang.tools.base.PageData;
@@ -44,7 +45,7 @@ public class OecpTagController  {
 
     @PostMapping("/oecpTag/save")
     @ResponseBody
-    public BaseResponse<String> saveOecpTag(OecpTagDO oecpTag){
+    public BaseResponse<String> saveOecpTag(@RequestBody OecpTagDO oecpTag){
         BaseResponse<String> baseResponse = new BaseResponse<>();
         oecpTagManager.saveOecpTag(oecpTag);
         baseResponse.setData("OK");

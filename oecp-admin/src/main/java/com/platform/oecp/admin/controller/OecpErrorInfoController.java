@@ -15,6 +15,7 @@ import red.lixiang.tools.base.BaseResponse;
 import red.lixiang.tools.base.PageData;
 import red.lixiang.tools.common.mybatis.model.Page;
 
+import javax.naming.CommunicationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -54,7 +55,7 @@ public class OecpErrorInfoController  {
      */
     @PostMapping("/saveOecpErrorInfo")
     @ResponseBody
-    public BaseResponse<String> saveOecpErrorInfo(@NotNull(message = "请检查不为空信息是否填写") @Valid @RequestBody OecpErrorInfoRequest oecpErrorInfoRequest){
+    public BaseResponse<String> saveOecpErrorInfo(@NotNull(message = "请检查不为空信息是否填写") @Valid @RequestBody OecpErrorInfoRequest oecpErrorInfoRequest) throws CommunicationException {
         BaseResponse<String> baseResponse = new BaseResponse<>();
         commonManager.saveErrorInfo(oecpErrorInfoRequest);
         baseResponse.setData("OK");
@@ -118,6 +119,17 @@ public class OecpErrorInfoController  {
         }
     }
 
+    @GetMapping("/getPlatformErrorInfoAndCase")
+    @ResponseBody
+    public BaseResponse<List<ErrorInfoAndCaseDto>> getPlatformErrorInfoAndCase(){
+        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos();
+        if(errorInfoAndCaseDtos!=null && errorInfoAndCaseDtos.size()>0){
+            return BaseResponse.success(errorInfoAndCaseDtos);
+        }else{
+            return BaseResponse.fail("no data info");
+        }
+    }
+
     @GetMapping("/oecpErrorInfo/remove")
     @ResponseBody
     public BaseResponse<String> remove(Long id){
@@ -126,5 +138,21 @@ public class OecpErrorInfoController  {
         baseResponse.setData("OK");
         return  baseResponse;
     }
+
+    /**
+     * 快速申请错误码
+     * @param oecpErrorInfo
+     * @return
+     */
+    @PostMapping("/oecpErrorInfo/save")
+    @ResponseBody
+    public BaseResponse<String> save(@NotNull(message = "请检查不为空信息是否填写") @Valid @RequestBody OecpErrorInfoDO oecpErrorInfo) throws CommunicationException {
+        BaseResponse<String> baseResponse = new BaseResponse<>();
+        oecpErrorInfoManager.saveOecpErrorInfo(oecpErrorInfo);
+        baseResponse.setData("OK");
+        return  baseResponse;
+    }
+
+
 
 }
