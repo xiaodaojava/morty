@@ -36,7 +36,7 @@
       </el-table-column>
          <el-table-column prop="content" label="操作" width="150">
              <template slot-scope="scope">
-               <el-button type="text" @click="seeCodeDetail(scope.row)">查看详情</el-button>
+               <el-button type="text" @click="seeCodeDetail(scope.row)">编辑</el-button>
                <el-button type="text" @click="deleteCode(scope.row)">删除</el-button>
              </template>
              </el-table-column>
@@ -95,7 +95,8 @@ export default {
         this.$router.push('/errorDealWith/add')
       },
       seeCodeDetail(row){
-        this.$router.push({path:'/errorDealWith/detail',query:{id:row.codeId}})
+        console.log(row)
+        this.$router.push({name:'errorDealWithEdit',params:{data:row}})
       },
       handleCurrentChange(){
         this.search()

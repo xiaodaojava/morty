@@ -117,12 +117,14 @@ export const constantRoutes = [
       },
       {
         path: "/errorDealWith/add",
+        name:"errorDealWithEdit",
         component: () => import("@/views/errorDealWith/add"),
         meta: { title: "我的错误码添加", icon: "dashboard" },
         hidden:true
       },
       {
         path: "/errorDealWith/detail",
+        name: 'errorDealWithDetail',
         component: () => import("@/views/errorDealWith/detail"),
         meta: { title: "我的案例", icon: "dashboard" }
       }
