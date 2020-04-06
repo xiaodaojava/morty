@@ -2,25 +2,14 @@
   <div class="errorTag-container">
     <div class="search-area">
       <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-        <el-form-item label="标签">
+        <!-- <el-form-item label="标签">
           <el-input v-model="searchForm.tag" placeholder="请输入标签"></el-input>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-date-picker
-            v-model="searchForm.createForm"
-            type="datetimerange"
-            :picker-options="pickerOptions"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            align="right"
-          ></el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSearchSubmit">查询</el-button>
         </el-form-item>
 
-        <el-button @click="clearFilter">清空</el-button>
+        <el-button @click="clearFilter">清空</el-button> -->
 
         <div class="add-class">
           <el-button @click="addErrorTag" type="warning">+ 增加标签</el-button>
@@ -117,8 +106,6 @@ export default {
       },
       tableLoading: true,
       searchForm: {
-        tag: '',
-        createDate: '',
         pageIndex: 1,
         pageSize: 10,
         total: 0

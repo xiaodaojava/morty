@@ -66,7 +66,7 @@ export const constantRoutes = [
           {
             path: "/searchboardResult/normalResult",
             component: () => import("@/views/searchboard/normalResult"),
-            meta: { title: "按原来顺序查看", icon: "dashboard" }
+            meta: { title: "错误码搜索结果查看", icon: "dashboard" }
           },
           
          

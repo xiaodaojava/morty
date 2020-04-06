@@ -28,6 +28,7 @@ module.exports = {
     https: true,
     //启用热更新
     hot: true,
+    open:true,
     port: port,
     overlay: {
       warnings: false,

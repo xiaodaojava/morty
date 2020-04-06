@@ -2,7 +2,7 @@
   <div class="content-container">
     <div class="search-area">
       <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-        <el-form-item label="案例标题">
+        <!-- <el-form-item label="案例标题">
           <el-input v-model="searchForm.title" placeholder="请输入案例标题"></el-input>
         </el-form-item>
         <el-form-item label="案例内容">
@@ -12,7 +12,7 @@
           <el-button type="primary" @click="onSearchSubmit">查询</el-button>
         </el-form-item>
 
-        <el-button @click="clearFilter">清空</el-button>
+        <el-button @click="clearFilter">清空</el-button> -->
 
         <div class="add-class">
           <el-button @click="addCaseInfo" type="warning">+ 增加案例</el-button>
@@ -45,14 +45,14 @@
       ></el-pagination>
     </div>
 
-    <el-dialog :title="addCaseInfoForm.formName" :visible.sync="addCaseInfoForm.dialogFormVisible">
+    <el-dialog :title="formName" :visible.sync="dialogFormVisible">
       <el-form ref="addCaseInfoForm" :model="addCaseInfoForm" :rules="validRules">
-        <el-form-item label="案例标题" :label-width="addCaseInfoForm.formLabelWidth">
+        <el-form-item label="案例标题" :label-width="formLabelWidth">
           <div class="save-input-class">
             <el-input ref="title" v-model="addCaseInfoForm.title"></el-input>
           </div>
         </el-form-item>
-        <el-form-item label="案例内容" :label-width="addCaseInfoForm.formLabelWidth">
+        <el-form-item label="案例内容" :label-width="formLabelWidth">
           <div class="save-input-textarea-class">
             <el-input
               ref="content"
@@ -62,6 +62,19 @@
               placeholder="请输入内容"
             ></el-input>
           </div>
+        </el-form-item>
+        <el-form-item label="关联错误码" :label-width="formLabelWidth">
+           <el-select
+              filterable
+              v-model="addCaseInfoForm.codeId"
+              placeholder="请输入错误码">
+              <el-option
+                v-for="item in errorCodeList"
+                :key="item.codeId"
+                :label="item.code"
+                :value="item.codeId">
+              </el-option>
+            </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -74,6 +87,7 @@
 
 <script>
 import { query, save, remove } from "@/api/errorCaseInfo";
+import { getErrorInfoAndCase } from '@/api/errorInfo'
 import { parseTime } from "@/utils/index";
 export default {
   data() {
@@ -101,14 +115,16 @@ export default {
         id: "",
         title: "",
         content: "",
+        codeId:'',
+      },
+        formName: "",
         dialogFormVisible: false,
         formLabelWidth: "120px",
-        formName: ""
-      },
       validRules: {
         title: [{ required: true, trigger: "blur", validator: validateRule }],
         content: [{ required: true, trigger: "blur", validator: validateRule }]
-      }
+      },
+      errorCodeList:[]
     };
   },
   methods: {
@@ -120,7 +136,10 @@ export default {
       this.searchForm.content = "";
     },
     formatter(row, column) {
-      return parseTime(row.createDate);
+      if(!row.createDate){
+        return '--';
+      }
+      return  parseTime(row.createDate);
     },
     filterTag(value, row) {
       return row.error_tag === value;
@@ -134,8 +153,9 @@ export default {
       this.addCaseInfoForm.title = row.title;
       this.addCaseInfoForm.id = row.id;
       this.addCaseInfoForm.content = row.content;
-      this.addCaseInfoForm.formName = "编辑案例";
-      this.addCaseInfoForm.dialogFormVisible = true;
+      this.addCaseInfoForm.codeId = row.codeId;
+      this.formName = "编辑案例";
+      this.dialogFormVisible = true;
     },
     handleDelete(index, row) {
       console.log(index, row);
@@ -149,7 +169,6 @@ export default {
       });
     },
     onSearchSubmit() {
-      console.log("submit!");
       this.search();
     },
     handleSizeChange(val) {
@@ -180,16 +199,22 @@ export default {
       console.log(this.tableLoading);
     },
     addCaseInfo() {
-      this.addCaseInfoForm.dialogFormVisible = true;
-      this.addCaseInfoForm.formName = "增加案例";
+      this.dialogFormVisible = true;
+      this.formName = "增加案例";
     },
     saveCode() {
-      this.$refs.addCaseInfoForm.validate(valid => {
-        if (!valid) {
-          console.log("error submit!!");
-          return;
-        }
-      });
+      if(!this.addCaseInfoForm.title){
+        this.$message.warning('请填写案例标题信息')
+        return;
+      }
+      if(!this.addCaseInfoForm.content){
+        this.$message.warning('请填写案例内容信息')
+        return;
+      }
+      if(!this.addCaseInfoForm.codeId){
+        this.$message.warning('请选择错误码')
+        return;
+      }
       save(this.addCaseInfoForm).then(res => {
         if (res.result) {
           this.$message.success("保存成功");
@@ -204,13 +229,23 @@ export default {
       this.addCaseInfoForm = {
         title: "",
         content: "",
-        dialogFormVisible: false,
-        formLabelWidth: "120px"
+        codeId:''
+      
       };
+        this.dialogFormVisible = false,
+        this.formLabelWidth ="120px"
+    },
+    getErrorCodeList(){
+      getErrorInfoAndCase({pageIndex:1,pageSize:100}).then(res => {
+        if (res.result && !res.code) {
+          this.errorCodeList = res.data.dataList
+        }
+      })
     }
   },
   mounted() {
     this.search();
+    this.getErrorCodeList();
   }
 };
 </script>
