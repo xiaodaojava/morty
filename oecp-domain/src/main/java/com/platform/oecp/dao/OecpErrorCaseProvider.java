@@ -2,10 +2,13 @@ package com.platform.oecp.dao;
 
 import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
+import org.springframework.util.CollectionUtils;
 import red.lixiang.tools.common.mybatis.MapperUtils;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
 import red.lixiang.tools.jdk.SnowflakeGenerator;
+
+import java.util.List;
 
 /**
  * @author lixiang
@@ -25,6 +28,20 @@ public class OecpErrorCaseProvider implements ProviderMethodResolver {
             SELECT("a.code_id ,a.case_id ,b.title,b.content ");
             FROM("oecp_error_case a");
             INNER_JOIN("oecp_case_info b on a.case_id = b.id");
+        }};
+
+        return sql.toString();
+    }
+
+    public String listOecpErrorCasesByCaseIdList(List<Long> caseIdList){
+
+        SQL sql = new SQL() {{
+            SELECT(TABLE_FIELDS);
+            FROM("oecp_error_case");
+            WHERE("del_flag = 0");
+            if(!CollectionUtils.isEmpty(caseIdList)){
+                WHERE("case_id in (" + caseIdList +")");
+            }
         }};
 
         return sql.toString();

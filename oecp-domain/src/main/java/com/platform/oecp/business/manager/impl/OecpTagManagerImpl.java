@@ -1,7 +1,9 @@
 package com.platform.oecp.business.manager.impl;
 
+import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.dos.OecpTagDO;
 import com.platform.oecp.models.qc.OecpTagQC;
+import com.platform.oecp.utils.UserUtil;
 import red.lixiang.tools.jdk.ListTools;
 import com.platform.oecp.business.manager.OecpTagManager;
 import com.platform.oecp.dao.OecpTagMapper;
@@ -32,7 +34,8 @@ public class OecpTagManagerImpl implements OecpTagManager{
 
     @Override
     public List<OecpTagDO> queryOecpTag(OecpTagQC qc){
-
+        OecpSysUserDO user = UserUtil.currentUser();
+        qc.setCreateBy(String.valueOf(user.getId()));
         List<OecpTagDO> oecpTags = oecpTagMapper.listOecpTags(qc);
         return oecpTags;
     }
@@ -45,7 +48,8 @@ public class OecpTagManagerImpl implements OecpTagManager{
 
     @Override
     public Long countOecpTag(OecpTagQC qc){
-
+        OecpSysUserDO user = UserUtil.currentUser();
+        qc.setCreateBy(String.valueOf(user.getId()));
         Long count = oecpTagMapper.countOecpTags(qc);
         return count;
     }

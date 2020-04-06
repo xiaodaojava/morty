@@ -32,7 +32,17 @@ public class OecpCaseInfoDO extends DataEntity<OecpCaseInfoDO> implements Serial
 
    private String creatorAvator;
 
-   private List<OecpCaseTagDO> caseTagList;
+   private Long codeId;
+
+    public Long getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(Long codeId) {
+        this.codeId = codeId;
+    }
+
+    private List<OecpCaseTagDO> caseTagList;
 
     public String getCreatorName() {
         return creatorName;

@@ -79,7 +79,7 @@ public class SearchManager {
                     //todo:案例删除
                     result = oecpErrorInfoEsManager.editErrorCode(oecpErrorDocument);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.error("编辑错误码信息同步到 ES 中发生异常，错误码 {}，", oecpErrorInfoRequest.getCode(), e);
             }
             logger.info("更新错误码异步更新到 ES 响应结果 {}", result);

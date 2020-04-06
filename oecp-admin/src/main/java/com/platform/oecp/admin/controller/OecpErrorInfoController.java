@@ -121,17 +121,6 @@ public class OecpErrorInfoController  {
         }
     }
 
-    @GetMapping("/getPlatformErrorInfoAndCase")
-    @ResponseBody
-    public BaseResponse<List<ErrorInfoAndCaseDto>> getPlatformErrorInfoAndCase(){
-        List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = commonManager.getErrorInfos(null);
-        if(errorInfoAndCaseDtos!=null && errorInfoAndCaseDtos.size()>0){
-            return BaseResponse.success(errorInfoAndCaseDtos);
-        }else{
-            return BaseResponse.fail("no data info");
-        }
-    }
-
     @GetMapping("/oecpErrorInfo/remove")
     @ResponseBody
     public BaseResponse<String> remove(Long id){

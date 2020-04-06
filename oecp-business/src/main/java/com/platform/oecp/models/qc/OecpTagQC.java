@@ -11,18 +11,16 @@ public class OecpTagQC extends BaseQC {
    
    /** 主键UUID  */
    private Long id;
-   
-   
-   
-   
-   
-   
-   
-   
-   
 
-    
-    
+   private String createBy;
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
     public Long getId() {
         return this.id;

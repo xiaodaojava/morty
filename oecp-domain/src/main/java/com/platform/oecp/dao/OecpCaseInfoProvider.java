@@ -19,6 +19,7 @@ public class OecpCaseInfoProvider implements ProviderMethodResolver {
             SELECT(TABLE_FIELDS);
             FROM("oecp_case_info");
             WHERE("del_flag = 0");
+            ORDER_BY("create_date desc");
         }};
         MapperUtils.richWhereSql(sql, oecpCaseInfoQC);
 
