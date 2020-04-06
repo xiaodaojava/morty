@@ -1,8 +1,8 @@
 <template>
-  <oecp-page title="错误码新建" class="editCodePage">
+  <oecp-page :title="titleName" class="editCodePage">
     <el-form :model="addCodeForm" label-position="top" label-width="80px">
       <el-form-item label="错误码">
-        <el-input style="width:30%" v-model="addCodeForm.code" placeholder="输入你要添加的错误码"></el-input>
+        <el-input style="width:30%" v-model="addCodeForm.code" placeholder="输入你要保存的错误码"></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input
@@ -74,7 +74,8 @@ export default {
       tags: [],
       inputVisible: false,
       inputValue: '',
-      oecpCaseInfoRequests: []
+      oecpCaseInfoRequests: [],
+      titleName:'错误码新建'
     }
   },
   methods: {
@@ -106,14 +107,11 @@ export default {
     },
 
     cancelCommit() {
-      this.addCodeForm = {
-        code: '',
-        errorInfo: ''
-      }
-      this.tags = []
+      this.$router.push('/errorDealWith/list')
     },
     goToCommit() {
       let data = {
+        codeId : this.addCodeForm.codeId,
         code: this.addCodeForm.code,
         errorInfo: this.addCodeForm.errorInfo,
         tags: this.tags,
@@ -122,7 +120,7 @@ export default {
       }
       saveOecpErrorInfo(data).then(res => {
         if (res.result && !res.code) {
-          this.$message.success('错误码新建成功!')
+          this.$message.success('错误码保存成功!')
           this.$router.push('/fastcreateerrorcode/success')
         } else {
           this.$message.error('保存失败')
@@ -143,7 +141,15 @@ export default {
       this.oecpCaseInfoRequests.splice(index, 1)
     }
   },
-  mounted() {}
+  mounted() {
+    let params = this.$route.params.data;
+    if(params){
+      this.titleName = '错误码编辑'
+      this.addCodeForm = params
+      this.tags = params.errorTags
+      this.oecpCaseInfoRequests = params.caseInfos
+    }
+  }
 }
 </script>
 

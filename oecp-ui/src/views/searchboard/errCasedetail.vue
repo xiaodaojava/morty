@@ -19,21 +19,7 @@ import { get } from '@/api/caseInfo'
 export default {
   data(){
     return{
-      caseDetail:{
-        id: 6916228232000,
-        remarks: null,
-        delFlag: 0,
-        createDate: "2020-04-04T10:21:06.000+0000",
-        createBy: "6812127232576",
-        updateDate: "2020-04-04T10:21:06.000+0000",
-        updateBy: "6812127232576",
-        titleForSearch: "null78687/m|的/uj|案例/n|",
-        title: "78687的案例",
-        contentForSearch: "78687的案例",
-        content: "78687786877868778687786877868778687",
-        creatorName: "PS",
-        creatorAvator: "https://tfs.alipayobjects.com/images/partner/T1vipmXdBaXXXXXXXX"
-    }
+      caseDetail:{}
     }
   },
   mounted(){

@@ -21,9 +21,8 @@
           </el-table>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="ID" width="100"></el-table-column>
-      <el-table-column prop="code" label="错误码" width="180"></el-table-column>
-      <el-table-column prop="errorMsg" label="错误信息"></el-table-column>
+      <el-table-column type="index" label="编号" width="50"></el-table-column>
+      <el-table-column prop="code" label="错误码" width="130"></el-table-column>
       <el-table-column prop="errorInfo" label="错误描述"></el-table-column>
       <el-table-column prop="errorTags" label="相关标签">
         <template slot-scope="scope">
@@ -34,13 +33,23 @@
           >{{item.tag}}</el-tag>
         </template>
       </el-table-column>
-         <el-table-column prop="content" label="操作" width="150">
+         <el-table-column prop="content" label="操作" width="150" fixed="right">
              <template slot-scope="scope">
-               <el-button type="text">查看详情</el-button>
+               <el-button type="text" @click="editCodeDetail(scope.row)">编辑</el-button>
                <el-button type="text" @click="deleteCode(scope.row)">删除</el-button>
+               <el-button type="text" @click="seeCodeDetail(scope.row)">查看详情</el-button>
              </template>
              </el-table-column>
     </el-table>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="resultTotal"
+      @current-change="handleCurrentChange"
+      :current-page.sync="pageIndex"
+      :page-size="pageSize"
+      >
+    </el-pagination>
   </oecp-page>
 </template>
 
@@ -53,7 +62,8 @@ export default {
       tableData:[],
       tableLoading:false,
       pageIndex:1,
-      pageSize:10
+      pageSize:10,
+      resultTotal:0
     }
   },
   methods: {
@@ -74,6 +84,7 @@ export default {
             if (res.result && !res.code) {
               console.log(res.data)
               this.tableData = res.data.dataList
+              this.resultTotal = res.data.totalCount
             } else {
               this.$message.error('保存失败')
             }
@@ -82,6 +93,16 @@ export default {
       },
       createCode(){
         this.$router.push('/errorDealWith/add')
+      },
+      editCodeDetail(row){
+        console.log(row)
+        this.$router.push({name:'errorDealWithEdit',params:{data:row}})
+      },
+      handleCurrentChange(){
+        this.search()
+      },
+      seeCodeDetail(row){
+        this.$router.push({name:'errorDealWithDetail',params:{data:row}})
       }
   },
   mounted() {
