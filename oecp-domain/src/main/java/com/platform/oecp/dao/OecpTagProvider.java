@@ -2,6 +2,8 @@ package com.platform.oecp.dao;
 
 import com.platform.oecp.models.dos.OecpTagDO;
 import com.platform.oecp.models.qc.OecpTagQC;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import red.lixiang.tools.common.mybatis.MapperUtils;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
@@ -40,7 +42,9 @@ public class OecpTagProvider implements ProviderMethodResolver {
         SQL sql = new SQL() {{
             SELECT("count(1)");
             FROM("oecp_tag");
+
             WHERE("del_flag = 0");
+
         }};
         MapperUtils.richWhereSql(sql, oecpTagQC);
 

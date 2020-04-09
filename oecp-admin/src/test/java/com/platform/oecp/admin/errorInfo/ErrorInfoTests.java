@@ -25,7 +25,7 @@ public class ErrorInfoTests {
 
 	@Test
 	public void testGetErrorInfos(){
-		List<ErrorInfoAndCaseDto> errorInfos = commonManager.getErrorInfos(null);
+		List<ErrorInfoAndCaseDto> errorInfos = commonManager.getErrorInfos(new Page(1,10));
 	}
 
 }

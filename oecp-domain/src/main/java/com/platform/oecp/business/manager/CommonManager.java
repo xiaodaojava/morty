@@ -126,44 +126,50 @@ public class CommonManager {
         OecpSearchMainDO oecpSearchMainDO = oecpSearchMainFactory.createNewInstance(oecpErrorInfoDO);
         oecpSearchMainDO = oecpSearchMainManager.saveOecpSearchMain(oecpSearchMainDO);
         if(oecpErrorInfoDO != null) {
-            //保存tag
-            for (ErrorTag tag : oecpErrorInfoRequest.getTags()) {
-                OecpTagDO oecpTagDO = new OecpTagDO();
-                oecpTagDO.setId(tag.getId()==null? null :Long.valueOf(tag.getId()));
-                oecpTagDO.setTag(tag.getTag());
-                oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
-                //保存错误码tag信息oecp_error_tag
-                OecpErrorTagDO oecpErrorTagDO = new OecpErrorTagDO();
-                oecpErrorTagDO.setCodeId(oecpErrorInfoDO.getId());
-                oecpErrorTagDO.setTagId(oecpTagDO.getId());
-                oecpErrorTagManager.saveOecpErrorTag(oecpErrorTagDO);
-            }
-            //保存案例信息
-            for (OecpCaseInfoRequest oecpCaseInfoRequest : oecpErrorInfoRequest.getOecpCaseInfoRequests()) {
-                OecpCaseInfoDO oecpCaseInfoDO = oecpCaseInfoFactory.createNewInstance(oecpCaseInfoRequest);
-                oecpCaseInfoDO = oecpCaseInfoManager.saveOecpCaseInfo(oecpCaseInfoDO);
-                oecpCaseInfoRequest.setCaseId(oecpCaseInfoDO.getId());
-                oecpCaseInfoRequest.setTitleForSearch(oecpCaseInfoDO.getTitleForSearch());
-                oecpCaseInfoRequest.setContentForSearch(oecpCaseInfoDO.getContentForSearch());
-                for (CaseTag caseTag : oecpCaseInfoRequest.getTags()) {
+            if(oecpErrorInfoRequest.getTags() != null) {
+                //保存tag
+                for (ErrorTag tag : oecpErrorInfoRequest.getTags()) {
                     OecpTagDO oecpTagDO = new OecpTagDO();
-                    oecpTagDO.setId(caseTag.getId()==null? null :Long.valueOf(caseTag.getId()));
-                    oecpTagDO.setTag(caseTag.getTag());
+                    oecpTagDO.setId(tag.getId() == null ? null : Long.valueOf(tag.getId()));
+                    oecpTagDO.setTag(tag.getTag());
                     oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
-                    //保存案例tag信息oecp_case_tag
-                    OecpCaseTagDO oecpCaseTagDO = new OecpCaseTagDO();
-                    oecpCaseTagDO.setCaseId(oecpCaseInfoDO.getId());
-                    oecpCaseTagDO.setTagId(oecpTagDO.getId());
-                    oecpCaseTagManager.saveOecpCaseTag(oecpCaseTagDO);
+                    //保存错误码tag信息oecp_error_tag
+                    OecpErrorTagDO oecpErrorTagDO = new OecpErrorTagDO();
+                    oecpErrorTagDO.setCodeId(oecpErrorInfoDO.getId());
+                    oecpErrorTagDO.setTagId(oecpTagDO.getId());
+                    oecpErrorTagManager.saveOecpErrorTag(oecpErrorTagDO);
                 }
-                //保存错误码和案例关联关系
-                OecpErrorCaseDO oecpErrorCaseDO = new OecpErrorCaseDO();
-                oecpErrorCaseDO.setCodeId(oecpErrorInfoDO.getId());
-                oecpErrorCaseDO.setCaseId(oecpCaseInfoDO.getId());
-                oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCaseDO);
-                //保存案例到search表中
-                OecpSearchSubDO oecpSearchSubDO =oecpSearchSubFactory.createNewInstance(oecpCaseInfoDO,oecpSearchMainDO);
-                oecpSearchSubManager.saveOecpSearchSub(oecpSearchSubDO);
+            }
+            if(oecpErrorInfoRequest.getOecpCaseInfoRequests() != null) {
+                //保存案例信息
+                for (OecpCaseInfoRequest oecpCaseInfoRequest : oecpErrorInfoRequest.getOecpCaseInfoRequests()) {
+                    OecpCaseInfoDO oecpCaseInfoDO = oecpCaseInfoFactory.createNewInstance(oecpCaseInfoRequest);
+                    oecpCaseInfoDO = oecpCaseInfoManager.saveOecpCaseInfo(oecpCaseInfoDO);
+                    oecpCaseInfoRequest.setCaseId(oecpCaseInfoDO.getId());
+                    oecpCaseInfoRequest.setTitleForSearch(oecpCaseInfoDO.getTitleForSearch());
+                    oecpCaseInfoRequest.setContentForSearch(oecpCaseInfoDO.getContentForSearch());
+                    if (oecpCaseInfoRequest.getTags() != null) {
+                        for (CaseTag caseTag : oecpCaseInfoRequest.getTags()) {
+                            OecpTagDO oecpTagDO = new OecpTagDO();
+                            oecpTagDO.setId(caseTag.getId() == null ? null : Long.valueOf(caseTag.getId()));
+                            oecpTagDO.setTag(caseTag.getTag());
+                            oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
+                            //保存案例tag信息oecp_case_tag
+                            OecpCaseTagDO oecpCaseTagDO = new OecpCaseTagDO();
+                            oecpCaseTagDO.setCaseId(oecpCaseInfoDO.getId());
+                            oecpCaseTagDO.setTagId(oecpTagDO.getId());
+                            oecpCaseTagManager.saveOecpCaseTag(oecpCaseTagDO);
+                        }
+                    }
+                    //保存错误码和案例关联关系
+                    OecpErrorCaseDO oecpErrorCaseDO = new OecpErrorCaseDO();
+                    oecpErrorCaseDO.setCodeId(oecpErrorInfoDO.getId());
+                    oecpErrorCaseDO.setCaseId(oecpCaseInfoDO.getId());
+                    oecpErrorCaseManager.saveOecpErrorCase(oecpErrorCaseDO);
+                    //保存案例到search表中
+                    OecpSearchSubDO oecpSearchSubDO = oecpSearchSubFactory.createNewInstance(oecpCaseInfoDO, oecpSearchMainDO);
+                    oecpSearchSubManager.saveOecpSearchSub(oecpSearchSubDO);
+                }
             }
         }
         //异步更新es
@@ -188,17 +194,19 @@ public class CommonManager {
         oecpCaseInfoRequest.setTitleForSearch(oecpCaseInfoDO.getTitleForSearch());
         oecpCaseInfoRequest.setContentForSearch(oecpCaseInfoDO.getContentForSearch());
         //保存和修改案例tag
-        for(CaseTag tag : oecpCaseInfoRequest.getTags()){
-            OecpTagDO oecpTagDO = new OecpTagDO();
-            oecpTagDO.setId(tag.getId()==null? null :Long.valueOf(tag.getId()));
-            oecpTagDO.setTag(tag.getTag());
-            oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
-            if(StringUtils.isEmpty(oecpCaseInfoRequest.getCaseId())) {
-                //保存案例tag信息oecp_case_tag
-                OecpCaseTagDO oecpCaseTagDO = new OecpCaseTagDO();
-                oecpCaseTagDO.setCaseId(oecpCaseInfoDO.getId());
-                oecpCaseTagDO.setTagId(oecpTagDO.getId());
-                oecpCaseTagManager.saveOecpCaseTag(oecpCaseTagDO);
+        if(oecpCaseInfoRequest.getTags() != null) {
+            for (CaseTag tag : oecpCaseInfoRequest.getTags()) {
+                OecpTagDO oecpTagDO = new OecpTagDO();
+                oecpTagDO.setId(tag.getId() == null ? null : Long.valueOf(tag.getId()));
+                oecpTagDO.setTag(tag.getTag());
+                oecpTagDO = oecpTagManager.saveOecpTag(oecpTagDO);
+                if (StringUtils.isEmpty(oecpCaseInfoRequest.getCaseId())) {
+                    //保存案例tag信息oecp_case_tag
+                    OecpCaseTagDO oecpCaseTagDO = new OecpCaseTagDO();
+                    oecpCaseTagDO.setCaseId(oecpCaseInfoDO.getId());
+                    oecpCaseTagDO.setTagId(oecpTagDO.getId());
+                    oecpCaseTagManager.saveOecpCaseTag(oecpCaseTagDO);
+                }
             }
         }
         if(oecpCaseInfoDO != null && StringUtils.isEmpty(oecpCaseInfoRequest.getCaseId())) {

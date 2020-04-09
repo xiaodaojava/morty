@@ -2,9 +2,11 @@ package com.platform.oecp.business.manager.impl;
 
 import com.platform.oecp.business.manager.OecpCaseTagManager;
 import com.platform.oecp.business.manager.OecpTagManager;
+import com.platform.oecp.dao.OecpErrorCaseMapper;
 import com.platform.oecp.dao.OecpSysUserMapper;
 import com.platform.oecp.models.dos.OecpCaseInfoDO;
 import com.platform.oecp.models.dos.OecpCaseTagDO;
+import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.dos.OecpSysUserDO;
 import com.platform.oecp.models.qc.OecpCaseInfoQC;
 import com.platform.oecp.models.qc.OecpCaseTagQC;
@@ -19,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,6 +37,9 @@ public class OecpCaseInfoManagerImpl implements OecpCaseInfoManager{
 
     @Autowired
     private OecpCaseTagManager oecpCaseTagManager;
+
+    @Autowired
+    private OecpErrorCaseMapper oecpErrorCaseMapper;
     
     @Override
     public OecpCaseInfoDO getOecpCaseInfoById(Long id) {
@@ -59,6 +66,31 @@ public class OecpCaseInfoManagerImpl implements OecpCaseInfoManager{
     public List<OecpCaseInfoDO> queryOecpCaseInfo(OecpCaseInfoQC qc){
 
         List<OecpCaseInfoDO> oecpCaseInfos = oecpCaseInfoMapper.listOecpCaseInfos(qc);
+        if(oecpCaseInfos != null) {
+            List<Long> caseIdList = oecpCaseInfos.stream().map(info ->{
+                return info.getId();
+            }).distinct().collect(Collectors.toList());
+            Map<Long,OecpCaseInfoDO> map = new HashMap<>();
+            for(OecpCaseInfoDO oecpCaseInfoDO : oecpCaseInfos){
+                map.put(oecpCaseInfoDO.getId(),oecpCaseInfoDO);
+            }
+            List<OecpErrorCaseDO> oecpErrorCaseDOS = oecpErrorCaseMapper.listOecpErrorCasesByCaseIdList(caseIdList);
+            if(oecpErrorCaseDOS != null){
+                Map<Long,Long> caseAndCodeMap = new HashMap<>();
+               for(OecpErrorCaseDO caseDO : oecpErrorCaseDOS){
+                   Long codeID = caseAndCodeMap.get(caseDO.getCaseId());
+                   if(codeID == null){
+                       caseAndCodeMap.put(caseDO.getCaseId(),caseDO.getCodeId());
+                   }
+               }
+               for(OecpCaseInfoDO infoDO : oecpCaseInfos){
+                   Long id = caseAndCodeMap.get(infoDO.getId());
+                   if(id != null) {
+                       infoDO.setCodeId(caseAndCodeMap.get(infoDO.getId()));
+                   }
+               }
+            }
+        }
 
         return oecpCaseInfos;
     }

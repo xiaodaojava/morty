@@ -2,10 +2,7 @@ package com.platform.oecp.dao;
 
 import com.platform.oecp.models.dos.OecpErrorCaseDO;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,6 +22,9 @@ public interface OecpErrorCaseMapper {
      */
     @SelectProvider(type = OecpErrorCaseProvider.class)
     List<OecpErrorCaseDO> listOecpErrorCases(OecpErrorCaseQC oecpErrorCaseQC);
+
+
+    List<OecpErrorCaseDO> listOecpErrorCasesByCaseIdList(@Param("caseIdList") List<Long> caseIdList);
 
     /**
      * 获取数量
