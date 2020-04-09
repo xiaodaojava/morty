@@ -30,7 +30,7 @@ public class OecpErrorInfoRequest implements Serializable {
     private String errorInfo;
 
     /** 错误码标签内容(相当于ES中的TERM)  */
-    @NotNull(message = "错误码tag不能为空,至少一个")
+   // @NotNull(message = "错误码tag不能为空,至少一个")
     @Valid
     private List<ErrorTag> tags;
 
