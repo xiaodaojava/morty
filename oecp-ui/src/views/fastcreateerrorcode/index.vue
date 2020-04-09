@@ -15,7 +15,7 @@
   </oecp-page>
 </template>
 <script>
-import { save } from '@/api/errorInfo'
+import { saveOecpErrorInfo } from '@/api/errorInfo'
 export default {
   data(){
     return{
@@ -40,7 +40,7 @@ export default {
       console.log(formName)
       this.$refs[formName].validate((valid) =>{
         if(valid){
-          save(self.ruleForm).then(res => {
+          saveOecpErrorInfo(self.ruleForm).then(res => {
             if (res.result && !res.code) {
               console.log('错误码新建成功!')
               this.$router.push('/fastcreateerrorcode/success')
