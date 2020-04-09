@@ -2,7 +2,7 @@
   <oecp-page title="错误码搜索结果">
     <el-form :inline="true">
       <el-form-item label="搜索内容">
-        <el-input v-model="searchContent" placeholder="请输入搜索内容"></el-input>
+        <el-input v-model="searchContent" placeholder="请输入搜索内容" maxlength="50"></el-input>
       </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSearchSubmit">查询</el-button>

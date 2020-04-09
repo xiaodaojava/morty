@@ -49,7 +49,7 @@
       <el-form ref="addCaseInfoForm" :model="addCaseInfoForm" :rules="validRules">
         <el-form-item label="案例标题" :label-width="formLabelWidth">
           <div class="save-input-class">
-            <el-input ref="title" v-model="addCaseInfoForm.title"></el-input>
+            <el-input ref="title" v-model="addCaseInfoForm.title" maxLength="50"></el-input>
           </div>
         </el-form-item>
         <el-form-item label="案例内容" :label-width="formLabelWidth">
@@ -60,6 +60,7 @@
               :rows="5"
               v-model="addCaseInfoForm.content"
               placeholder="请输入内容"
+              maxlength="100"
             ></el-input>
           </div>
         </el-form-item>

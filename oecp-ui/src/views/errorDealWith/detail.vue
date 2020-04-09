@@ -9,6 +9,7 @@
           v-for="(item,tagIndex) in dynamicTags"
           :disable-transitions="false"
           @close="handleClose(tag)"
+          v-show="item.tag"
         >{{item.tag}}</el-tag>
         <el-input
           class="input-new-tag"
@@ -22,7 +23,7 @@
 
         <!-- <add-tags v-else @click.native="showInput" addTagsName="增加标签" /> -->
       </el-form-item>
-      <el-form-item label="相关案例">
+      <el-form-item label="相关案例" v-if="caseInfos && caseInfos.length != 0">
         <div class="case-class" v-for="(item,index) in caseInfos" :key="index" @click="gotoCaseDetail(item)">{{item.title}}</div>
       </el-form-item>
       <!-- <el-button  class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button> -->

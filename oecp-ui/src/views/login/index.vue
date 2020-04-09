@@ -95,7 +95,7 @@ export default {
     return {
       loginForm: {
         username: 'HZUVWxpO',
-        password: '666888'
+        password: '123456'
       },
       aliLoginForm: {
         accessToken: '',

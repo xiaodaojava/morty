@@ -14,7 +14,7 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <router-link to="/user/index">
             <el-dropdown-item>个人信息</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">
@@ -24,7 +24,7 @@
       </el-dropdown>
     </div>
     <div class="searchInput" v-if="this.$route.path != '/searchboardResult/normalResult' && this.$route.path != '/searchboard'">
-      <el-input v-model="searchContent" placeholder="Enter Your ErrorCode">
+      <el-input v-model="searchContent" placeholder="Enter Your ErrorCode" maxLength="50">
         <el-button
           slot="append"
           icon="el-icon-search"

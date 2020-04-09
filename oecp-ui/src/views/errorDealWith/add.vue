@@ -2,7 +2,7 @@
   <oecp-page :title="titleName" class="editCodePage">
     <el-form :model="addCodeForm" label-position="top" label-width="80px">
       <el-form-item label="错误码">
-        <el-input style="width:30%" v-model="addCodeForm.code" placeholder="输入你要保存的错误码"></el-input>
+        <el-input style="width:30%" v-model="addCodeForm.code" maxLength="50" placeholder="输入你要保存的错误码"></el-input>
       </el-form-item>
       <el-form-item label="描述">
         <el-input
@@ -11,10 +11,11 @@
           rows="5"
           v-model="addCodeForm.errorInfo"
           placeholder="请输入该错误码的描述"
+           maxLength="100" 
         ></el-input>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input style="width:50%" v-model="addCodeForm.errorDesc" placeholder="输入备注"></el-input>
+        <el-input style="width:50%" v-model="addCodeForm.errorDesc" placeholder="输入备注"   maxLength="255" ></el-input>
       </el-form-item>
       <el-form-item label="标签">
         <el-tag
@@ -121,7 +122,7 @@ export default {
       saveOecpErrorInfo(data).then(res => {
         if (res.result && !res.code) {
           this.$message.success('错误码保存成功!')
-          this.$router.push('/fastcreateerrorcode/success')
+          this.$router.push('/errorDealWith/list')
         } else {
           this.$message.error('保存失败')
         }
