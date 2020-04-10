@@ -15,7 +15,6 @@
   </oecp-page>
 </template>
 <script>
-import { save } from '@/api/errorInfo'
 import CreateFailedLogo from '@/assets/images/error.png'
 export default {
   data(){

@@ -3,7 +3,7 @@
     <!-- <div class="dashboard-text">name: {{ name }}</div> -->
     <div class="dashboard-text">One ErrorCode Platform</div>
     <div class="searchClass">
-      <el-input v-model="searchContent" placeholder="Enter Your ErrorCode">
+      <el-input v-model="searchContent" placeholder="Enter Your ErrorCode" maxLength="64">
         <el-button
           slot="append"
           icon="el-icon-search"

@@ -1,11 +1,11 @@
 <template>
-  <oecp-page title="快速申请错误码">
+  <oecp-page title="快速申请错误码" class="fast-create-code">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px">
       <el-form-item label="错误码code" prop="code">
-        <el-input v-model="ruleForm.code"></el-input>
+        <el-input v-model="ruleForm.code" class="input-class" maxlength="50"></el-input>
       </el-form-item>
       <el-form-item label="错误码描述" prop="errorInfo">
-        <el-input type="textarea" v-model="ruleForm.errorInfo"></el-input>
+        <el-input type="textarea" v-model="ruleForm.errorInfo"  :rows="5" class="input-class" maxlength="200"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -15,7 +15,7 @@
   </oecp-page>
 </template>
 <script>
-import { save } from '@/api/errorInfo'
+import { saveOecpErrorInfo } from '@/api/errorInfo'
 export default {
   data(){
     return{
@@ -40,7 +40,7 @@ export default {
       console.log(formName)
       this.$refs[formName].validate((valid) =>{
         if(valid){
-          save(self.ruleForm).then(res => {
+          saveOecpErrorInfo(self.ruleForm).then(res => {
             if (res.result && !res.code) {
               console.log('错误码新建成功!')
               this.$router.push('/fastcreateerrorcode/success')
@@ -61,5 +61,11 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+.fast-create-code{
+  .input-class{
+    width:70%;
+  
+  }
+}
 </style>

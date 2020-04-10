@@ -7,6 +7,7 @@
           size="small"
           v-model="addCaseInfoForm.title"
           placeholder="请输入案例标题"
+          maxLength="50"
         ></el-input>
       </el-form-item>
       <el-form-item label="案例描述">
@@ -16,6 +17,7 @@
           rows="5"
           v-model="addCaseInfoForm.content"
           placeholder="请输入该案例的描述"
+          maxLength="50"
         ></el-input>
       </el-form-item>
       <el-form-item label="案例标签">

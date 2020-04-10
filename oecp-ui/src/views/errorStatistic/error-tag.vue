@@ -45,7 +45,7 @@
       <el-form ref="addTagForm" :model="addTagForm" :rules="validRules">
         <el-form-item label="标签名称" :label-width="addTagForm.formLabelWidth">
           <div class="save-input-class">
-            <el-input ref="tag" v-model="addTagForm.tag"></el-input>
+            <el-input ref="tag" v-model="addTagForm.tag" maxLength="50"></el-input>
           </div>
         </el-form-item>
       </el-form>

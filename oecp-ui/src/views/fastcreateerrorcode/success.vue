@@ -12,7 +12,6 @@
   </oecp-page>
 </template>
 <script>
-import { save } from '@/api/errorInfo'
 import CreateSuccessLogo from '@/assets/images/fast-create-success.png'
 export default {
   data(){

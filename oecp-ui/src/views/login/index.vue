@@ -95,7 +95,7 @@ export default {
     return {
       loginForm: {
         username: 'HZUVWxpO',
-        password: '666888'
+        password: '123456'
       },
       aliLoginForm: {
         accessToken: '',
@@ -147,7 +147,6 @@ export default {
               this.loading = false
             })
             .catch(error => {
-              console.log(error)
               this.loading = false
             })
         } else {
