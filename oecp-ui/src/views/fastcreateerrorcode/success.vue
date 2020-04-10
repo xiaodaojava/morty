@@ -5,7 +5,7 @@
      <div class="text-class">
        您已成功申请错误码<br/>
        <span @click="goToMyErrorCode">我的错误码</span>进行查看 &nbsp;&nbsp;
-       <span @click="goToAllErrorCode">平台错误码</span>进行查看
+       <span @click="goToAllErrorCode">平台错误码</span>进行搜索
      </div>
     </div>
     
