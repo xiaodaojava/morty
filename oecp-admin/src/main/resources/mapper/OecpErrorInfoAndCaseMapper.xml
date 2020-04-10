@@ -54,6 +54,8 @@
 		left join oecp_case_tag c on c.case_id=a.case_id
 		left join oecp_tag d on d.id = c.tag_id
 		where 1=1
+		and
+		b.del_flag = 0
 		AND a.create_by = #{userId}
 		<if test="codeId != null and codeId != ''">
 			AND a.code_id = #{codeId}

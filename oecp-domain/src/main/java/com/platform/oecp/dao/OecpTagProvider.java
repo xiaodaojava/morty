@@ -21,6 +21,7 @@ public class OecpTagProvider implements ProviderMethodResolver {
             SELECT(TABLE_FIELDS);
             FROM("oecp_tag");
             WHERE("del_flag = 0");
+            ORDER_BY("update_date desc");
         }};
         MapperUtils.richWhereSql(sql, oecpTagQC);
 
