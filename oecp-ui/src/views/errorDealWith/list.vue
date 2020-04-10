@@ -10,6 +10,7 @@
             <el-table-column prop="content" label="案例详情" ></el-table-column>
             <el-table-column prop="errorTags" label="相关标签">
             <template slot-scope="scope">
+              
               <el-tag
                 v-for="(item,index) in scope.row.caseTags"
                 :key="index"
@@ -26,6 +27,9 @@
       <el-table-column prop="errorInfo" label="错误描述"></el-table-column>
       <el-table-column prop="errorTags" label="相关标签">
         <template slot-scope="scope">
+          <div v-if="!scope.row.errorTags || scope.row.errorTags.length == 0 || (scope.row.errorTags.length == 1 && scope.row.errorTags[0].tag == null )">
+                暂无
+              </div>
           <el-tag
             v-for="(item,index) in scope.row.errorTags"
             :key="index"
