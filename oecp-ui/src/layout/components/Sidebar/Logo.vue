@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Logo from '@/assets/images/Error-Cloud.png'
+import Logo from '@/assets/images/error-cloud-logo.png'
 export default {
   name: 'SidebarLogo',
   props: {
