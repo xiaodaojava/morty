@@ -3,7 +3,8 @@
     <div class="row_border">
       <el-row :gutter="20">
         <el-col :span="20"><h2>错误码代码检测</h2></el-col>
-        <el-col :span="4"><el-button type="success" :loading="listLoading" @click="detectCode">提交检测</el-button></el-col>
+        <el-col :span="2"><el-button type="primary" :loading="listLoading" @click="simpleCode">示例代码</el-button></el-col>
+        <el-col :span="2"><el-button type="success" :loading="listLoading" @click="detectCode">提交检测</el-button></el-col>
       </el-row>
     </div>
     <div>
@@ -48,6 +49,38 @@ export default {
       }).catch(error => {
         this.$message.error(error.msg);
       })
+    },
+    // 填充示例代码
+    simpleCode: function() {
+      this.code = `
+        package com.platform.oecp.admin.test;
+
+        /**
+        * 检测测试，检测 Throw new Exception 中不存在的错误码，这里 123123 和 404 都是已经存在的错误码.
+        *
+        * @version 1.0.0
+        */
+        public class TestDetect {
+
+            public static final String code1 = "404";
+
+            private String code2 = "234";
+
+            public void test1() throws Exception {
+                throw new Exception("123123");
+            }
+
+            public void test2() throws Exception {
+                throw new Exception(code1);
+            }
+
+            public void test3() throws Exception {
+                throw new Exception(code2);
+            }
+
+        }
+
+      `
     }
   }
 }
