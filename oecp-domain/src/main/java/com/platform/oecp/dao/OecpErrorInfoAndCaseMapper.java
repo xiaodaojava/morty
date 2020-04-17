@@ -2,6 +2,7 @@ package com.platform.oecp.dao;
 
 import com.platform.oecp.dto.CaseInfoDto;
 import com.platform.oecp.dto.ErrorInfoAndCaseDto;
+import com.platform.oecp.models.document.OecpErrorDocument;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -34,4 +35,12 @@ public interface OecpErrorInfoAndCaseMapper {
      * @return
      */
     List<CaseInfoDto> caseInfoList(@Param("userId") String userId, @Param("codeId") Long codeId);
+
+    /**
+     * @author: LILIANG
+     * @date: 2020/4/17 11:02
+     * @return: java.util.List<com.platform.oecp.models.document.OecpErrorDocument>
+     * @description: 获取搜索表数据
+     */
+    List<OecpErrorDocument> findSearchInfo();
 }
