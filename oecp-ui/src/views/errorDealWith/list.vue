@@ -31,9 +31,6 @@
       <el-table-column prop="errorInfo" label="错误描述"></el-table-column>
       <el-table-column prop="errorTags" label="相关标签">
         <template slot-scope="scope">
-          <div v-if="!scope.row.errorTags || scope.row.errorTags.length == 0 || (scope.row.errorTags.length == 1 && scope.row.errorTags[0].tag == null )">
-                暂无
-              </div>
           <el-tag
             v-for="(item,index) in scope.row.errorTags"
             :key="index"
@@ -42,7 +39,7 @@
           >{{item.tag}}</el-tag>
         </template>
       </el-table-column>
-         <el-table-column prop="content" label="操作" width="200" fixed="right">
+         <el-table-column prop="content" label="操作" width="150" fixed="right">
              <template slot-scope="scope">
                <el-button type="text" @click="editCodeDetail(scope.row)">编辑</el-button>
                <el-button type="text" @click="deleteCode(scope.row)">删除</el-button>
@@ -77,14 +74,8 @@ export default {
   },
   methods: {
       deleteCode(row){
-        this.$confirm('确认删除该错误码？','提示',{
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
-          .then(_ => {
-           console.log(row)
-           remove(row.codeId).then(res => {
+        console.log(row)
+        remove(row.codeId).then(res => {
            if (res.result && !res.code) {
               this.search()
               this.$message.success('删除成功')
@@ -92,8 +83,6 @@ export default {
               this.$message.error('删除失败')
             }
         })
-          })
-          .catch(_ => {});
       },
       search(){
         this.load = true;

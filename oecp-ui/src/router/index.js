@@ -30,7 +30,7 @@ export const constantRoutes = [
       {
         path: "/fastcreateerrorcode/index",
         component: () => import("@/views/fastcreateerrorcode/index"),
-        meta: { title: "快速申请错误码", icon: "fast" }
+        meta: { title: "快速申请错误码", icon: "dashboard" }
       },
       {
         path: "/fastcreateerrorcode/success",
@@ -55,18 +55,18 @@ export const constantRoutes = [
       {
         path: "/searchboard",
         component: () => import("@/views/searchboard/index"),
-        meta: { title: "错误码搜索", icon: "search" }
+        meta: { title: "错误码搜索", icon: "dashboard" }
       },
       {
         path: "/searchboardResult",
         component: () => import("@/views/searchboard/normalResult"),
-        meta: { title: "错误码搜索结果", icon: "result" },
+        meta: { title: "错误码搜索结果", icon: "dashboard" },
         children:[
         
           {
             path: "/searchboardResult/normalResult",
             component: () => import("@/views/searchboard/normalResult"),
-            meta: { title: "错误码搜索结果查看", icon: "list" }
+            meta: { title: "错误码搜索结果查看", icon: "dashboard" }
           },
           
          
@@ -108,36 +108,36 @@ export const constantRoutes = [
     path: "/errorDealWith",
     component: Layout,
     redirect: "/errorDealWith/add",
-    meta: { title: "我的错误码", icon: "book" },
+    meta: { title: "我的错误码", icon: "example" },
     children: [
       {
         path: "/errorDealWith/list",
         component: () => import("@/views/errorDealWith/list"),
-        meta: { title: "我的错误码列表", icon: "my-error-list" },
+        meta: { title: "我的错误码列表", icon: "dashboard" },
       },
       {
         path: "/errorDealWith/add",
         name:"errorDealWithEdit",
         component: () => import("@/views/errorDealWith/add"),
-        meta: { title: "我的错误码添加", icon: "add" },
+        meta: { title: "我的错误码添加", icon: "dashboard" },
         hidden:true
       },
       {
         path: "/errorDealWith/detail",
         name: 'errorDealWithDetail',
         component: () => import("@/views/errorDealWith/detail"),
-        meta: { title: "我的错误码详情", icon: "detail" },
+        meta: { title: "我的错误码详情", icon: "dashboard" },
         hidden:true
       },
       {
         path: "/errorStatistic/error-tag",
         component: () => import("@/views/errorStatistic/error-tag"),
-        meta: { title: "我的错误码标签", icon: "tag" }
+        meta: { title: "我的错误码标签", icon: "dashboard" }
       },
       {
         path: "/errorStatistic/error-case-info",
         component: () => import("@/views/errorStatistic/error-case-info"),
-        meta: { title: "我的案例", icon: "case" }
+        meta: { title: "我的案例", icon: "dashboard" }
       },
     ]
   },
@@ -149,7 +149,7 @@ export const constantRoutes = [
         path: "/codeDetect",
         name: "错误代码检测",
         component: () => import("@/views/detect/index"),
-        meta: { title: "错误码代码检测", icon: "check" }
+        meta: { title: "错误码代码检测", icon: "dashboard" }
       }
     ]
   },

@@ -44,7 +44,7 @@ public class SearchManager {
     private OecpErrorInfoManager oecpErrorInfoManager;
 
     @Async
-    public void saveEsContent(OecpErrorInfoRequest oecpErrorInfoRequest, OecpCaseInfoRequest oecpCaseInfoRequest,String errorCode, OecpDeleteCaseInfoRequest oecpDeleteCaseInfoRequest) {
+    public void saveEsContent(OecpErrorDocument esOecpErrorDocument,OecpErrorInfoRequest oecpErrorInfoRequest, OecpCaseInfoRequest oecpCaseInfoRequest,String errorCode, OecpDeleteCaseInfoRequest oecpDeleteCaseInfoRequest) {
         // 异步把错误码信息入到 ES 中
         CompletableFuture.runAsync(() -> {
             String result = null;
@@ -52,6 +52,9 @@ public class SearchManager {
                 if(oecpErrorInfoRequest != null) {
                     OecpErrorDocument oecpErrorDocument = oecpErrorDocumentFactory.createNewInstance(oecpErrorInfoRequest);
                     result = oecpErrorInfoEsManager.editErrorCode(oecpErrorDocument);
+                }
+                if(esOecpErrorDocument != null){
+                    result = oecpErrorInfoEsManager.editErrorCode(esOecpErrorDocument);
                 }
                 if(oecpCaseInfoRequest != null){
                     OecpErrorInfoDO oecpErrorInfoDO = oecpErrorInfoManager.getOecpErrorInfoById(oecpCaseInfoRequest.getCodeId());
@@ -79,7 +82,7 @@ public class SearchManager {
                     //todo:案例删除
                     result = oecpErrorInfoEsManager.editErrorCode(oecpErrorDocument);
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 logger.error("编辑错误码信息同步到 ES 中发生异常，错误码 {}，", oecpErrorInfoRequest.getCode(), e);
             }
             logger.info("更新错误码异步更新到 ES 响应结果 {}", result);
