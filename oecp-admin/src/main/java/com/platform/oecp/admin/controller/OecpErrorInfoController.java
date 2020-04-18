@@ -37,6 +37,21 @@ public class OecpErrorInfoController  {
     @Value("${project.code}")
     private int projectCode;
 
+    /**
+     * @author: LILIANG
+     * @date: 2020/4/17 11:15
+     * @return: red.lixiang.tools.base.BaseResponse<java.lang.String>
+     * @description: 同步search表数据
+     */
+    @PostMapping("/oecpErrorInfo/syncSearch")
+    @ResponseBody
+    public BaseResponse<String> syncSearch(){
+        BaseResponse<String> baseResponse = new BaseResponse<>();
+        commonManager.findSearchInfo();
+        baseResponse.setData("OK");
+        return baseResponse;
+    }
+
     @GetMapping("/oecpErrorInfo/query")
     @ResponseBody
     public BaseResponse<PageData<OecpErrorInfoDO>> queryOecpErrorInfo(OecpErrorInfoQC qc, Page page ){

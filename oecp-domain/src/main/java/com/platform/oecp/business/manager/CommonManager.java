@@ -7,17 +7,15 @@ import com.platform.oecp.dto.OecpTagDto;
 import com.platform.oecp.factory.*;
 import com.platform.oecp.models.document.CaseTag;
 import com.platform.oecp.models.document.ErrorTag;
+import com.platform.oecp.models.document.OecpErrorDocument;
 import com.platform.oecp.models.dos.*;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import com.platform.oecp.models.qc.OecpErrorInfoQC;
 import com.platform.oecp.models.qc.OecpErrorTagQC;
-import com.platform.oecp.models.qc.OecpSearchMainQC;
 import com.platform.oecp.models.request.OecpCaseInfoRequest;
 import com.platform.oecp.models.request.OecpDeleteCaseInfoRequest;
 import com.platform.oecp.models.request.OecpErrorInfoRequest;
-import com.platform.oecp.models.request.OecpTagRequest;
 import com.platform.oecp.utils.UserUtil;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +85,19 @@ public class CommonManager {
     private RedisSpringTools redisUtils;
 
     public CommonManager() {
+    }
+
+    /**
+     * 同步搜索专用表数据到es中
+     * @return
+     */
+    public List<OecpErrorDocument> findSearchInfo(){
+        List<OecpErrorDocument> oecpErrorDocuments = oecpErrorInfoAndCaseMapper.findSearchInfo();
+        for(OecpErrorDocument oecpErrorDocument:oecpErrorDocuments) {
+            //异步更新es
+            searchManager.saveEsContent(oecpErrorDocument,null,null,null,null);
+        }
+        return null;
     }
 
     /**
@@ -214,7 +225,7 @@ public class CommonManager {
             }
         }
         //异步更新es
-        searchManager.saveEsContent(oecpErrorInfoRequest,null,null,null);
+        searchManager.saveEsContent(null,oecpErrorInfoRequest,null,null,null);
         return oecpErrorInfoDO;
     }
 
@@ -264,7 +275,7 @@ public class CommonManager {
             oecpSearchSubManager.saveOecpSearchSub(oecpSearchSubDO);
         }
         //异步更新es
-        searchManager.saveEsContent(null,oecpCaseInfoRequest,null,null);
+        searchManager.saveEsContent(null,null,oecpCaseInfoRequest,null,null);
         return oecpCaseInfoDO;
     }
 
@@ -299,7 +310,7 @@ public class CommonManager {
             oecpSearchMainManager.removeOecpSearchMainById(oecpSearchMainDO.getId());
             oecpSearchSubManager.removeOecpSearchSubByMainId(oecpSearchMainDO.getId());
             //异步更新es
-            searchManager.saveEsContent(null,null,oecpSearchMainDO.getErrorCode(),null);
+            searchManager.saveEsContent(null,null,null,oecpSearchMainDO.getErrorCode(),null);
             return errorInfoDeleteFlag;
         }
         return 0;
@@ -325,7 +336,7 @@ public class CommonManager {
             //同步更新到es中和search表中
             oecpSearchSubManager.removeOecpSearchSubByCaseId(caseId);
             //异步更新es
-            searchManager.saveEsContent(null,null,null,oecpDeleteCaseInfoRequest);
+            searchManager.saveEsContent(null,null,null,null,oecpDeleteCaseInfoRequest);
             if(caseInfoDeleteFlag <= 0){
                 return 0;
             }
