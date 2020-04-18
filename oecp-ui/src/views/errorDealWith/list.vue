@@ -1,20 +1,24 @@
 <template>
   <oecp-page title="我的错误码" class="editCodePage">
-    <el-button style="float:right;" type="primary" @click="createCode">新建错误码</el-button>
-    <el-table :data="tableData" style="width: 100%" border fit highlight-current-row :loading="tableLoading">
+    <el-button style="float:right;margin-bottom:2px;" type="success" @click="createCode">新建错误码</el-button>
+    <el-table v-loading="load" :data="tableData" style="width: 100%" border fit highlight-current-row >
       <el-table-column type="expand">
         <template slot-scope="scope">
-          <el-table :data="scope.row.caseInfos" style="width:100%" border fit highlight-current-row>
+          <el-table v-loading="load" :data="scope.row.caseInfos" style="width:100%" border fit highlight-current-row>
             <el-table-column type="index" label="案例编号" width="100"></el-table-column>
             <el-table-column prop="title" label="标题"></el-table-column>
             <el-table-column prop="content" label="案例详情" ></el-table-column>
             <el-table-column prop="errorTags" label="相关标签">
             <template slot-scope="scope">
-              
+               <div v-if="!scope.row.caseTags || scope.row.caseTags.length == 0 || (scope.row.caseTags.length == 1 && scope.row.caseTags[0].tag == null )">
+                暂无
+              </div>
               <el-tag
                 v-for="(item,index) in scope.row.caseTags"
                 :key="index"
                 v-show="item.tag"
+                style="margin-right:5px"
+                 type="warning"
               >{{item.tag}}</el-tag>
             </template>
             </el-table-column>
@@ -34,6 +38,7 @@
             v-for="(item,index) in scope.row.errorTags"
             :key="index"
             v-show="item.tag"
+            style="margin-right:5px"
           >{{item.tag}}</el-tag>
         </template>
       </el-table-column>
@@ -64,7 +69,7 @@ export default {
     return {
       searchContent: '',
       tableData:[],
-      tableLoading:false,
+      load: true,
       pageIndex:1,
       pageSize:10,
       resultTotal:0
@@ -91,17 +96,19 @@ export default {
           .catch(_ => {});
       },
       search(){
-        this.tableLoading = true;
+        this.load = true;
+        console.log(this.load)
         getErrorInfoAndCase({pageIndex:this.pageIndex,pageSize:this.pageSize}).then(res => {
             if (res.result && !res.code) {
               console.log(res.data)
               this.tableData = res.data.dataList
               this.resultTotal = res.data.totalCount
+              this.load = false;
             } else {
               this.$message.error('保存失败')
+              this.load = false;
             }
           })
-          this.tableLoading = false;
       },
       createCode(){
         this.$router.push('/errorDealWith/add')
@@ -119,8 +126,13 @@ export default {
   },
   mounted() {
     this.searchContent = this.$route.query.searchContent
+    this.load = true;
     this.search();
 
+  },
+  activated(){
+    console.log("activiate");
+    this.search();
   }
 }
 </script>

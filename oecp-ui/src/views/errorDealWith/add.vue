@@ -21,6 +21,7 @@
         <el-tag
           :key="item.tag"
           v-for="item in tags"
+          v-show="item.tag"
           closable
           :disable-transitions="false"
           @close="handleClose(item)"
@@ -145,6 +146,7 @@ export default {
   mounted() {
     let params = this.$route.params.data;
     if(params){
+      console.log(params)
       this.titleName = '错误码编辑'
       this.addCodeForm = params
       this.tags = params.errorTags

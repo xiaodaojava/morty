@@ -17,9 +17,9 @@
       </el-form>
     </div>
     <el-table :data="tableData" style="width: 100%" align="center" :loading="tableLoading">
-      <el-table-column type="index" label="编号" width="150"></el-table-column>
-      <el-table-column prop="tag" label="标签" width="380"></el-table-column>
-      <el-table-column prop="createDate" label="创建日期" sortable width="220" :formatter="formatter"></el-table-column>
+      <el-table-column type="index" label="编号" ></el-table-column>
+      <el-table-column prop="tag" label="标签"></el-table-column>
+      <el-table-column prop="createDate" label="创建日期" sortable  :formatter="formatter"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
