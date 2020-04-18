@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platform.oecp.dao.OecpTagMapper">
+
+    <select id="listOecpTagByIDS" resultType="com.platform.oecp.models.dos.OecpTagDO">
+        select
+        id,
+        tag
+        from
+        oecp_tag
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="ids != null">
+                id in
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            AND
+            del_flag = 0
+        </trim>
+    </select>
+</mapper>

@@ -3,7 +3,7 @@
 <mapper namespace="com.platform.oecp.dao.OecpErrorInfoAndCaseMapper">
 
 	<resultMap type="com.platform.oecp.dto.CaseInfoDto" id="caseInfoMap">
-			<id column="id" property="caseId" jdbcType="BIGINT" />
+			<id column="caseId" property="caseId" jdbcType="BIGINT" />
 			<result column="title_for_search" property="titleForSearch" jdbcType="VARCHAR" />
 			<result column="title" property="title" jdbcType="VARCHAR" />
 			<result column="content_for_search" property="contentForSearch" jdbcType="VARCHAR" />
@@ -30,11 +30,11 @@
 	<!--查询出错误信息和对应的标签-->
 	<select id="errorInfoList" resultMap="errorInfoMap">
 		select
-		a.id,a.code,a.error_info,a.remarks,
-		c.id,c.tag
+		a.id,
+		a.code,
+		a.error_info,
+		a.remarks
 		from oecp_error_info a
-		left join oecp_error_tag b on b.code_id=a.id
-		left join oecp_tag c on c.id = b.tag_id
 		where 1=1
 		AND a.create_by = #{userId}
 		AND a.del_flag = 0
@@ -47,8 +47,13 @@
 	<!--查询出案例信息和对应的标签-->
 	<select id="caseInfoList" resultMap="caseInfoMap">
 		select
-		b.id,b.title,b.title_for_search,b.content,b.content_for_search,
-		d.id,d.tag
+		b.id AS caseId,
+		b.title,
+		b.title_for_search,
+		b.content,
+		b.content_for_search,
+		d.id,
+		d.tag
 		from oecp_error_case a
 		left join oecp_case_info b on b.id=a.case_id
 		left join oecp_case_tag c on c.case_id=a.case_id

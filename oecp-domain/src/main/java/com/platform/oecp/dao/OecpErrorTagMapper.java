@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 本类只做简单的增删改查,复杂的用mapper自己手写,也可以写在Provider里面
@@ -55,4 +56,11 @@ public interface OecpErrorTagMapper {
     */
     @UpdateProvider(type = OecpErrorTagProvider.class)
     int removeOecpErrorTagById(long id);
+
+    /**
+     * 根据id获取数量
+     * @param codeIdSet
+     * @return
+     */
+    List<OecpErrorTagDO> listOecpErrorTagByIds(@Param("ids") Set<Long> codeIdSet);
 }

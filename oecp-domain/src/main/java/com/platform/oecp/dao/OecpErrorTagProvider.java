@@ -7,6 +7,9 @@ import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
 import red.lixiang.tools.jdk.SnowflakeGenerator;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author lixiang
  */
@@ -56,12 +59,11 @@ public class OecpErrorTagProvider implements ProviderMethodResolver {
     }
 
     public String removeOecpErrorTagById(long id){
-            SQL sql = new SQL() {{
-                UPDATE("oecp_error_tag");
-                SET("del_flag = 1");
-            }};
-            sql.WHERE("id = #{id}");
-            return sql.toString();
+        SQL sql = new SQL() {{
+            UPDATE("oecp_error_tag");
+            SET("del_flag = 1");
+        }};
+        sql.WHERE("id = #{id}");
+        return sql.toString();
     }
-
 }

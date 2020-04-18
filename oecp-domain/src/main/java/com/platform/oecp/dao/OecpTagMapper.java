@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 本类只做简单的增删改查,复杂的用mapper自己手写,也可以写在Provider里面
@@ -63,4 +64,6 @@ public interface OecpTagMapper {
     */
     @UpdateProvider(type = OecpTagProvider.class)
     int removeOecpTagById(long id);
+
+    List<OecpTagDO> listOecpTagByIDS(@Param("ids") Set<Long> ids);
 }

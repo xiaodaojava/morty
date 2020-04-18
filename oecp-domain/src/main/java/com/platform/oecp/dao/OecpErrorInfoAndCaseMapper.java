@@ -4,7 +4,7 @@ import com.platform.oecp.dto.CaseInfoDto;
 import com.platform.oecp.dto.ErrorInfoAndCaseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import red.lixiang.tools.common.mybatis.model.Page;
 
