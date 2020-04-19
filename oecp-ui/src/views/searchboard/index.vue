@@ -35,11 +35,11 @@ export default {
       searchContent: "",
       suggests:[
         {"value":"Invalid"},
+        {"value":"服务器问题"},
+        {"value":"没有找到资源"},
         {"value":"400"},
-        {"value":"403"},
-        {"value":"不存在"},
-        {"value":"存在未支付订单"},
-        {"value":"未完善个人信息"}
+        {"value":"898"},
+        {"value":"xz"}
       ]
     };
   },
