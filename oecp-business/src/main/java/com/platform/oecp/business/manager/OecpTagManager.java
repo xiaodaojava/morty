@@ -5,6 +5,7 @@ import com.platform.oecp.models.dos.OecpTagDO;
 import com.platform.oecp.models.qc.OecpTagQC;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface OecpTagManager {
@@ -24,5 +25,5 @@ public interface OecpTagManager {
     public int removeOecpTagById(Long id);
 
 
-
+    List<OecpTagDO> listOecpTagById(Set<Long> tagsId);
 }

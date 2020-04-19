@@ -5,6 +5,7 @@ import com.platform.oecp.models.dos.OecpErrorTagDO;
 import com.platform.oecp.models.qc.OecpErrorTagQC;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface OecpErrorTagManager {
@@ -21,5 +22,5 @@ public interface OecpErrorTagManager {
     public int removeOecpErrorTagById(Long id);
 
 
-
+    List<OecpErrorTagDO> listOecpErrorTagByIds(Set<Long> codeIdSet);
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class OecpTagManagerImpl implements OecpTagManager{
@@ -73,6 +74,12 @@ public class OecpTagManagerImpl implements OecpTagManager{
 
         return oecpTagMapper.removeOecpTagById(id);
 
+    }
+
+
+    @Override
+    public List<OecpTagDO> listOecpTagById(Set<Long> ids) {
+        return oecpTagMapper.listOecpTagByIDS(ids);
     }
 
 

@@ -3,30 +3,34 @@ package com.platform.oecp.business.manager;
 import com.platform.oecp.dao.OecpErrorInfoAndCaseMapper;
 import com.platform.oecp.dto.CaseInfoDto;
 import com.platform.oecp.dto.ErrorInfoAndCaseDto;
-import com.platform.oecp.factory.*;
+import com.platform.oecp.dto.OecpTagDto;
+import com.platform.oecp.factory.OecpCaseInfoFactory;
+import com.platform.oecp.factory.OecpErrorInfoFactory;
+import com.platform.oecp.factory.OecpSearchMainFactory;
+import com.platform.oecp.factory.OecpSearchSubFactory;
 import com.platform.oecp.models.document.CaseTag;
 import com.platform.oecp.models.document.ErrorTag;
+import com.platform.oecp.models.document.OecpErrorDocument;
 import com.platform.oecp.models.dos.*;
 import com.platform.oecp.models.qc.OecpErrorCaseQC;
 import com.platform.oecp.models.qc.OecpErrorInfoQC;
 import com.platform.oecp.models.qc.OecpErrorTagQC;
-import com.platform.oecp.models.qc.OecpSearchMainQC;
 import com.platform.oecp.models.request.OecpCaseInfoRequest;
 import com.platform.oecp.models.request.OecpDeleteCaseInfoRequest;
 import com.platform.oecp.models.request.OecpErrorInfoRequest;
-import com.platform.oecp.models.request.OecpTagRequest;
 import com.platform.oecp.utils.UserUtil;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import red.lixiang.tools.common.mybatis.model.Page;
 import red.lixiang.tools.jdk.ListTools;
 import red.lixiang.tools.spring.redis.RedisSpringTools;
 
 import javax.naming.CommunicationException;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @version 1.0
@@ -87,6 +91,19 @@ public class CommonManager {
     }
 
     /**
+     * 同步搜索专用表数据到es中
+     * @return
+     */
+    public List<OecpErrorDocument> findSearchInfo(){
+        List<OecpErrorDocument> oecpErrorDocuments = oecpErrorInfoAndCaseMapper.findSearchInfo();
+        for(OecpErrorDocument oecpErrorDocument:oecpErrorDocuments) {
+            //异步更新es
+            searchManager.saveEsContent(oecpErrorDocument,null,null,null,null);
+        }
+        return null;
+    }
+
+    /**
      * @author: LILIANG
      * @date: 2020/3/29 21:47
      *
@@ -96,7 +113,45 @@ public class CommonManager {
     public List<ErrorInfoAndCaseDto> getErrorInfos(Page page){
         OecpSysUserDO user = UserUtil.currentUser();
         List<ErrorInfoAndCaseDto> errorInfoAndCaseDtos = oecpErrorInfoAndCaseMapper.errorInfoList(String.valueOf(user.getId()),page);
-        for(ErrorInfoAndCaseDto errorInfoAndCaseDto:errorInfoAndCaseDtos){
+        if(CollectionUtils.isEmpty(errorInfoAndCaseDtos)){
+            return errorInfoAndCaseDtos;
+        }
+        Set<Long> codeIdSet = errorInfoAndCaseDtos.stream().map(dto ->{return dto.getCodeId();}).collect(Collectors.toSet());
+        List<OecpErrorTagDO> oecpErrorTagDOS = oecpErrorTagManager.listOecpErrorTagByIds(codeIdSet);
+
+        if(CollectionUtils.isEmpty(oecpErrorTagDOS)){
+            return errorInfoAndCaseDtos;
+        }
+
+        Map<Long,List<Long>> errorTagMap = new HashMap<>();
+        Set<Long> tagsId = new HashSet<>();
+        for(OecpErrorTagDO tagDO : oecpErrorTagDOS){
+            List<Long> values = errorTagMap.get(tagDO.getCodeId());
+            if(values == null){
+                values = new ArrayList<>();
+                errorTagMap.put(tagDO.getCodeId(),values);
+            }
+            values.add(tagDO.getTagId());
+            tagsId.add(tagDO.getTagId());
+        }
+
+        List<OecpTagDO> tagDOS = oecpTagManager.listOecpTagById(tagsId);
+        Map<Long,String> tagMap = tagDOS.stream().collect(Collectors.toMap(OecpTagDO::getId, tagDO -> tagDO.getTag()));
+
+        //key是codeId
+        Map<Long,List<OecpTagDto>> oecpTagDtoMap = new HashMap<>();
+        for(ErrorInfoAndCaseDto errorInfoAndCaseDto : errorInfoAndCaseDtos){
+            List<Long> tagIdList = errorTagMap.get(errorInfoAndCaseDto.getCodeId());
+            if(tagIdList != null){
+                List<OecpTagDto> list = new ArrayList<>();
+                for(Long id : tagIdList){
+                    OecpTagDto dto = new OecpTagDto();
+                    dto.setId(id);
+                    dto.setTag(tagMap.get(id));
+                    list.add(dto);
+                }
+                errorInfoAndCaseDto.setErrorTags(list);
+            }
             List<CaseInfoDto> caseInfoDtos = oecpErrorInfoAndCaseMapper.caseInfoList(String.valueOf(user.getId()),errorInfoAndCaseDto.getCodeId());
             errorInfoAndCaseDto.setCaseInfos(caseInfoDtos);
         }
@@ -173,7 +228,7 @@ public class CommonManager {
             }
         }
         //异步更新es
-        searchManager.saveEsContent(oecpErrorInfoRequest,null,null,null);
+        searchManager.saveEsContent(null,oecpErrorInfoRequest,null,null,null);
         return oecpErrorInfoDO;
     }
 
@@ -223,7 +278,7 @@ public class CommonManager {
             oecpSearchSubManager.saveOecpSearchSub(oecpSearchSubDO);
         }
         //异步更新es
-        searchManager.saveEsContent(null,oecpCaseInfoRequest,null,null);
+        searchManager.saveEsContent(null,null,oecpCaseInfoRequest,null,null);
         return oecpCaseInfoDO;
     }
 
@@ -258,7 +313,7 @@ public class CommonManager {
             oecpSearchMainManager.removeOecpSearchMainById(oecpSearchMainDO.getId());
             oecpSearchSubManager.removeOecpSearchSubByMainId(oecpSearchMainDO.getId());
             //异步更新es
-            searchManager.saveEsContent(null,null,oecpSearchMainDO.getErrorCode(),null);
+            searchManager.saveEsContent(null,null,null,oecpSearchMainDO.getErrorCode(),null);
             return errorInfoDeleteFlag;
         }
         return 0;
@@ -284,7 +339,7 @@ public class CommonManager {
             //同步更新到es中和search表中
             oecpSearchSubManager.removeOecpSearchSubByCaseId(caseId);
             //异步更新es
-            searchManager.saveEsContent(null,null,null,oecpDeleteCaseInfoRequest);
+            searchManager.saveEsContent(null,null,null,null,oecpDeleteCaseInfoRequest);
             if(caseInfoDeleteFlag <= 0){
                 return 0;
             }

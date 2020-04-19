@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class OecpErrorTagManagerImpl implements OecpErrorTagManager{
@@ -66,5 +67,8 @@ public class OecpErrorTagManagerImpl implements OecpErrorTagManager{
 
     }
 
-
+    @Override
+    public List<OecpErrorTagDO> listOecpErrorTagByIds(Set<Long> codeIdSet) {
+        return oecpErrorTagMapper.listOecpErrorTagByIds(codeIdSet);
+    }
 }
