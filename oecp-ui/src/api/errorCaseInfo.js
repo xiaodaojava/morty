@@ -24,6 +24,7 @@ export function get(params) {
   })
 }
 
+
 export function remove(id) {
   return request({
     url: '/oecpCaseInfo/remove',

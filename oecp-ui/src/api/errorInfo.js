@@ -78,3 +78,11 @@ export function searchErrorCode(info) {
     }
   })
 }
+
+export function suggest(params) {
+  return request({
+    url: '/es/suggestErrorCode',
+    method: 'get',
+    params
+  })
+}

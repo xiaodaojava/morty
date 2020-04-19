@@ -23,6 +23,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { suggest } from '@/api/errorInfo'
 
 export default {
   name: "Dashboard",
@@ -33,7 +34,7 @@ export default {
     return {
       searchContent: "",
       suggests:[
-        {"value":"404"},
+        {"value":"Invalid"},
         {"value":"400"},
         {"value":"403"},
         {"value":"不存在"},
@@ -44,22 +45,38 @@ export default {
   },
   methods: {
     searchEnter() {
-      //searchCode(searchContent);
       this.$router.push(
         `/searchboardResult/normalResult?searchContent=${this.searchContent}`
       );
     },
+
      querySearchAsync(queryString, cb) {
        let suggests = this.suggests;
-      var results = queryString ? suggests.filter(this.createStateFilter(queryString)) : suggests;
-
+       var results = null;
+       if(this.searchContent && this.searchContent !=''){
+        console.log('searchContent',this.searchContent)
+        suggest({ info: this.searchContent}).then(res =>{
+          res.forEach(element => {
+            element.value = element.errorMsg;
+          });
+          suggests = res;
+           results = !queryString ? res : res.filter(this.createStateFilter(queryString)) ;
+        });
+       
+       }else{
+        results = !queryString ? suggests : suggests.filter(this.createStateFilter(queryString)) ;
+       }
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(results);
       }, 1000 * Math.random());
     },
+
       createStateFilter(queryString) {
-      return (state) => {
+       return (state) => {
+         console.log(queryString)
+         console.log(state)
+         console.log(state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
     },

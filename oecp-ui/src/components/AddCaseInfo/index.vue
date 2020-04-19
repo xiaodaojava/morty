@@ -22,14 +22,16 @@
       </el-form-item>
       <el-form-item label="案例标签">
         <el-tag
+          :type="itemIndex%2 == 0? 'danger' : 'warning'"
           :key="item.tag"
-          v-for="item in addCaseInfoForm.tags"
+          v-for="(item,itemIndex) in addCaseInfoForm.caseTags"
           closable
           :disable-transitions="false"
           @close="handleClose(item)"
         >{{item.tag}}</el-tag>
         <el-input
           class="input-new-tag"
+          
           v-if="inputVisible"
           v-model="inputValue"
           ref="saveTagInput"
@@ -40,7 +42,7 @@
 
         <add-tags v-else @click.native="showInput" addTagsName="增加标签" />
         <br />
-        <el-button type="warning" icon="el-icon-delete" @click="deleteThisCaseInfo">删除该案例</el-button>
+        <el-button style="margin-top:10px;" type="warning" icon="el-icon-delete" @click="deleteThisCaseInfo">删除该案例</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -61,7 +63,7 @@ export default {
         return {
           title: '',
           content: '',
-          tags: []
+          caseTags: []
         }
       }
     }
@@ -76,21 +78,21 @@ export default {
   methods: {
     handleClose(item) {
       console.log(item)
-      this.addCaseInfoForm.tags.splice(
-        this.addCaseInfoForm.tags.indexOf(item),
+      this.addCaseInfoForm.caseTags.splice(
+        this.addCaseInfoForm.caseTags.indexOf(item),
         1
       )
     },
     handleInputConfirm() {
       let inputValue = this.inputValue
-      if (contains(this.addCaseInfoForm.tags, 'tag', inputValue)) {
+      if (contains(this.addCaseInfoForm.caseTags, 'tag', inputValue)) {
         this.$message.warning('标签名重复添加')
         this.inputVisible = false
         this.inputValue = ''
         return
       }
       if (inputValue) {
-        this.addCaseInfoForm.tags.push({ tag: inputValue })
+        this.addCaseInfoForm.caseTags.push({ tag: inputValue })
       }
       this.inputVisible = false
       this.inputValue = ''
@@ -105,6 +107,10 @@ export default {
     deleteThisCaseInfo() {
       this.$emit('delete', this.caseInfoIndex)
     }
+  },
+  mounted(){
+    console.log('addCaseInfo-------》')
+    console.log(this.addCaseInfoForm)
   }
 }
 </script>
